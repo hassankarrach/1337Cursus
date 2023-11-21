@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 17:42:46 by hkarrach          #+#    #+#             */
-/*   Updated: 2023/11/20 17:42:58 by hkarrach         ###   ########.fr       */
+/*   Updated: 2023/11/21 12:31:41 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,8 @@ static char *ft_strndup(const char *s, size_t n) //Alloc Memory for the required
 	res = (char *)malloc(sizeof(char) * n + 1);
 	if (!res)
 		return (NULL);
-	res = ft_strncpy(res, s, n); //Fill it.
-	res[n] = '\0';
-	return (res);
+	ft_strlcpy(res, s, n + 1); // Copy the string
+    return (res);
 }
 
 char **ft_split(char const *s, char c)
