@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 17:43:44 by hkarrach          #+#    #+#             */
-/*   Updated: 2023/11/20 17:43:44 by hkarrach         ###   ########.fr       */
+/*   Updated: 2023/11/21 12:27:23 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void ft_striteri(char *s, void (*f)(unsigned int, char*))
 	i = 0;
 	while (s[i] != '\0')
 	{
-		f(i, s[i]);
+		f(i, &s[i]);
 		i++;
 	}
 }
