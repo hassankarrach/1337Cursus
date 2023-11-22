@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 17:43:51 by hkarrach          #+#    #+#             */
-/*   Updated: 2023/11/20 17:44:04 by hkarrach         ###   ########.fr       */
+/*   Updated: 2023/11/22 12:23:31 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,11 @@
 size_t ft_strlcpy(char *dest, const char *src, size_t size)
 {
 	size_t n;
+	
 	n = 0;
 	if(size == 0)
 	{
-		while(src[n])
-			n++;
-		return n;
+		return (ft_strlen(src));
 	}	
 	while (n < size-1 && src[n])
 	{

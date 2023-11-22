@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:42:03 by hkarrach          #+#    #+#             */
-/*   Updated: 2023/11/20 17:39:55 by hkarrach         ###   ########.fr       */
+/*   Updated: 2023/11/22 13:49:19 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void *memchr(const void *str, int c, size_t n)
 	size_t i;
 	char *s;
 
-       	s = (char *) str;
+    s = (char *) str;
 	i = 0;
 
 	while(i < n)
