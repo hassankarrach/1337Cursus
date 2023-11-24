@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 17:39:20 by hkarrach          #+#    #+#             */
-/*   Updated: 2023/11/20 17:39:32 by hkarrach         ###   ########.fr       */
+/*   Updated: 2023/11/23 16:09:28 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_list *ft_lstmap(t_list *lst, void *(*f)(void *),void (*del)(void *))
 	new_list = NULL;
 	while(lst)
 	{
-		new_node = ft_lstnew(f(lst-<content));
+		new_node = ft_lstnew(f(lst->content));
 		if(!new_node)
 		{
 			ft_lstclear(&new_list, del);

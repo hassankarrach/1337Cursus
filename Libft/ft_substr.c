@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 17:45:38 by hkarrach          #+#    #+#             */
-/*   Updated: 2023/11/22 14:30:16 by hkarrach         ###   ########.fr       */
+/*   Updated: 2023/11/23 17:33:26 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,15 @@ char *ft_substr(char const *s, unsigned int start,size_t len)
 {
 	char *res;
 	unsigned int i;
+	unsigned int s_len = ft_strlen(s);
+
+	if(!s)
+		return (NULL);
+	if(start > s_len)
+	{
+		res = ft_calloc(1, sizeof(char));
+		return (res);
+	}
 	
 	res = (char *)malloc((sizeof(char) * len) + 1);
 	if (!res)

@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 17:42:46 by hkarrach          #+#    #+#             */
-/*   Updated: 2023/11/21 12:31:41 by hkarrach         ###   ########.fr       */
+/*   Updated: 2023/11/23 17:56:58 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@ char **ft_split(char const *s, char c)
 	int i; //track string --s--.
 	int j; //keep track the first of the word.
 	int k; //track the element of the tab.
+
+	if(!s)
+		return (NULL);
 
 	i = 0;
 	k = 0;

@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:54:36 by hkarrach          #+#    #+#             */
-/*   Updated: 2023/11/20 17:44:30 by hkarrach         ###   ########.fr       */
+/*   Updated: 2023/11/23 18:00:22 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@ char *ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
 	unsigned int i;
 	char *res;
+
+	if (!s || !f)
+		return (NULL);
 
 	i = 0;
 	res = (char *)malloc(sizeof(char) * (ft_strlen(s)) + 1);
