@@ -1,0 +1,23 @@
+#include "ft_printf.h"
+
+int	ft_putnbr(int nb)
+{
+	int	res;
+
+	res = 0;
+	if (nb == -2147483648)
+		return (write(1, "-2147483648", 11));
+	if (nb < 0)
+	{
+		res += write(1, "-", 1);
+		nb *= -1;
+	}
+	if (nb > 9)
+	{
+		res += ft_putnbr(nb / 10);
+		res += ft_putnbr(nb % 10);
+	}
+	else
+		res += ft_putchar(nb + 48);
+	return (res);
+}
