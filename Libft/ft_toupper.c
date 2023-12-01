@@ -6,13 +6,15 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 17:45:44 by hkarrach          #+#    #+#             */
-/*   Updated: 2023/11/20 17:45:45 by hkarrach         ###   ########.fr       */
+/*   Updated: 2023/11/29 14:58:10 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int ft_toupper(int c)
+#include "libft.h"
+
+int	ft_toupper(int c)
 {
-	if (c >= 'a' && c <= 'A')
+	if (c >= 'a' && c <= 'z')
 		return (c - 32);
 	return (c);
 }

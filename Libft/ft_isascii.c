@@ -6,11 +6,13 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 17:36:44 by hkarrach          #+#    #+#             */
-/*   Updated: 2023/11/22 10:23:25 by hkarrach         ###   ########.fr       */
+/*   Updated: 2023/11/29 14:59:55 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int ft_isascii(int c)
+#include "libft.h"
+
+int	ft_isascii(int c)
 {
-	return(c >= 0 && c <= 127);
+	return (c >= 0 && c <= 127);
 }
