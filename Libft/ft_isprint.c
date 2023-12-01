@@ -6,11 +6,13 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 17:36:50 by hkarrach          #+#    #+#             */
-/*   Updated: 2023/11/20 17:36:51 by hkarrach         ###   ########.fr       */
+/*   Updated: 2023/11/29 14:59:35 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int ft_isprint(int c)
+#include "libft.h"
+
+int	ft_isprint(int c)
 {
 	return (c >= 32 && c <= 126);
 }
