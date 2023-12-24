@@ -1,0 +1,19 @@
+NAME = mylib.a
+CC = CC
+CFLAGS = -w -w -w
+SRCS = a.c b.c d.c 
+OBJS = ${SRCS: .c=.o}
+
+all : $(NAME)
+$(NAME) : $(OBJS)
+	ar -rcs $@ $^
+
+%.o : %.c
+	${CC} ${CFLAGS} -o $@ -c $^
+
+clean : 
+	rm -f ${OBJS}
+fclean : clean
+	rm -f ${NAME}
+re :fclean all
+.PHONY: re fclean all clean
