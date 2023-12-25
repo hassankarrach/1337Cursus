@@ -1,5 +1,14 @@
 #include "get_next_line.h"
 
+char	*ft_free(char *buffer, char *buf)
+{
+	char	*temp;
+
+	temp = ft_strjoin(buffer, buf);
+	free(buffer);
+	return (temp);
+}
+
 int check_the_end_of_line(char *buff)
 {
 	int i;
@@ -14,7 +23,6 @@ int check_the_end_of_line(char *buff)
 	}
 	return (0);
 }
-
 char	*extract_line(char *str)
 {
 	char *final_line;
@@ -37,7 +45,6 @@ char	*extract_line(char *str)
 	final_line[i] = '\0';
 	return (final_line);
 }
-
 char	*get_rest_of_line(char *str)
 {
 	char *final_line;
@@ -65,27 +72,51 @@ char	*get_rest_of_line(char *str)
 	return (final_line);
 }
 
-char	*get_next_line(int fd)
+char	*read_file(int fd, char *str)
 {
-	static char *line;
-	char *buff;
+	char	*Buffer;
+	int		byte_readed;
 
-	buff = malloc(sizeof(char) * 10);
-	if(!buff)
-		return (0);
-
-	line = NULL;
-	read(fd, buff, 9);
-	line = ft_strjoin(line, buff);
-
-	while(!check_the_end_of_line(buff))
+	if (!str)
+		str = ft_calloc(1, 1);
+	// malloc buffer
+	Buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	byte_readed = 1;
+	while (byte_readed > 0)
 	{
-		read(fd, buff, 9);
-		line = ft_strjoin(line, buff);
+		// while not EOF read
+		byte_readed = read(fd, Buffer, BUFFER_SIZE);
+		if (byte_readed == -1)
+		{
+			free(Buffer);
+			return (NULL);
+		}
+		// 0 to end for leak
+		Buffer[byte_readed] = 0;
+		// join and free
+		str = ft_free(str, Buffer);
+		// quit if \n find
+		if (ft_strchr(str, '\n'))
+			break ;
 	}
-	return (extract_line(line));
+	free(str);
+	return (str);
 }
 
+char	*get_next_line(int fd)
+{
+	static char	*str; //Full Str
+	char		*line;//Final Line
+
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+		return (NULL);
+	str = read_file(fd, str);
+	if (!str)
+		return (NULL);
+	line = extract_line(str);
+	str = get_rest_of_line(str);
+	return (line);
+}
 int main()
 {
 	int fd;
@@ -95,6 +126,8 @@ int main()
 	if (fd == -1)
 		printf("error!");
 
-	printf("\n-%s", get_next_line(fd));
-	// printf("\n-%s", get_next_line(fd));
+	printf("-%s", get_next_line(fd));
+	printf("-%s", get_next_line(fd));
+	printf("-%s", get_next_line(fd));
+	printf("-%s", get_next_line(fd));
 }

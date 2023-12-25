@@ -1,19 +1,49 @@
 #include "get_next_line.h"
 
-int	ft_strchr(char *str)
+void	ft_bzero(void *s, size_t n)
 {
-	int		i;
+	unsigned char	*p;
+
+	p = s;
+	while (n > 0)
+	{
+		*p = 0;
+		p++;
+		n--;
+	}
+}
+
+void	*ft_calloc(size_t elements_count, size_t element_size)
+{
+	void	*result;
+	size_t	buffer_size;
+
+	buffer_size = elements_count * element_size;
+	if (elements_count > 0 && element_size > 0 && buffer_size
+		/ elements_count != element_size)
+		return (NULL);
+	result = (void *)malloc(buffer_size);
+	if (!result)
+		return (NULL);
+	else
+		ft_bzero(result, buffer_size);
+	return (result);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	int	i;
 
 	i = 0;
-	if (!str)
-		return (0);
-	while (str[i])
+	while (s[i])
 	{
-		if (str[i] == '\n')
-			return (1);
+		if (s[i] == (char)c)
+			return ((char *)&s[i]);
 		i++;
 	}
-	return (0);
+	if (s[i] == (char)c)
+		return ((char *)&s[i]);
+	return (NULL);
 }
 
 int	len(char *src)
