@@ -1,6 +1,6 @@
 #include "get_next_line.h"
 
-char	*ft_free(char *buffer, char *buf)
+char	*ft_join_free(char *buffer, char *buf)
 {
 	char	*temp;
 
@@ -94,7 +94,7 @@ char	*read_file(int fd, char *str)
 		// 0 to end for leak
 		Buffer[byte_readed] = 0;
 		// join and free
-		str = ft_free(str, Buffer);
+		str = ft_join_free(str, Buffer);
 		// quit if \n find
 		if (ft_strchr(str, '\n'))
 			break ;
