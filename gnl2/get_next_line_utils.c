@@ -1,103 +1,85 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/25 22:03:46 by hkarrach          #+#    #+#             */
+/*   Updated: 2023/12/26 01:08:29 by hkarrach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
-void	ft_bzero(void *s, size_t n)
-{
-	unsigned char	*p;
-
-	p = s;
-	while (n > 0)
-	{
-		*p = 0;
-		p++;
-		n--;
-	}
-}
-
-void	*ft_calloc(size_t elements_count, size_t element_size)
-{
-	void	*result;
-	size_t	buffer_size;
-
-	buffer_size = elements_count * element_size;
-	if (elements_count > 0 && element_size > 0 && buffer_size
-		/ elements_count != element_size)
-		return (NULL);
-	result = (void *)malloc(buffer_size);
-	if (!result)
-		return (NULL);
-	else
-		ft_bzero(result, buffer_size);
-	return (result);
-}
-
-char	*ft_strchr(const char *s, int c)
+int	ft_strlen(char *s)
 {
 	int	i;
 
 	i = 0;
 	while (s[i])
 	{
-		if (s[i] == (char)c)
-			return ((char *)&s[i]);
 		i++;
+		if (s[i - 1] == '\n')
+			break ;
 	}
-	if (s[i] == (char)c)
-		return ((char *)&s[i]);
-	return (NULL);
+	return (i);
 }
 
-int	len(char *src)
+void	shift(char *buf, int endl)
 {
 	int	i;
 
 	i = 0;
-	while (src[i])
-		i++;
-	return (i);
+	while (endl < BUFFER_SIZE && buf[endl])
+		buf[i++] = buf [endl++];
+	while (i < endl)
+		buf[i++] = 0;
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+static char	*alloc_totalen(char *line, char *buf, int *totlen)
 {
-	char	*join;
-	int		b;
-	int		a;
+	int		line_len;
+	int		buf_len;
+	char	*newstr;
 
-	b = 0;
-	a = 0;
-	if (!s1)
-		s1 = ft_strdup("");
-	join = (char *) malloc(len(s1) + len(s2) + 1);
-	if (!join)
-		return (0);
-	while (s1[a])
-	{
-		join[a] = s1[a];
-		a++;
-	}
-	while (s2[b])
-	{
-		join[a] = s2[b];
-		a++;
-		b++;
-	}
-	join[a] = '\0';
-	return (join);
+	line_len = 0;
+	buf_len = 0;
+	*totlen = 0;
+	if (!line && !buf)
+		return (NULL);
+	if (line)
+		line_len = ft_strlen(line);
+	buf_len = ft_strlen(buf);
+	*totlen = line_len + buf_len;
+	newstr = (char *) malloc(*totlen + 1);
+	return (newstr);
 }
 
-char	*ft_strdup(char *src)
+char	*ft_strjoin(char *line, char *buf)
 {
-	char	*dup;
 	int		i;
+	int		count;
+	char	*newstr;
+	int		totlen;
 
 	i = 0;
-	dup = (char *) malloc(len(src) + 1);
-	if (!dup)
-		return (0);
-	while (i < len(src))
+	count = 0;
+	newstr = alloc_totalen(line, buf, &totlen);
+	if (!newstr)
+		return (free_it(line), NULL);
+	while (line && line[count] && totlen > count)
 	{
-		dup[i] = src[i];
-		i++;
+		newstr[count] = line[count];
+		count++;
 	}
-	dup[i] = '\0';
-	return (dup);
+	free_it(line);
+	while (buf[i] && totlen > count)
+	{
+		newstr[count++] = buf[i++];
+		if (buf[i - 1] == '\n')
+			break ;
+	}
+	newstr[count] = '\0';
+	return (newstr);
 }
