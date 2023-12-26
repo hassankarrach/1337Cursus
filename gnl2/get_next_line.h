@@ -1,21 +1,18 @@
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H 
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
+
+# include <fcntl.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 1337
 # endif
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <fcntl.h>
-# include <limits.h>
-
-/* FUNCTIONS */
-char	*read_and_getline(char *buf, int fd, char *line);
-void	free_it(char *str);
-char	*ft_strjoin(char *line, char *buf);
-void	shift(char *buf, int endl);
-int		ft_strlen(char *s);
-int		ft_strchr( char *s, int readit);
+char	*ft_strjoin(char *s1, char *s2);
+int		ft_strlen(char *str);
+int		ft_strchr(char *s, char c);
 char	*get_next_line(int fd);
+
 #endif

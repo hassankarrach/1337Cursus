@@ -1,85 +1,64 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/25 22:03:46 by hkarrach          #+#    #+#             */
-/*   Updated: 2023/12/26 01:08:29 by hkarrach         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "get_next_line.h"
 
-int	ft_strlen(char *s)
+int ft_strlen(char *str)
 {
-	int	i;
+	int i;
 
 	i = 0;
-	while (s[i])
-	{
+	if(!str)
+		return (0);
+	while(str[i])
 		i++;
-		if (s[i - 1] == '\n')
-			break ;
-	}
 	return (i);
 }
 
-void	shift(char *buf, int endl)
+int	ft_strchr(char *str, char c)
 {
-	int	i;
+	int i;
 
 	i = 0;
-	while (endl < BUFFER_SIZE && buf[endl])
-		buf[i++] = buf [endl++];
-	while (i < endl)
-		buf[i++] = 0;
-}
-
-static char	*alloc_totalen(char *line, char *buf, int *totlen)
-{
-	int		line_len;
-	int		buf_len;
-	char	*newstr;
-
-	line_len = 0;
-	buf_len = 0;
-	*totlen = 0;
-	if (!line && !buf)
+	if(!str)
 		return (NULL);
-	if (line)
-		line_len = ft_strlen(line);
-	buf_len = ft_strlen(buf);
-	*totlen = line_len + buf_len;
-	newstr = (char *) malloc(*totlen + 1);
-	return (newstr);
+	while(str[i])
+	{
+		if(str[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
-char	*ft_strjoin(char *line, char *buf)
+char *ft_strjoin(char *s1, char *s2)
 {
-	int		i;
-	int		count;
-	char	*newstr;
-	int		totlen;
+	int i;
+	int j;
+	char *res;
 
 	i = 0;
-	count = 0;
-	newstr = alloc_totalen(line, buf, &totlen);
-	if (!newstr)
-		return (free_it(line), NULL);
-	while (line && line[count] && totlen > count)
+	j = 0;
+	if (!s1)
 	{
-		newstr[count] = line[count];
-		count++;
+		s1 = malloc(sizeof(char) * 1);
+		s1[0] = '\0';
 	}
-	free_it(line);
-	while (buf[i] && totlen > count)
+	s1[0] = '\0';
+	if (!s1 || !s2)
+		return (NULL);
+	
+	res = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	if(!res)
+		return (NULL);
+	while(s1[i])
 	{
-		newstr[count++] = buf[i++];
-		if (buf[i - 1] == '\n')
-			break ;
+		res[i] = s1[i];
+		i++;
 	}
-	newstr[count] = '\0';
-	return (newstr);
+	while(s2[j])
+	{
+		res[i+j] = s2[j];
+		j++;
+	}
+	
+	res[i+j] = '\0';
+	return (res);
 }
