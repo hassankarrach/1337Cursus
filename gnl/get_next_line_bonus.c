@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/26 06:51:21 by hkarrach          #+#    #+#             */
-/*   Updated: 2023/12/27 02:16:29 by hkarrach         ###   ########.fr       */
+/*   Created: 2023/12/26 06:50:49 by hkarrach          #+#    #+#             */
+/*   Updated: 2023/12/27 02:19:18 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*get_the_line(char *str)
 {
@@ -69,43 +69,43 @@ char	*get_the_rest(char *str)
 	return (res);
 }
 
-char	*read_line(int fd, char *str)
+char	*read_line(int fd, char *buffer)
 {
-	char	*buffer;
+	char	*line;
 	int		read_byte;
 
 	read_byte = 1;
-	buffer = malloc(BUFFER_SIZE + 1 * sizeof(char));
-	if (!buffer)
+	line = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
+	if (!line)
 		return (NULL);
-	while (read_byte > 0 && !ft_strchr(str, '\n'))
+	while (read_byte > 0 && !ft_strchr(buffer, '\n'))
 	{
-		read_byte = read(fd, buffer, BUFFER_SIZE);
+		read_byte = read(fd, line, BUFFER_SIZE);
 		if (read_byte < 0)
 		{
+			free(line);
 			free(buffer);
-			free(str);
 			return (NULL);
 		}
-		buffer[read_byte] = '\0';
-		str = ft_strjoin(str, buffer);
+		line[read_byte] = '\0';
+		buffer = ft_strjoin(buffer, line);
 	}
-	free(buffer);
-	return (str);
+	free(line);
+	return (buffer);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*str;
+	static char	*str[1024];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	str = read_line(fd, str);
-	if (!str)
+	str[fd] = read_line(fd, str[fd]);
+	if (!str[fd])
 		return (NULL);
-	line = get_the_line(str);
-	str = get_the_rest(str);
+	line = get_the_line(str[fd]);
+	str[fd] = get_the_rest(str[fd]);
 	if (line[0] == 0)
 	{
 		free(line);
@@ -116,20 +116,21 @@ char	*get_next_line(int fd)
 
 // int main()
 // {
-//     int fd = open("text.txt", O_RDONLY);
-//     char *line;
+// 	char *line;
+// 	char *line2;
+// 	int fd = open("text.txt", O_RDONLY);
+// 	int fd2 = open("text2.txt", O_RDONLY);
+// 	if(fd < 0)
+// 	{
+// 		printf("ERR\n");
+// 		return (1);
+// 	}
+// 	while((line = get_next_line(fd)) != NULL && (line2 = get_next_line(fd2)) != NULL)
+// 	{
+// 		printf("%s", line);
+// 		printf("%s", line2);
+// 		free(line);
+// 		free(line2);
+// 	}
 
-//     if (fd == -1)
-//     {
-//         perror("Error opening file");
-//         return (1);
-//     }
-//     while ((line = get_next_line(fd)) != NULL)
-//     {
-//         printf("Line: %s", line);
-//         free(line);
-//     }
-
-//     close(fd);
-//     return (0);
 // }
