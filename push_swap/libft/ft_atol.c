@@ -1,6 +1,6 @@
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+long	ft_atol(const char *str)
 {
 	unsigned int	i;
 	long			res;
@@ -22,5 +22,5 @@ int	ft_atoi(const char *str)
 		res = res * 10 + (str[i] - '0');
 		i++;
 	}
-	return ((int)(res * sign));
+	return (res * sign);
 }
