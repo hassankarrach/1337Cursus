@@ -91,6 +91,7 @@ static void stack_rotate(t_stack **stack)
 
     Last->next = (*stack);
     (*stack)->next = NULL;
+    Next->prev = NULL;
     (*stack)->prev = Last;
 
     (*stack) = Next;

@@ -32,21 +32,33 @@ int main(int argc, char **argv)
     {
         Value = ft_atol(argv[i]);
         append_node(&a, new_node(Value));
-        append_node(&b, new_node(Value));
         i++;
     }
+    
+    if(!is_sorted(a))
+    {
+        if(stack_len(a) == 2)
+            stack_sa(&a);
+        else if(stack_len(a) == 3)
+            tiny_sort(&a);
+        else
+            stack_sort(&a, &b);
+    }
 
-    tiny_sort(&a);
-
+    printf("\n--------A--------\n\n");
     while(a)
     {
-        printf("%d\n", a->value);
+        printf("     ---\n");
+        printf("%d : |%d|\n",a->index, a->value);
+        printf("     ---\n");
         a = a->next;
     }
-    printf("\n----------------\n\n");
+    printf("\n--------B--------\n\n");
     while(b)
     {
-        printf("%d\n", b->value);
+        printf("     ---\n");
+        printf("%d : |%d| --TARG--> %d . %d moves needed. IN TOP %d ?\n",b->index, b->value, b->targ->value, b->cost_to_push, b->is_in_top);
+        printf("     ---\n");
         b = b->next;
     }
 
