@@ -8,8 +8,11 @@ t_stack *new_node(int value)
     node = (t_stack *)malloc(sizeof(t_stack));
     if(!node)
         return (NULL);
+    node->cost_to_push = 0;
+    node->is_in_top = 0;
     node->value = value;
-    node->index = index;
+    node->index = 0;
+    node->targ = node;
     node->next = NULL;
     node->prev = NULL;
     return (node);
@@ -45,6 +48,7 @@ int stack_len(t_stack *head)
 {
     int len;
 
+    len = 0;
     if(head == NULL)
         return (0);
     while (head)
@@ -52,6 +56,7 @@ int stack_len(t_stack *head)
         len++;
         head = head->next;    
     }
+
     return (len);
 }
 
@@ -75,3 +80,25 @@ t_stack *higgest_node(t_stack *head)
     }
     return (Higgest_node);
 }
+
+t_stack *smallest_node(t_stack *head)
+{
+    int     tmp_value;
+    t_stack *smallest_node;
+
+    if(!head)
+        return (NULL);
+    tmp_value = head->value;
+    smallest_node = head;
+    while(head->next)
+    {
+        head = head->next;
+        if(head->value < tmp_value)
+        {
+            tmp_value = head->value;
+            smallest_node = head;
+        }
+    }
+    return (smallest_node);
+}
+
