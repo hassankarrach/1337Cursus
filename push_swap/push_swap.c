@@ -23,7 +23,7 @@ int main(int argc, char **argv)
     //Checks the args
     if(!args_check(argv))
     {
-        printf("ERROR\n");
+        printf("ERROR.\n");
         return (0);
     }
     //Add to the stack
@@ -34,7 +34,7 @@ int main(int argc, char **argv)
         append_node(&a, new_node(Value));
         i++;
     }
-    
+   
     if(!is_sorted(a))
     {
         if(stack_len(a) == 2)
@@ -61,8 +61,4 @@ int main(int argc, char **argv)
         printf("     ---\n");
         b = b->next;
     }
-
-
-
-    // printf("total len of the stack : %d\n", stack_len(a));
 }
