@@ -15,7 +15,6 @@ static int	ft_isdigit(char *str)
 	}
 	return (1);
 }
-
 static int ft_check_range(char *str)
 {
 	long n;
@@ -27,7 +26,6 @@ static int ft_check_range(char *str)
 	}
 	return (1);
 }
-
 static int ft_check_duplicated(char **list)
 {
 	int i;
@@ -53,7 +51,6 @@ static int ft_check_duplicated(char **list)
 
 	return (0);
 }
-
 int args_check(char **list)
 {
 	int i;
