@@ -16,7 +16,16 @@ void tiny_sort(t_stack **head)
         stack_sa(head);
     }
 }
-
+void Sort_five(t_stack **a, t_stack **b)
+{
+    while (stack_len(*a) > 3)
+    {
+        initialize(*a, *b);
+        Finalize_ratation(a, smallest_node(*a), 'a');
+        stack_pb(b, a);
+    }
+    
+}
 int is_sorted(t_stack *a)
 {
     if(!a)
@@ -29,7 +38,6 @@ int is_sorted(t_stack *a)
     }
     return (1);
 }
-
 t_stack *get_cheapest(t_stack *b)
 {
     t_stack *cheapest;
@@ -51,4 +59,17 @@ t_stack *get_cheapest(t_stack *b)
     }
 
     return (cheapest);
+}
+void Finish_sort(t_stack **a)
+{
+    t_stack *smallest;
+    
+    set_node_position(*a);
+	smallest = smallest_node(*a);
+	if (smallest->is_in_top)
+		while (*a != smallest)
+                stack_ra(a);
+	else
+        while (*a != smallest)
+                stack_rra(a);
 }

@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 09:36:06 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/06 09:36:07 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/07 17:18:19 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int stack_len(t_stack *head)
 
     return (len);
 }
-
 t_stack *higgest_node(t_stack *head)
 {
     int     tmp_value;
@@ -48,7 +47,6 @@ t_stack *higgest_node(t_stack *head)
     }
     return (Higgest_node);
 }
-
 t_stack *smallest_node(t_stack *head)
 {
     int     tmp_value;
@@ -58,14 +56,14 @@ t_stack *smallest_node(t_stack *head)
         return (NULL);
     tmp_value = head->value;
     smallest_node = head;
-    while(head->next)
+    while(head)
     {
-        head = head->next;
         if(head->value < tmp_value)
         {
             tmp_value = head->value;
             smallest_node = head;
         }
+        head = head->next;
     }
     return (smallest_node);
 }

@@ -6,35 +6,32 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 09:18:50 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/06 18:49:47 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/07 16:07:19 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-//SWAP
-void stack_swap(t_stack **head)
-{
-    t_stack *tmp;
-    t_stack *next_node;
+void stack_swap(t_stack **head) {
+    t_stack *first;
+    t_stack *second;
+    
+    if (*head == NULL || (*head)->next == NULL)
+        return;
+    first = *head;
+    second = first->next;
+    first->next = second->next;
+    if (second->next != NULL) {
+        second->next->prev = first;
+    }
+    second->prev = NULL;
+    second->next = first;
+    first->prev = second;
 
-    next_node = (*head)->next;
-    tmp = (*head);
-    if (head == NULL || *head == NULL || stack_len(*head) == 1)
-        return ;
-    (next_node->next)->prev = (*head);
-
-    (*head)->prev = next_node; //x
-    (*head)->next = next_node->next;
-
-    next_node->next = (*head);
-    next_node->prev = NULL; //x
-
-    *head = next_node;
+    *head = second;
 }
 
-//PUSH
-void stack_push(t_stack **dest, t_stack **src)
+void    stack_push(t_stack **dest, t_stack **src)
 {
     t_stack *Next_of_Src;
 
@@ -86,21 +83,16 @@ void stack_rotate(t_stack **stack)
 //Reverse_Rotate
 void stack_reverse_rotate(t_stack **stack)
 {
-    t_stack *new_head;
-    t_stack *new_Last;
+	t_stack	*last;
+	int				len;
 
-    if(stack == NULL || *stack == NULL || !((*stack)->next))
-        return ;
-    
-    new_head = find_last_node((*stack));
-    printf("-----%d\n", new_head->value);
-    new_Last = new_head->prev;
-    // if(!new_Last) //FIX THAaaaaaaaaaaT.
-    //     printf("-----%d\n", new_head->value);
-    if(new_Last)
-        new_Last->next = NULL;
-
-    new_head->next = (*stack);
-    new_head->prev = NULL;
-    (*stack) = new_head;
+	len = stack_len(*stack);
+	if (NULL == *stack || NULL == stack || 1 == len)
+		return ;
+	last = find_last_node(*stack);
+	last->prev->next = NULL;
+	last->next = *stack;
+	last->prev = NULL;
+	*stack = last;
+	last->next->prev = last;
 }

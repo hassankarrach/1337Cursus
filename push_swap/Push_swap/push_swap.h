@@ -6,6 +6,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <stdbool.h>
+# include <limits.h>
 # include "./Libft/libft.h"
 
 typedef struct s_stack{
@@ -17,10 +18,6 @@ typedef struct s_stack{
     struct s_stack *prev;
     struct s_stack *targ;
 } t_stack;
-
-//------------Args_check---------------------------
-int     args_check(char **list);
-//-------------------------------------------------
 
 //------------Stack_Utils--------------------------
 t_stack *new_node(int value);
@@ -53,12 +50,23 @@ void    stack_reverse_rotate(t_stack **stack);
 int     is_sorted(t_stack *a);
 void    stack_sort(t_stack **a, t_stack **b);
 void    tiny_sort(t_stack **head);
+void    Sort_five(t_stack **a, t_stack **b);
 t_stack *get_cheapest(t_stack *b);
+void    Finish_sort(t_stack **a);
+void    Finalize_ratation(t_stack **head, t_stack *node, char stack_name);
 
-void    set_nodes_index(t_stack *a, t_stack *b);
 void    set_node_target(t_stack *a, t_stack *b);
-void    set_node_position(t_stack *a, t_stack *b);
+void    set_node_position(t_stack *stack);
 void    set_node_cost(t_stack *a, t_stack *b);
+void    initialize(t_stack *a, t_stack *b);
+//------------------------------------------------
+
+//------------Error_Handling----------------------
+void	Free_on_error(t_stack **a, char **argv, bool is_arc2);
+void    Free_stack(t_stack **head);
+void    Free_array(char **argv);
+int     ft_check_duplicated(t_stack *a, int nbr);
+int     ft_isdigit(char *str);
 //------------------------------------------------
 
 #endif

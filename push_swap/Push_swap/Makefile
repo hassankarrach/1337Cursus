@@ -8,7 +8,7 @@ SRCS = Actions/actions.c Actions/pa.c Actions/pb.c Actions/ra.c \
 		Algo/Sort_utils.c Algo/Sort_utils2.c Algo/Stack_sort.c \
 		Libft/ft_atol.c Libft/ft_split.c Libft/ft_strlcpy.c \
 		Libft/ft_strlen.c \
-		Utils/Stack_utils.c Utils/Stack_utils2.c \
+		Utils/Stack_utils.c Utils/Stack_utils2.c Utils/Errors_utils.c\
 		args_check.c push_swap.c
 
 OBJ = $(SRCS:.c=.o)
