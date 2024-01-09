@@ -1,6 +1,11 @@
 {
     "files.associations": {
         "push_swap.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "stddef.h": "c",
+        "checker.h": "c",
+        "libft.h": "c",
+        "fcntl.h": "c",
+        "get_next_line.h": "c"
     }
 }
