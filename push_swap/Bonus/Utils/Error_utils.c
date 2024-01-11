@@ -1,19 +1,19 @@
-#include "../push_swap.h"
+#include "../checker.h"
 
-//Free the Split allocations.
 void    Free_argv(char **argv)
 {
 	int	i;
 	
 	if (!argv || !*argv)
 		return ;
-	i = -1;
+	i = 0;
 	while (argv[i])
-		free(argv[i++]);
-	free(argv-1);
+	{
+		free(argv[i]);
+		i++;
+	}
+	free(argv);
 }
-
-//Free the stack Nodes.
 void    Free_stack(t_stack **head)
 {
 	t_stack	*tmp;
@@ -30,7 +30,6 @@ void    Free_stack(t_stack **head)
 	}
 	*head = NULL;
 }
-
 void	Free_on_error(t_stack **a, char **argv, bool is_arc2)
 {
 	Free_stack(a);

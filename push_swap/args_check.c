@@ -5,11 +5,14 @@ int	ft_isdigit(char *str)
 	int i;
 
 	i = 0;
-	if (str[i] == '-' || str[i] == '+')
-		i++;
-	while(str[i])
+	if (!(str[i] == '+' || str[i] == '-' || (str[i] >= '0' && str[i] <= '9')))
+		return (0);
+	if ((str[i] == '+' || str[i] == '-') && !(str[i + 1] >= '0' && str[i + 1] <= '9'))
+		return (0);
+	i++;
+	while (str[i])
 	{
-		if(!(str[i] >= '0' && str[i] <= '9'))
+		if (!(str[i] >= '0' && str[i] <= '9'))
 			return (0);
 		i++;
 	}
