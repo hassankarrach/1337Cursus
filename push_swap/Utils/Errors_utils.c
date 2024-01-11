@@ -1,20 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Errors_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/11 14:01:25 by hkarrach          #+#    #+#             */
+/*   Updated: 2024/01/11 14:13:04 by hkarrach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../push_swap.h"
 
-//Free the Split allocations.
-void    Free_argv(char **argv)
+// Free the Split allocations.
+void	free_argv(char **argv)
 {
 	int	i;
-	
+
 	if (!argv || !*argv)
 		return ;
 	i = -1;
 	while (argv[i])
 		free(argv[i++]);
-	free(argv-1);
+	free(argv - 1);
 }
 
-//Free the stack Nodes.
-void    Free_stack(t_stack **head)
+// Free the stack Nodes.
+void	free_stack(t_stack **head)
 {
 	t_stack	*tmp;
 	t_stack	*current;
@@ -31,11 +43,11 @@ void    Free_stack(t_stack **head)
 	*head = NULL;
 }
 
-void	Free_on_error(t_stack **a, char **argv, bool is_arc2)
+void	free_on_error(t_stack **a, char **argv, bool is_arc2)
 {
-	Free_stack(a);
+	free_stack(a);
 	if (is_arc2)
-		Free_argv(argv);
+		free_argv(argv);
 	write(2, "Error\n", 6);
 	exit(1);
 }

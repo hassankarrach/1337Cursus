@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 09:00:50 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/10 10:32:51 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/11 14:05:44 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	i = 0;
 	k = 0;
-	tab = (char **)malloc(sizeof(char *) * (ft_count_words(s, c) + 2)); // +2 for the placeholder and NULL
+	tab = (char **)malloc(sizeof(char *) * (ft_count_words(s, c) + 2));
 	if (!tab)
 		return (NULL);
-	tab[k++] = ft_strndup("", 0); // Placeholder
+	tab[k++] = ft_strndup("", 0);
 	while (s[i])
 	{
 		while (s[i] == c)
@@ -70,4 +70,3 @@ char	**ft_split(char const *s, char c)
 	tab[k] = NULL;
 	return (tab);
 }
-

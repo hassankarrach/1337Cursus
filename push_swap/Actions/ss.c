@@ -6,16 +6,16 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 09:20:45 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/08 13:46:27 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/11 12:06:29 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void stack_ss(t_stack **a, t_stack **b, int is_checker)
+void	stack_ss(t_stack **a, t_stack **b, int is_checker)
 {
-    stack_swap(a);
-    stack_swap(b);
-    if(!is_checker)
-        write(1, "ss\n", 3);
+	stack_swap(a);
+	stack_swap(b);
+	if (!is_checker)
+		write(1, "ss\n", 3);
 }

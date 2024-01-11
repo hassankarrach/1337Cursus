@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Error_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/11 14:02:04 by hkarrach          #+#    #+#             */
+/*   Updated: 2024/01/11 14:02:16 by hkarrach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../checker.h"
 
-void    Free_argv(char **argv)
+void	free_argv(char **argv)
 {
 	int	i;
-	
+
 	if (!argv || !*argv)
 		return ;
 	i = 0;
@@ -14,7 +26,8 @@ void    Free_argv(char **argv)
 	}
 	free(argv);
 }
-void    Free_stack(t_stack **head)
+
+void	free_stack(t_stack **head)
 {
 	t_stack	*tmp;
 	t_stack	*current;
@@ -30,11 +43,12 @@ void    Free_stack(t_stack **head)
 	}
 	*head = NULL;
 }
-void	Free_on_error(t_stack **a, char **argv, bool is_arc2)
+
+void	free_on_error(t_stack **a, char **argv, bool is_arc2)
 {
-	Free_stack(a);
+	free_stack(a);
 	if (is_arc2)
-		Free_argv(argv);
+		free_argv(argv);
 	write(2, "Error\n", 6);
 	exit(1);
 }
