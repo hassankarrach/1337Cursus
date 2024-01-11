@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 09:41:10 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/07 12:11:50 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/11 12:14:08 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,61 +14,61 @@
 
 void	set_node_target(t_stack *a, t_stack *b)
 {
-	t_stack	*Current_Node;
-	long	Current_index;
+	t_stack	*current_node;
+	long	current_index;
 
 	while (b)
 	{
-		Current_index = LONG_MAX;
-		Current_Node = a;
-		while (Current_Node)
+		current_index = LONG_MAX;
+		current_node = a;
+		while (current_node)
 		{
-			if (Current_Node->value > b->value
-				&& Current_Node->value < Current_index)
+			if (current_node->value > b->value
+				&& current_node->value < current_index)
 			{
-				Current_index = Current_Node->value;
-				b->targ = Current_Node;
+				current_index = current_node->value;
+				b->targ = current_node;
 			}
-			Current_Node = Current_Node->next;
+			current_node = current_node->next;
 		}
-		if (Current_index == LONG_MAX)
+		if (current_index == LONG_MAX)
 			b->targ = smallest_node(a);
 		b = b->next;
 	}
 }
+
 void	set_node_position(t_stack *stack)
 {
-    int Stack_len;
-    int Stack_Middle_line;
-    int i;
+	int	stacklen;
+	int	stack_middle_line;
+	int	i;
 
-    if(!stack)
-        return;
-        
-    Stack_len = stack_len(stack);
-    Stack_Middle_line = Stack_len / 2;
-    i = 0;
-    
-    while(stack)
-    {
-        stack->index = i;
-        if(stack->index <= Stack_Middle_line)
-            stack->is_in_top = 1;
-        else
-            stack->is_in_top = 0;
-        stack = stack->next;
-        i++;
-    }
+	if (!stack)
+		return ;
+	stacklen = stack_len(stack);
+	stack_middle_line = stacklen / 2;
+	i = 0;
+	while (stack)
+	{
+		stack->index = i;
+		if (stack->index <= stack_middle_line)
+			stack->is_in_top = 1;
+		else
+			stack->is_in_top = 0;
+		stack = stack->next;
+		i++;
+	}
 }
+
 void	set_node_cost(t_stack *a, t_stack *b)
 {
-    int b_len;
-    int a_len;
+	int	b_len;
+	int	a_len;
 
-    if(!a || !b)
-        return ;
-    b_len = stack_len(b);
-    a_len = stack_len(a);
+	if (!a || !b)
+		return ;
+	b_len = stack_len(b);
+	a_len = stack_len(a);
 	while (b)
 	{
 		if (b->is_in_top)
@@ -82,10 +82,11 @@ void	set_node_cost(t_stack *a, t_stack *b)
 		b = b->next;
 	}
 }
+
 void	initialize(t_stack *a, t_stack *b)
 {
-    set_node_position(a);
-    set_node_position(b);
-    set_node_target(a ,b);
-    set_node_cost(a ,b);
+	set_node_position(a);
+	set_node_position(b);
+	set_node_target(a, b);
+	set_node_cost(a, b);
 }
