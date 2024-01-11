@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 09:34:56 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/08 15:44:26 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/10 10:16:18 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,10 @@ void append_node(t_stack **head, t_stack *node)
         *head = node;
         return ;
     }
-    
-    last_node = find_last_node(*head);
-    last_node->next = node;
-    node->prev = last_node;
+    else
+    {
+        last_node = find_last_node(*head);
+        last_node->next = node;
+        node->prev = last_node;    
+    }
 }

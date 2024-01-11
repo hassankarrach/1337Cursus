@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   rra.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/10 09:01:11 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/10 09:01:12 by hkarrach         ###   ########.fr       */
+/*   Created: 2024/01/06 09:23:31 by hkarrach          #+#    #+#             */
+/*   Updated: 2024/01/08 16:36:05 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../checker.h"
 
-size_t	ft_strlen(const char *str)
+void stack_rra(t_stack **a, int is_checker)
 {
-	size_t	length;
-
-	length = 0;
-	while (str[length])
-		length++;
-	return (length);
+    stack_reverse_rotate(a);
+    if(!is_checker)
+        write(1, "rra\n", 4);
 }
