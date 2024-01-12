@@ -6,11 +6,11 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:47:09 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/11 14:01:09 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/12 14:21:56 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "checker.h"
+#include "../push_swap.h"
 
 static int	ft_strcmp(char *str_1, char *str_2)
 {
@@ -38,13 +38,6 @@ int	ft_isdigit(char *str)
 	return (1);
 }
 
-static void	handle_error(t_stack **a, t_stack **b)
-{
-	free_stack(a);
-	free_stack(b);
-	write(2, "Error\n", 6);
-	exit(1);
-}
 
 void	commands_cmp(t_stack **a, t_stack **b, char *cmd)
 {
@@ -71,7 +64,7 @@ void	commands_cmp(t_stack **a, t_stack **b, char *cmd)
 	else if (!ft_strcmp(cmd, "rrr\n"))
 		stack_rrr(a, b, 1);
 	else
-		handle_error(a, b);
+		handle_error_parsing(a, b);
 }
 
 int	ft_check_duplicated(t_stack *a, int nbr)

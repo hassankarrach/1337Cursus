@@ -51,7 +51,9 @@ fi
 if [ -z "$1" ] || [ $1 != -b ]; then
 printf ${BLUE}"\n-------------------------------------------------------------\n"${DEF_COLOR};
 printf ${BLUE}"\n\t\t\tCONTROL ERRORS\t\n"${DEF_COLOR};
+
 printf ${BLUE}"\n-------------------------------------------------------------\n\n"${DEF_COLOR};
+
 
 ARG="a"
 ./push_swap $ARG > /dev/null 2> test_check.txt

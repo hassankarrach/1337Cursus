@@ -6,20 +6,24 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 14:11:45 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/11 14:11:48 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/12 14:18:39 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# include "./Libft/Mini_Libft/libft.h"
 # include <limits.h>
 # include <stdbool.h>
 # include <stddef.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <fcntl.h>
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 10
+# endif
 
 typedef struct s_stack
 {
@@ -73,15 +77,34 @@ void				set_node_target(t_stack *a, t_stack *b);
 void				set_node_position(t_stack *stack);
 void				set_node_cost(t_stack *a, t_stack *b);
 void				initialize(t_stack *a, t_stack *b);
-void				stack_init(char **argv, t_stack **a, int argc);
+// void				stack_init(char **argv, t_stack **a, int argc);
 //------------------------------------------------
 
 //------------Error_Handling----------------------
-void				free_on_error(t_stack **a, char **argv, bool is_arc2);
 void				free_stack(t_stack **head);
 void				free_argv(char **argv);
+void				handle_error(t_stack **a);
+void				handle_error_with_free(char **tmp, t_stack **a);
 int					ft_check_duplicated(t_stack *a, int nbr);
 int					ft_isdigit(char *str);
 //------------------------------------------------
+
+//------------Libft_Files--------------------------
+long				ft_atol(const char *str);
+char				**ft_split(char const *s, char c);
+size_t				ft_strlcpy(char *dest, const char *src, size_t size);
+size_t				ft_strlen(const char *str);
+char				*ft_strrchr(const char *str, int c);
+char				*ft_strtrim(char const *s1, char const *set);
+//-------------------------------------------------
+//------------GNL_SRCS-----------------------------
+char				*ft_strjoin(char *s1, char *s2);
+int					ft_strchr(char *s, char c);
+char				*get_next_line(int fd);
+//-------------------------------------------------
+//------------BONUS_FILES--------------------------
+void				commands_cmp(t_stack **a, t_stack **b, char *cmd);
+void				handle_error_parsing(t_stack **a , t_stack **b);
+//-------------------------------------------------
 
 #endif
