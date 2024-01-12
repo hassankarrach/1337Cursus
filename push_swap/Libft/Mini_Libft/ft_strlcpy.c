@@ -6,11 +6,11 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 09:01:03 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/11 14:06:12 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/12 14:09:43 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../push_swap.h"
 
 size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {

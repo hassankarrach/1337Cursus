@@ -1,20 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ra.c                                               :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/06 09:22:23 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/11 12:05:11 by hkarrach         ###   ########.fr       */
+/*   Created: 2023/11/20 17:45:19 by hkarrach          #+#    #+#             */
+/*   Updated: 2024/01/12 14:09:51 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "../../push_swap.h"
 
-void	stack_ra(t_stack **a, int is_checker)
+char	*ft_strrchr(const char *str, int c)
 {
-	stack_rotate(a);
-	if (!is_checker)
-		write(1, "ra\n", 3);
+	int		i;
+	char	*last;
+
+	i = 0;
+	last = NULL;
+	while (str[i] != '\0')
+	{
+		if (str[i] == (char)c)
+			last = ((char *)&str[i]);
+		i++;
+	}
+	if (str[i] == (char)c)
+		last = ((char *)&str[i]);
+	return (last);
 }

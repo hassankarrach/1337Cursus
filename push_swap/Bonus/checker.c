@@ -6,51 +6,107 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 13:38:15 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/11 14:01:18 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/12 14:22:30 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "checker.h"
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "../push_swap.h"
 
-static void	stack_init(char **argv, t_stack **a, int argc)
+static int is_empty_or_whitespace(char *str)
+{
+	char	*trimmed;
+	int		result;
+	
+	trimmed = ft_strtrim(str, " ");
+	result = (ft_strlen(trimmed) == 0);
+	free(trimmed);
+	return result;
+}
+
+static int	ft_count_words(const char *s, char c)
+{
+	unsigned int	i;
+	int				counter;
+
+	i = 0;
+	counter = 0;
+	while (s[i])
+	{
+		while (s[i] == c)
+			i++;
+		if (s[i])
+			counter++;
+		while (s[i] && (s[i] != c))
+			i++;
+	}
+	return (counter);
+}
+
+static int check_args_and_push(char *arg, t_stack **a)
+{
+	long	value;
+	if(!arg)
+		return (0);
+	if (!ft_isdigit(arg))
+		return (0);
+	value = ft_atol(arg);
+	if (value > INT_MAX || value < INT_MIN)
+		return (0);
+	if (ft_check_duplicated(*a, value))
+		return (0);
+
+	append_node(a, new_node(value));
+	return (1);
+}
+
+void	stack_init(char **argv, t_stack **a)
 {
 	int		i;
-	long	value;
+	int		j;
+	char 	**tmp;
 
 	i = 0;
 	while (argv[i])
 	{
-		if (!ft_isdigit(argv[i]))
-			free_on_error(a, argv, 2 == argc);
-		value = ft_atol(argv[i]);
-		if (value > INT_MAX || value < INT_MIN)
-			free_on_error(a, argv, 2 == argc);
-		if (ft_check_duplicated((*a), (int)value))
-			free_on_error(a, argv, 2 == argc);
-		append_node(a, new_node(value));
-		i++;
+		if(ft_count_words(argv[i], ' ') == 1)
+		{
+			if(check_args_and_push(argv[i], a) == 0)
+				handle_error(a);
+		}
+		else
+		{
+			tmp = ft_split(argv[i], ' ');
+			j = 0;
+			while(tmp[j])
+			{
+				if(!check_args_and_push(tmp[j++], a))
+					handle_error_with_free(tmp, a);
+			}
+			free_argv(tmp);
+		}
+		i++; 
 	}
-	if (argc)
-		free_argv(argv);
 }
 
 int	main(int argc, char **argv)
 {
-	t_stack	*a;
-	t_stack	*b;
 	char	*next_line;
 	int		len;
+	t_stack	*a;
+	t_stack	*b;
 
 	a = NULL;
 	b = NULL;
-	if (argc == 1 || (argc == 2 && !argv[1][0]))
+	if (argc == 1)
 		return (1);
-	else if (argc == 2)
-		argv = ft_split(argv[1], ' ');
-	stack_init(++argv, &a, argc == 2);
+	else if(argc == 2)
+	{
+		if (is_empty_or_whitespace(argv[1])) {
+      		write(2, "Error\n", 6);
+        	exit(1);
+    	}
+	}
+	stack_init(++argv, &a);
 	len = stack_len(a);
 	next_line = get_next_line(STDIN_FILENO);
 	while (next_line)

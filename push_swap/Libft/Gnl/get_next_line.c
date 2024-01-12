@@ -6,11 +6,11 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 14:09:10 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/09 13:01:12 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/12 14:13:35 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../../push_swap.h"
 
 static char	*get_the_line(char *str)
 {

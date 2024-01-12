@@ -6,11 +6,11 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 09:00:59 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/10 11:00:05 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/12 14:09:21 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../push_swap.h"
 
 long	ft_atol(const char *str)
 {

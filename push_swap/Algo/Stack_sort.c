@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 09:39:05 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/11 13:38:07 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/12 16:46:34 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,9 @@ void	finalize_ratation(t_stack **head, t_stack *node, char stack_name)
 		if (stack_name == 'a')
 		{
 			if (node->is_in_top)
-			{
 				stack_ra(head, 0);
-			}
 			else
-			{
 				stack_rra(head, 0);
-			}
 		}
 		else if (stack_name == 'b')
 		{

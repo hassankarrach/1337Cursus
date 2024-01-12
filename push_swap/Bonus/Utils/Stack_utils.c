@@ -6,11 +6,11 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 14:02:34 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/11 14:02:57 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/12 14:25:43 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../checker.h"
+#include "../../push_swap.h"
 
 t_stack	*new_node(int value)
 {

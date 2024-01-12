@@ -6,11 +6,11 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 14:08:51 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/09 13:43:22 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/12 14:13:30 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../../push_swap.h"
 
 int	ft_strchr(char *s, char c)
 {
