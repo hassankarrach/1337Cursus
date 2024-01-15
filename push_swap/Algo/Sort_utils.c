@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 12:08:02 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/11 12:12:00 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/15 12:52:23 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,6 @@ void	tiny_sort(t_stack **a)
 		stack_sa(a, 0);
 }
 
-void	sort_five(t_stack **a, t_stack **b)
-{
-	while (stack_len(*a) > 3)
-	{
-		initialize(*a, *b);
-		finalize_ratation(a, smallest_node(*a), 'a');
-		stack_pb(b, a, 0);
-	}
-}
-
 int	is_sorted(t_stack *a)
 {
 	if (!a)
@@ -48,23 +38,23 @@ int	is_sorted(t_stack *a)
 	return (1);
 }
 
-t_stack	*get_cheapest(t_stack *b)
+t_stack	*get_cheapest(t_stack *a)
 {
 	t_stack	*cheapest;
 	int		max;
 
 	cheapest = NULL;
 	max = INT_MAX;
-	if (!b)
+	if (!a)
 		return (NULL);
-	while (b)
+	while (a)
 	{
-		if (b->cost_to_push < max)
+		if (a->cost_to_push < max)
 		{
-			cheapest = b;
-			max = b->cost_to_push;
+			cheapest = a;
+			max = a->cost_to_push;
 		}
-		b = b->next;
+		a = a->next;
 	}
 	return (cheapest);
 }

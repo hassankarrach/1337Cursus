@@ -6,34 +6,50 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 09:41:10 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/11 12:14:08 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/15 13:54:03 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
+static t_stack *biggest_node(t_stack *stack) 
+{
+	t_stack *biggest;
+	
+	biggest = stack;
+	while(stack)
+	{
+		if(stack->value > biggest->value)
+			biggest = stack;
+		stack = stack->next;
+	}
+
+	return (biggest);
+}
+
 void	set_node_target(t_stack *a, t_stack *b)
 {
-	t_stack	*current_node;
-	long	current_index;
+	long	current_best;
+	t_stack *temp_b;
 
-	while (b)
+	while (a)
 	{
-		current_index = LONG_MAX;
-		current_node = a;
-		while (current_node)
+		current_best = LONG_MIN;
+		temp_b = b;
+		
+		while(temp_b)
 		{
-			if (current_node->value > b->value
-				&& current_node->value < current_index)
+			if(a->value > temp_b->value && temp_b->value > current_best)
 			{
-				current_index = current_node->value;
-				b->targ = current_node;
+				a->targ  = temp_b;
+				current_best = temp_b->value;
 			}
-			current_node = current_node->next;
+			temp_b = temp_b->next;
 		}
-		if (current_index == LONG_MAX)
-			b->targ = smallest_node(a);
-		b = b->next;
+		if (current_best == LONG_MIN)
+			a->targ = biggest_node(b);
+			
+		a = a->next;
 	}
 }
 
@@ -69,17 +85,25 @@ void	set_node_cost(t_stack *a, t_stack *b)
 		return ;
 	b_len = stack_len(b);
 	a_len = stack_len(a);
-	while (b)
+	while (a)
 	{
-		if (b->is_in_top)
-			b->cost_to_push = b->index;
+		if (a->is_in_top)
+		{
+			a->cost_to_push = a->index;
+			if (a->targ->is_in_top)
+				a->cost_to_push = the_bigger(a->index, a->targ->index);
+			else
+				a->cost_to_push += b_len - (a->targ->index);
+		}
 		else
-			b->cost_to_push = b_len - (b->index);
-		if (b->targ->is_in_top)
-			b->cost_to_push += b->targ->index;
-		else
-			b->cost_to_push += a_len - (b->targ->index);
-		b = b->next;
+		{
+			a->cost_to_push = (a_len - (a->index));
+			if (!a->targ->is_in_top)
+				a->cost_to_push = the_bigger((a_len - a->index), (b_len - a->targ->index));
+			else
+				a->cost_to_push += a->targ->index;
+		}  
+		a = a->next;
 	}
 }
 

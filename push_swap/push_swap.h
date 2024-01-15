@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 14:11:45 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/12 14:18:39 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/15 13:54:35 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,10 @@ t_stack				*new_node(int value);
 t_stack				*find_last_node(t_stack *head);
 t_stack				*higgest_node(t_stack *head);
 t_stack				*smallest_node(t_stack *head);
+void				set_bigger_in_top(t_stack **b);
 void				append_node(t_stack **head, t_stack *node);
 int					stack_len(t_stack *head);
+int					the_bigger(int index1, int index2);
 //-------------------------------------------------
 
 //------------Stack_actions------------------------
