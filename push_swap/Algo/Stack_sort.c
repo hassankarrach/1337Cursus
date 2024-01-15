@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 09:39:05 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/12 16:46:34 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/15 14:06:35 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	rotate_both(t_stack **a, t_stack **b, t_stack *cheapest_node)
 {
-	while (*a != cheapest_node->targ && *b != cheapest_node)
+	while (*a != cheapest_node && *b != cheapest_node->targ)
 		stack_rr(a, b, 0);
 	set_node_position(*a);
 	set_node_position(*b);
@@ -23,7 +23,7 @@ static void	rotate_both(t_stack **a, t_stack **b, t_stack *cheapest_node)
 static void	reverse_rotate_both(t_stack **a, t_stack **b,
 		t_stack *cheapest_node)
 {
-	while (*a != cheapest_node->targ && *b != cheapest_node)
+	while (*a != cheapest_node && *b != cheapest_node->targ)
 		stack_rrr(a, b, 0);
 	set_node_position(*a);
 	set_node_position(*b);
@@ -54,33 +54,41 @@ static void	push(t_stack **a, t_stack **b)
 {
 	t_stack	*node_to_push;
 
-	node_to_push = get_cheapest(*b);
+	node_to_push = get_cheapest(*a);
+
 	if (node_to_push->is_in_top && node_to_push->targ->is_in_top)
 		rotate_both(a, b, node_to_push);
 	else if (!node_to_push->is_in_top && !node_to_push->targ->is_in_top)
 		reverse_rotate_both(a, b, node_to_push);
-	finalize_ratation(b, node_to_push, 'b');
-	finalize_ratation(a, node_to_push->targ, 'a');
-	stack_pa(a, b, 0);
+		
+	finalize_ratation(a, node_to_push, 'a');
+	finalize_ratation(b, node_to_push->targ, 'b');
+	stack_pb(b, a, 0);
 }
 
 void	stack_sort(t_stack **a, t_stack **b)
 {
-	int	len_a;
-
-	len_a = stack_len(*a);
-	if (len_a == 5)
-		sort_five(a, b);
-	else
+	if(stack_len(*a) == 5)
 	{
-		while (stack_len(*a) > 3)
-			stack_pb(b, a, 0);
+		sort_five(a, b);
+		return ;
 	}
-	tiny_sort(a);
-	while (*b)
+	//Push two Nodes to b.
+	stack_pb(b, a, 0);
+	stack_pb(b, a, 0);
+	
+	//Push the rest depending on their target.
+	while(*a)
 	{
 		initialize(*a, *b);
 		push(a, b);
 	}
-	finish_sort(a);
+	//Make the bigger node at top in Stack b.
+	set_bigger_in_top(b);
+
+	//One last initialize.
+	initialize(*a, *b);
+	//Push Back to Stack A.
+	while(*b)
+		stack_pa(a, b, 0);
 }

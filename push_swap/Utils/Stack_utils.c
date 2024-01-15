@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 09:34:56 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/11 14:13:38 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/15 13:54:13 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,23 @@ void	append_node(t_stack **head, t_stack *node)
 		last_node->next = node;
 		node->prev = last_node;
 	}
+}
+
+void	set_bigger_in_top(t_stack **b)
+{
+	t_stack	*biggest;
+
+	set_node_position(*b);
+	biggest = higgest_node(*b);
+	if (biggest->is_in_top)
+		while (*b != biggest)
+			stack_rb(b, 0);
+	else
+		while (*b != biggest)
+			stack_rrb(b, 0);
+}
+
+int the_bigger(int index1, int index2)
+{
+	return (index1 > index2 ? index1 : index2);
 }
