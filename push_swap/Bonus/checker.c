@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 13:38:15 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/16 09:31:28 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/16 09:53:09 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	main(int argc, char **argv)
 		return (1);
 	else if (argc == 2)
 		if (is_empty_or_whitespace(argv[1]))
-			only_error_print();
+			bonus_only_error_print();
 	stack_init(++argv, &a);
 	len = stack_len(a);
 	next_line = get_next_line(STDIN_FILENO);
