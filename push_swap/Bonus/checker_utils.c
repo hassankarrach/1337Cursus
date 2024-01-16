@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:47:09 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/16 09:31:54 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/16 09:58:35 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,10 @@ int	ft_check_duplicated(t_stack *a, int nbr)
 		a = a->next;
 	}
 	return (0);
+}
+
+void	bonus_only_error_print(void)
+{
+	write(2, "Error\n", 6);
+	exit(1);
 }

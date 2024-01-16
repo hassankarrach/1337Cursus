@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 14:11:45 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/16 09:24:10 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/16 09:53:59 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ char				*get_next_line(int fd);
 //------------BONUS_FILES--------------------------
 void				commands_cmp(t_stack **a, t_stack **b, char *cmd);
 void				handle_error_parsing(t_stack **a, t_stack **b);
+void				bonus_only_error_print(void);
 //-------------------------------------------------
 
 #endif

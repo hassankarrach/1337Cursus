@@ -1,8 +1,13 @@
 NAME = push_swap
-ARCHIVE = push_swap.a
+BONUS_NAME = checker
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
-MAKE_LIB = ar -rcs
+
+# Color codes
+BLUE = \033[34m
+GREEN = \033[32m
+ROSE = \033[35m
+RESET = \033[0m
 
 SRCS = 	${addprefix ./Actions/, actions.c pa.c pb.c ra.c rb.c rr.c rra.c rrb.c rrr.c sa.c sb.c ss.c} \
 		${addprefix ./Algo/, Sort_utils.c Sort_utils2.c Stack_sort.c Sort_Five.c} \
@@ -18,26 +23,32 @@ LIBFT_SRCS = ${addprefix ./Libft/Mini_Libft/, ft_atol.c ft_split.c ft_strlcpy.c 
 OBJS = $(SRCS:.c=.o)
 O_SRCB = $(SRCB:.c=.o)
 
-all : $(NAME)
+all: $(NAME)
 
-$(NAME) : $(ARCHIVE)
-	$(CC) $< -o $@
+$(NAME): $(OBJS)
+	@echo "$(BLUE)Linking objects into executable:$(RESET) $(GREEN)$@$(RESET)"
+	$(CC) $(CFLAGS) $^ -o $@
+	@echo "$(GREEN)Compilation completed successfully!$(RESET)"
 
-$(ARCHIVE) : $(OBJS)
-	$(MAKE_LIB) $(ARCHIVE) $^
+%.o: %.c
+	@echo "$(BLUE)Compiling:$(RESET) $(GREEN)$<$(RESET)"
+	$(CC) $(CFLAGS) -c $< -o $@
 
-%.o : %.c 
-	$(CC) $(CFLAGS) -c $< -o $@ 
+bonus: $(BONUS_NAME)
 
-bonus : $(O_SRCB)
-	${CC} $(CFLAGS) ${O_SRCB} -o checker
-	
-clean :
-	rm -f $(OBJS) $(O_SRCB) $(ARCHIVE)
+$(BONUS_NAME): $(O_SRCB)
+	@echo "$(BLUE)Linking objects into bonus executable:$(RESET) $(GREEN)$@$(RESET)"
+	$(CC) $(CFLAGS) $^ -o $@
+	@echo "$(GREEN)Bonus compilation completed successfully!$(RESET)"
 
-fclean : clean
+clean:
+	@echo "$(ROSE)Cleaning object files...$(RESET)"
+	rm -f $(OBJS) $(O_SRCB)
+
+fclean: clean
+	@echo "$(ROSE)Cleaning executables...$(RESET)"
 	rm -f $(NAME) checker
 
-re : fclean all
+re: fclean all
 
-.PHONY : all clean fclea re
+.PHONY: all clean fclean re bonus
