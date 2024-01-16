@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 09:41:10 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/16 09:21:15 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/16 11:39:22 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ static t_stack	*biggest_node(t_stack *stack)
 
 void	set_node_target(t_stack *a, t_stack *b)
 {
-	long	current_best;
+	int	current_best;
 	t_stack	*temp_b;
 
 	while (a)
 	{
-		current_best = LONG_MIN;
+		current_best = INT_MIN;
 		temp_b = b;
 		while (temp_b)
 		{
@@ -44,7 +44,7 @@ void	set_node_target(t_stack *a, t_stack *b)
 			}
 			temp_b = temp_b->next;
 		}
-		if (current_best == LONG_MIN)
+		if (current_best == INT_MIN)
 			a->targ = biggest_node(b);
 		a = a->next;
 	}
