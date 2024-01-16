@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 14:11:45 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/15 13:54:35 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/16 09:24:10 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ void				finalize_ratation(t_stack **head, t_stack *node,
 void				set_node_target(t_stack *a, t_stack *b);
 void				set_node_position(t_stack *stack);
 void				set_node_cost(t_stack *a, t_stack *b);
+void				set_node_cost_helper(t_stack *a, int a_len, int b_len);
 void				initialize(t_stack *a, t_stack *b);
-// void				stack_init(char **argv, t_stack **a, int argc);
 //------------------------------------------------
 
 //------------Error_Handling----------------------
@@ -89,6 +89,7 @@ void				handle_error(t_stack **a);
 void				handle_error_with_free(char **tmp, t_stack **a);
 int					ft_check_duplicated(t_stack *a, int nbr);
 int					ft_isdigit(char *str);
+void				only_error_print(void);
 //------------------------------------------------
 
 //------------Libft_Files--------------------------
@@ -106,7 +107,7 @@ char				*get_next_line(int fd);
 //-------------------------------------------------
 //------------BONUS_FILES--------------------------
 void				commands_cmp(t_stack **a, t_stack **b, char *cmd);
-void				handle_error_parsing(t_stack **a , t_stack **b);
+void				handle_error_parsing(t_stack **a, t_stack **b);
 //-------------------------------------------------
 
 #endif

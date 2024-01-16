@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 09:34:56 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/15 13:54:13 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/16 09:27:00 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,10 @@ void	set_bigger_in_top(t_stack **b)
 			stack_rrb(b, 0);
 }
 
-int the_bigger(int index1, int index2)
+int	the_bigger(int index1, int index2)
 {
-	return (index1 > index2 ? index1 : index2);
+	if (index1 > index2)
+		return (index1);
+	else
+		return (index2);
 }

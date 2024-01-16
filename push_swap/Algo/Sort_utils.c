@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 12:08:02 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/15 12:52:23 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/16 09:21:29 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,29 @@ void	finish_sort(t_stack **a)
 	else
 		while (*a != smallest)
 			stack_rra(a, 0);
+}
+
+void	set_node_cost_helper(t_stack *a, int a_len, int b_len)
+{
+	while (a)
+	{
+		if (a->is_in_top)
+		{
+			a->cost_to_push = a->index;
+			if (a->targ->is_in_top)
+				a->cost_to_push = the_bigger(a->index, a->targ->index);
+			else
+				a->cost_to_push += b_len - (a->targ->index);
+		}
+		else
+		{
+			a->cost_to_push = (a_len - (a->index));
+			if (!a->targ->is_in_top)
+				a->cost_to_push = the_bigger((a_len - a->index),
+						(b_len - a->targ->index));
+			else
+				a->cost_to_push += a->targ->index;
+		}
+		a = a->next;
+	}
 }
