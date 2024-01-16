@@ -6,13 +6,13 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 14:08:22 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/15 15:56:04 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/16 09:23:35 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	ft_isdigit(char *str) 
+int	ft_isdigit(char *str)
 {
 	int	i;
 

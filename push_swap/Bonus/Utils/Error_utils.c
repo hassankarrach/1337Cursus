@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 14:02:04 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/12 14:25:35 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/16 09:32:43 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	handle_error(t_stack **a)
 	exit(1);
 }
 
-void	handle_error_parsing(t_stack **a , t_stack **b)
+void	handle_error_parsing(t_stack **a, t_stack **b)
 {
 	free_stack(a);
 	free_stack(b);

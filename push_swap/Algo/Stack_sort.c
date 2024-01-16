@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 09:39:05 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/15 14:06:35 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/16 08:10:38 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,10 @@ static void	push(t_stack **a, t_stack **b)
 	t_stack	*node_to_push;
 
 	node_to_push = get_cheapest(*a);
-
 	if (node_to_push->is_in_top && node_to_push->targ->is_in_top)
 		rotate_both(a, b, node_to_push);
 	else if (!node_to_push->is_in_top && !node_to_push->targ->is_in_top)
 		reverse_rotate_both(a, b, node_to_push);
-		
 	finalize_ratation(a, node_to_push, 'a');
 	finalize_ratation(b, node_to_push->targ, 'b');
 	stack_pb(b, a, 0);
@@ -68,27 +66,20 @@ static void	push(t_stack **a, t_stack **b)
 
 void	stack_sort(t_stack **a, t_stack **b)
 {
-	if(stack_len(*a) == 5)
+	if (stack_len(*a) == 5)
 	{
 		sort_five(a, b);
 		return ;
 	}
-	//Push two Nodes to b.
 	stack_pb(b, a, 0);
 	stack_pb(b, a, 0);
-	
-	//Push the rest depending on their target.
-	while(*a)
+	while (*a)
 	{
 		initialize(*a, *b);
 		push(a, b);
 	}
-	//Make the bigger node at top in Stack b.
 	set_bigger_in_top(b);
-
-	//One last initialize.
 	initialize(*a, *b);
-	//Push Back to Stack A.
-	while(*b)
+	while (*b)
 		stack_pa(a, b, 0);
 }

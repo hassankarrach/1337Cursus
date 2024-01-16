@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 14:01:25 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/12 10:20:37 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/16 09:27:32 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ void	handle_error_with_free(char **tmp, t_stack **a)
 {
 	free_argv(tmp);
 	free_stack(a);
+	write(2, "Error\n", 6);
+	exit(1);
+}
+
+void	only_error_print(void)
+{
 	write(2, "Error\n", 6);
 	exit(1);
 }

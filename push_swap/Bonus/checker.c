@@ -6,21 +6,21 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 13:38:15 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/15 15:57:11 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/16 09:31:28 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-static int is_empty_or_whitespace(char *str)
+static int	is_empty_or_whitespace(char *str)
 {
 	char	*trimmed;
 	int		result;
-	
+
 	trimmed = ft_strtrim(str, " ");
 	result = (ft_strlen(trimmed) == 0);
 	free(trimmed);
-	return result;
+	return (result);
 }
 
 static int	ft_count_words(const char *s, char c)
@@ -42,10 +42,11 @@ static int	ft_count_words(const char *s, char c)
 	return (counter);
 }
 
-static int check_args_and_push(char *arg, t_stack **a)
+static int	check_args_and_push(char *arg, t_stack **a)
 {
 	long	value;
-	if(!arg)
+
+	if (!arg)
 		return (0);
 	if (!ft_isdigit(arg))
 		return (0);
@@ -54,7 +55,6 @@ static int check_args_and_push(char *arg, t_stack **a)
 		return (0);
 	if (ft_check_duplicated(*a, value))
 		return (0);
-
 	append_node(a, new_node(value));
 	return (1);
 }
@@ -63,28 +63,28 @@ void	stack_init(char **argv, t_stack **a)
 {
 	int		i;
 	int		j;
-	char 	**tmp;
+	char	**tmp;
 
 	i = 0;
 	while (argv[i])
 	{
-		if(ft_count_words(argv[i], ' ') == 1)
+		if (ft_count_words(argv[i], ' ') == 1)
 		{
-			if(check_args_and_push(argv[i], a) == 0)
+			if (check_args_and_push(argv[i], a) == 0)
 				handle_error(a);
 		}
 		else
 		{
 			tmp = ft_split(argv[i], ' ');
 			j = 0;
-			while(tmp[j])
+			while (tmp[j])
 			{
-				if(!check_args_and_push(tmp[j++], a))
+				if (!check_args_and_push(tmp[j++], a))
 					handle_error_with_free(tmp, a);
 			}
 			free_argv(tmp);
 		}
-		i++; 
+		i++;
 	}
 }
 
@@ -99,13 +99,9 @@ int	main(int argc, char **argv)
 	b = NULL;
 	if (argc == 1)
 		return (1);
-	else if(argc == 2)
-	{
-		if (is_empty_or_whitespace(argv[1])) {
-      		write(2, "Error\n", 6);
-        	exit(1);
-    	}
-	}
+	else if (argc == 2)
+		if (is_empty_or_whitespace(argv[1]))
+			only_error_print();
 	stack_init(++argv, &a);
 	len = stack_len(a);
 	next_line = get_next_line(STDIN_FILENO);

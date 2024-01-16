@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:47:09 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/12 14:21:56 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/16 09:31:54 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	ft_isdigit(char *str)
 	}
 	return (1);
 }
-
 
 void	commands_cmp(t_stack **a, t_stack **b, char *cmd)
 {
