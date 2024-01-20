@@ -4,7 +4,7 @@ CC = gcc
 CFLAGS = -Wall -Werror -Wextra
 
 # Color codes
-BLUE = \033[34m
+BLUE = c
 GREEN = \033[32m
 ROSE = \033[35m
 RESET = \033[0m
@@ -48,7 +48,5 @@ clean:
 fclean: clean
 	@echo "$(ROSE)Cleaning executables...$(RESET)"
 	rm -f $(NAME) checker
-
-re: fclean all
 
 .PHONY: all clean fclean re bonus

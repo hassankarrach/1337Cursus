@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 14:01:25 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/16 09:46:25 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/16 17:20:47 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	free_argv(char **argv)
 	free(argv);
 }
 
-// Free the stack Nodes.
+// Free  stack Nodes.
 void	free_stack(t_stack **head)
 {
 	t_stack	*tmp;
