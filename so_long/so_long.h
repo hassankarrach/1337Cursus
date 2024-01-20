@@ -72,5 +72,9 @@ int		on_destroy(t_mlx *mlx);
 
 //Events
 void    handle_player_move(t_mlx *mlx, char move_direction);
+int		is_next_move_valid(t_mlx *mlx, int next_x, int next_y);
+int 	is_next_move_earn_clb(t_mlx *mlx, int next_x, int next_y);
+int		is_next_move_exit(t_mlx *mlx, int next_x, int next_y);
+void 	handle_game_exit_won();
 
 #endif
