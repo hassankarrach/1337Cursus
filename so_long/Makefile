@@ -9,7 +9,7 @@ SRCS = ./main.c ./srcs/checkers/is_map_valid.c ./srcs/checkers/is_map_valid_help
 	./srcs/init/initialize_mlx.c ./srcs/init/initialize_map.c ./srcs/init/initialize_textures.c \
 	./srcs/init/initialize_hooks.c ./srcs/init/initialize_structs.c \
 	./srcs/hooks/on_keypress.c ./srcs/hooks/on_destroy.c ./srcs/events/handle_player_move.c \
-	./srcs/events/player_moves_events.c ./srcs/events/handle_game_exit_won.c
+	./srcs/events/player_moves_events.c ./srcs/events/handle_game_exit_won.c ./srcs/events/handle_game_lose.c ./srcs/events/handle_monster_move.c
 	
 OBJS = $(SRCS:.c=.o)
 
