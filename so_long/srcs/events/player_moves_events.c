@@ -27,6 +27,7 @@ int is_next_move_earn_clb(t_mlx *mlx, int next_x, int next_y)
         return (0);
 }
 
+
 int is_next_move_exit(t_mlx *mlx, int next_x, int next_y)
 {
     char next_move_content;
@@ -36,4 +37,27 @@ int is_next_move_exit(t_mlx *mlx, int next_x, int next_y)
         return (1);
     else
         return (0);
+}
+
+int  is_next_move_enemy(t_mlx *mlx, int next_x, int next_y)
+{
+    char    next_move_content;
+
+    next_move_content = pos_to_content(mlx, next_x, next_y);
+    if(next_move_content == 'M')
+        return (1);
+    else
+        return (0);
+}
+
+void    handle_next_move_exit(t_mlx *mlx)
+{
+    if (mlx->map.player1.colectibles_earned != mlx->map.collectibles)
+    {
+        printf("complete clcs to exit!\n");
+    }
+    else
+    {
+        handle_game_exit_won(mlx);
+    }
 }
