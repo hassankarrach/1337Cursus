@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:04:44 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/27 05:04:48 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/27 15:49:43 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,14 @@ typedef struct img
 	char		*path;
 	void		*img_data;
 }				t_img;
+
+typedef struct frames
+{
+	int			exit_frame;
+	int			coin_frame;
+	int			cat_frame;
+	int			monster_frame;
+}				t_frames;
 
 typedef struct player
 {
@@ -65,8 +73,8 @@ typedef struct data
 	t_img		*coin[6];
 	t_img		*exit[4];
 	t_img		*monster[4];
+	t_frames	frames;
 	int			cat_direction;
-	int			exit_frame;
 }				t_mlx;
 
 # ifndef BUFFER_SIZE
@@ -92,8 +100,7 @@ void			free_lines(t_mlx *mlx);
 //--------------------------------Inits
 void			initialize_structs(t_mlx *mlx);
 int				initialize_mlx(t_mlx *mlx);
-void			initialize_map(t_mlx *mlx, int CoinFrame, int cat_frame,
-					int exit_frame, int monster_frame);
+void			initialize_map(t_mlx *mlx);
 void			initialize_textures(t_mlx *mlx);
 int				texture_attach(t_mlx *mlx, t_img *texture, int pos_x,
 					int pos_y);
@@ -108,13 +115,13 @@ int				on_destroy(t_mlx *mlx);
 //----------------------------------------------------Events
 void			handle_player_move(t_mlx *mlx, char move_direction);
 int				is_next_move_valid(t_mlx *mlx, int next_x, int next_y);
-int				is_next_move_earn_clb(t_mlx *mlx, int next_x, int next_y);
-int				is_next_move_exit(t_mlx *mlx, int next_x, int next_y);
-int				is_next_move_enemy(t_mlx *mlx, int next_x, int next_y);
+char			pos_to_content(t_mlx *mlx, int pos_x, int pos_y);
+void			update_positions(t_mlx *mlx, int next_pos_x, int next_pos_y);
 void			handle_next_move_exit(t_mlx *mlx);
 void			handle_game_exit_won(t_mlx *mlx);
 void			handle_game_lose(t_mlx *mlx);
 void			handle_monster_move(t_mlx *mlx);
+int				is_monster_move_valid(t_mlx *mlx, int next_monster_x, int next_monster_y);
 //--------------------------------------
 
 // Libft------------------------
