@@ -1,18 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/26 06:51:21 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/18 10:54:51 by hkarrach         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "../../../so_long.h"
 
-#include "get_next_line.h"
-
-char	*get_the_line(char *str)
+static char	*get_the_line(char *str)
 {
 	int		i;
 	int		len;
@@ -41,7 +29,7 @@ char	*get_the_line(char *str)
 	return (line);
 }
 
-char	*get_the_rest(char *str)
+static char	*get_the_rest(char *str)
 {
 	int		i;
 	int		j;
@@ -69,7 +57,7 @@ char	*get_the_rest(char *str)
 	return (res);
 }
 
-char	*read_line(int fd, char *str)
+static 	char	*read_line(int fd, char *str)
 {
 	char	*buffer;
 	int		read_byte;
@@ -113,23 +101,3 @@ char	*get_next_line(int fd)
 	}
 	return (line);
 }
-
-// int main()
-// {
-//     int fd = open("text.txt", O_RDONLY);
-//     char *line;
-
-//     if (fd == -1)
-//     {
-//         perror("Error opening file");
-//         return (1);
-//     }
-//     while ((line = get_next_line(fd)) != NULL)
-//     {
-//         printf("Line: %s", line);
-//         free(line);
-//     }
-
-//     close(fd);
-//     return (0);
-// }

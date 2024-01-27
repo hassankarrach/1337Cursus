@@ -37,13 +37,25 @@ static void map_parsing(t_mlx *mlx, char c, int pos_x, int pos_y, int CoinFrame,
         texture_attach(mlx, mlx->monster[monster_frame], pos_x, pos_y);
 }
 
+static void put_cat_moves(t_mlx *mlx)
+{
+    int     textX;
+    int     textY;
+    char    *cat_moves;
+
+    textX = mlx->cat_moves->width + 25;
+    textY = mlx->map.height + 33;
+    cat_moves = ft_itoa(mlx->map.player1.moves);
+    mlx_string_put(mlx->ptr, mlx->win, textX, textY, 0xFFFFFF, cat_moves);
+    free(cat_moves);
+}
+
 void initialize_map(t_mlx *mlx, int CoinFrame, int cat_frame, int exit_frame, int monster_frame)
 {
     int     pos_x;
     int     pos_y;
     char    **lines;
-    char    *movements_count;
-
+    
     mlx_clear_window(mlx->ptr, mlx->win);
     pos_y = 0;
     lines = mlx->map.map_lines;
@@ -58,14 +70,10 @@ void initialize_map(t_mlx *mlx, int CoinFrame, int cat_frame, int exit_frame, in
         }
         pos_y++;
     }
-
     if(mlx->map.player1.is_lost)
         mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->you_lose->img_data, mlx->map.width/2 - 120, mlx->map.height/2);
     if(mlx->map.player1.is_won)
         mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->you_win->img_data, mlx->map.width/2 - 120, mlx->map.height/2);
-    
     mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->cat_moves->img_data, 15, mlx->map.height + 15);
-    int textX = 15 + mlx->cat_moves->width + 10; 
-    int textY = mlx->map.height + 33;
-    mlx_string_put(mlx->ptr, mlx->win, textX, textY, 0xFFFFFF, ft_itoa(mlx->map.player1.moves));
+    put_cat_moves(mlx);
 }

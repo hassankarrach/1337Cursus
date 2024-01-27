@@ -7,8 +7,8 @@ static void update_positions(t_mlx *mlx, int curr_pos_x, int curr_pos_y, int nex
     mlx->map.player1.player_pos_x = next_pos_x;
     mlx->map.player1.player_pos_y = next_pos_y;
 
-    printf("Number of Moves : %d.\n", mlx->map.player1.moves);
-    printf("%d/%d collectibles you've earned.\n", mlx->map.player1.colectibles_earned, mlx->map.collectibles);
+    ft_printf("Number of Moves : %d.\n", mlx->map.player1.moves);
+    ft_printf("%d/%d collectibles you've earned.\n", mlx->map.player1.colectibles_earned, mlx->map.collectibles);
 }
 
 static void handle_move_up(t_mlx *mlx, int curr_x, int curr_y)
@@ -23,11 +23,11 @@ static void handle_move_up(t_mlx *mlx, int curr_x, int curr_y)
         {
             if (mlx->map.player1.colectibles_earned != mlx->map.collectibles)
             {
-                printf("complete clcs to exit!\n");
+                ft_printf("complete clcs to exit!\n");
                 return ;
             }
             else
-                handle_game_exit_won();
+                handle_game_exit_won(mlx);
         }
         mlx->map.player1.moves++;
         update_positions(mlx, curr_x/60, curr_y/60, curr_x / 60, (curr_y - 60) / 60);
@@ -46,11 +46,11 @@ static void handle_move_right(t_mlx *mlx, int curr_x, int curr_y)
         {
             if (mlx->map.player1.colectibles_earned != mlx->map.collectibles)
             {
-                printf("complete clcs to exit!\n");
+                ft_printf("complete clcs to exit!\n");
                 return ;
             }
             else
-                handle_game_exit_won();
+                handle_game_exit_won(mlx);
         }
         mlx->map.player1.moves++;
         mlx->cat_direction = 1;
@@ -70,11 +70,11 @@ static void handle_move_left(t_mlx *mlx, int curr_x, int curr_y)
         {
             if (mlx->map.player1.colectibles_earned != mlx->map.collectibles)
             {
-                printf("complete clcs to exit!\n");
+                ft_printf("complete clcs to exit!\n");
                 return ;
             }
             else
-                handle_game_exit_won();
+                handle_game_exit_won(mlx);
         }
 
         mlx->map.player1.moves++;
@@ -95,11 +95,11 @@ static void handle_move_down(t_mlx *mlx, int curr_x, int curr_y)
         {
             if (mlx->map.player1.colectibles_earned != mlx->map.collectibles)
             {
-                printf("complete clcs to exit!\n");
+                ft_printf("complete clcs to exit!\n");
                 return ;
             }
             else
-                handle_game_exit_won();
+                handle_game_exit_won(mlx);
         }
         mlx->map.player1.moves++;
         update_positions(mlx, curr_x/60, curr_y/60, curr_x / 60, (curr_y + 60) / 60);

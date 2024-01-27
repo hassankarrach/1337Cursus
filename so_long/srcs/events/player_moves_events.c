@@ -54,10 +54,12 @@ void    handle_next_move_exit(t_mlx *mlx)
 {
     if (mlx->map.player1.colectibles_earned != mlx->map.collectibles)
     {
-        printf("complete clcs to exit!\n");
+        ft_printf("complete clcs to exit!\n");
     }
     else
     {
         handle_game_exit_won(mlx);
     }
 }
+
+// void    swap_places()

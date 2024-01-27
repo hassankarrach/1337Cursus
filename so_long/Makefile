@@ -1,46 +1,35 @@
 NAME = so_long
 
 MLX_FLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11
+LIB_MLX = libmlx.a
+# CFLAGS = -Wall -Wextra -Werror
 INCLUDES = -I/usr/include -Imlx
 
-SRCS = ./main.c ./srcs/checkers/is_map_valid.c ./srcs/checkers/is_map_valid_helper.c \
-	./srcs/libft/get_next_line/get_next_line.c ./srcs/libft/get_next_line/get_next_line_utils.c \
-	./srcs/Errors_handling/error_handling.c \
-	./srcs/init/initialize_mlx.c ./srcs/init/initialize_map.c ./srcs/init/initialize_textures.c \
-	./srcs/init/initialize_hooks.c ./srcs/init/initialize_structs.c \
-	./srcs/hooks/on_keypress.c ./srcs/hooks/on_destroy.c ./srcs/events/handle_player_move.c \
-	./srcs/events/player_moves_events.c ./srcs/events/handle_game_exit_won.c ./srcs/events/handle_game_lose.c ./srcs/events/handle_monster_move.c
+GNL_SRCS = $(addprefix ./srcs/libft/get_next_line/, get_next_line.c get_next_line_utils.c)
+MINI_LIBFT_SRCS = $(addprefix ./srcs/libft/mini_libft/, ft_itoa.c ft_split.c ft_strjoin.c ft_strlen.c ft_strncmp.c ft_memcpy.c ft_strdup.c ft_substr.c ft_calloc.c ft_bzero.c ft_strlcpy.c ft_strrchr.c)
+PRINTF_SRCS = $(addprefix ./srcs/libft/printf/, ft_printf.c ft_putadress.c ft_putchar.c ft_puthex_m.c ft_puthex.c ft_putnbr.c ft_putstr.c ft_putunbr.c)
+
+SRCS = main.c $(addprefix ./srcs/checkers/, is_map_valid.c is_map_valid_helper.c) \
+	$(addprefix ./srcs/Errors_handling/, error_handling.c) \
+	$(addprefix ./srcs/init/, initialize_mlx.c initialize_map.c initialize_textures.c initialize_hooks.c initialize_structs.c) \
+	$(addprefix ./srcs/hooks/, on_keypress.c on_destroy.c) \
+	$(addprefix ./srcs/events/, handle_player_move.c player_moves_events.c handle_game_exit_won.c handle_game_lose.c handle_monster_move.c) \
+	$(GNL_SRCS) $(MINI_LIBFT_SRCS) $(PRINTF_SRCS)
 	
 OBJS = $(SRCS:.c=.o)
 
-PRINTF_LIB = libftprintf.a
-PRINTF_DIR = srcs/libft/printf
-
-LIBFT_LIB = libft.a
-LIBFT_DIR = srcs/libft/libft
-
 all: $(NAME)
 
-$(NAME) : $(OBJS) $(PRINTF_LIB) $(LIBFT_LIB)
-	$(CC) $(CFLAGS) libmlx.a $^ -o $@ $(MLX_FLAGS)
-
-$(PRINTF_LIB):
-	make -C $(PRINTF_DIR)
-
-$(LIBFT_LIB):
-	make -C $(LIBFT_DIR)
+$(NAME) : $(OBJS)
+	$(CC) $(CFLAGS) $(LIB_MLX) $^ -o $@ $(MLX_FLAGS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
 
 clean:
 	rm -f $(OBJS)
-	make -C $(PRINTF_DIR) clean
-	make -C $(LIBFT_DIR) clean
 
 fclean: clean
 	rm -f $(NAME)
-	make -C $(PRINTF_DIR) fclean
-	make -C $(LIBFT_DIR) fclean
 
 re : fclean all

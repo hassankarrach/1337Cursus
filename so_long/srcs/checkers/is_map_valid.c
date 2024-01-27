@@ -1,18 +1,5 @@
 #include "../../so_long.h"
 
-static void is_line_valid(char *curr_line)
-{
-    int line_len;
-    
-    is_line_components_valid(curr_line);
-
-    line_len = custom_strlen(curr_line);
-    if(curr_line[0] != '1' || curr_line[line_len - 1] != '1')
-    {
-        printf("unvalid map pattern.\n");
-        exit(1);
-    }
-}
 static void check_map_rect(t_map *map, char **lines)
 {
     int map_width;
@@ -69,7 +56,7 @@ static void check_map_component(char **lines, t_map *map)
         y++;
     }
     if(map->collectibles < 1 || e != 1 || p != 1)
-        error_handle("Invalid Map pattern (duplicated or not found map component).");
+        error_handle("Invalid Map pattern (duplicated or not found on of the map components).");
 }
 static void check_border_walls(char **lines)
 {
@@ -85,7 +72,7 @@ static void check_border_walls(char **lines)
         lines_count++;
     }
     if(!is_border_wall(lines[0]) || !is_border_wall(lines[lines_count - 1]) || border_walls > 2)
-        error_handle("Invalid Map borders Wall pattern.");
+        error_handle("Invalid Map Wall pattern.");
 }
 
 void    is_map_valid(char * file_path, t_map *map)
@@ -97,15 +84,19 @@ void    is_map_valid(char * file_path, t_map *map)
 
     full_lines = NULL;
     if(((fd = open(file_path, O_RDONLY)) < 0))
-        error_handle("Error! can not open the map file.\n");
+        error_handle("can not open the map file.\n");
     if(!is_map_file_path_valid(file_path))
-        error_handle("Error! invalid path.\n");
+        error_handle("invalid path.\n");
     while((curr_line = get_next_line(fd)))
-        full_lines = ft_strjoin(full_lines, curr_line); //TB Free later.
-    lines_arr = ft_split(full_lines, '\n'); //TB free later.
+    {
+        full_lines = ft_strjoin(full_lines, curr_line);
+        free(curr_line);
+    }
+    lines_arr = ft_split(full_lines, '\n');
     map->map_lines = lines_arr;
     check_map_lines_length(lines_arr);
     check_map_component(lines_arr, map);
     check_border_walls(lines_arr);
     check_map_rect(map, lines_arr);
+    free(full_lines);
 }

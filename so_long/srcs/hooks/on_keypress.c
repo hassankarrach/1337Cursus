@@ -11,7 +11,7 @@ int on_keypress(int keysym, t_mlx *mlx)
 		handle_player_move(mlx, 'r');
 	else if(keysym == 115 || keysym == 65364)
 		handle_player_move(mlx, 'd');
-
-	// printf("-------Pressed key: %d\n", keysym);
+	else if(keysym == 65307)
+		on_destroy(mlx);
 	return (0);
 }
