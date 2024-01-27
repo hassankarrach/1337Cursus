@@ -6,16 +6,11 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:27:17 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/27 05:27:37 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/27 14:01:02 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../so_long.h"
-
-static void	*texture_loader(t_mlx *mlx, char *path, int *width, int *height)
-{
-	return (mlx_xpm_file_to_image(mlx->ptr, path, width, height));
-}
 
 static t_img	*create_texture(t_mlx *mlx, char *path)
 {
@@ -29,8 +24,8 @@ static t_img	*create_texture(t_mlx *mlx, char *path)
 	texture->width = 0;
 	texture->x_pos = 0;
 	texture->y_pos = 0;
-	texture->img_data = texture_loader(mlx, texture->path, &texture->width,
-			&texture->height);
+	texture->img_data = mlx_xpm_file_to_image(mlx->ptr, texture->path,
+			&texture->width, &texture->height);
 	return (texture);
 }
 

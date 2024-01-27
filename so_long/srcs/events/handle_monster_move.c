@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:17:01 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/27 05:17:02 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/27 15:51:16 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,56 +26,57 @@ static int	has_elapsed_1_seconds(time_t *last_time)
 	return (0);
 }
 
-static int	is_move_valid(t_mlx *mlx, int next_monster_x, int next_monster_y)
+static void	handle_moving_left(t_mlx *mlx, int *monster_curr_x,
+		int monster_curr_y)
 {
-	if (mlx->map.map_lines[next_monster_y][next_monster_x] == '0'
-		|| mlx->map.map_lines[next_monster_y][next_monster_x] == 'P')
-		return (1);
-	else
-		return (0);
+	if (mlx->map.map_lines[monster_curr_y][(*monster_curr_x) - 1] == 'P')
+	{
+		mlx->map.player1.is_lost = 1;
+		mlx->map.map_lines[monster_curr_y][*monster_curr_x] = '0';
+		return ;
+	}
+	mlx->map.map_lines[monster_curr_y][*monster_curr_x] = '0';
+	mlx->map.map_lines[monster_curr_y][*monster_curr_x - 1] = 'M';
 }
 
-void	update_monster_position(t_mlx *mlx, int *monster_curr_x,
+static void	handle_moving_right(t_mlx *mlx, int *monster_curr_x,
 		int monster_curr_y)
+{
+	if (mlx->map.map_lines[monster_curr_y][(*monster_curr_x) + 1] == 'P')
+	{
+		mlx->map.player1.is_lost = 1;
+		mlx->map.map_lines[monster_curr_y][*monster_curr_x] = '0';
+		return ;
+	}
+	mlx->map.map_lines[monster_curr_y][*monster_curr_x] = '0';
+	mlx->map.map_lines[monster_curr_y][(*monster_curr_x) + 1] = 'M';
+}
+
+void	update_monster_position(t_mlx *mlx, int *curr_x, int curr_y)
 {
 	static int	reached_right_edge = 0;
 	static int	reached_left_edge = 0;
 
-	if (is_move_valid(mlx, (*monster_curr_x) - 1, monster_curr_y)
-		&& !reached_left_edge)
+	if (is_monster_move_valid(mlx, (*curr_x) - 1, curr_y) && !reached_left_edge)
 	{
-		if (mlx->map.map_lines[monster_curr_y][(*monster_curr_x) - 1] == 'P')
-		{
-			mlx->map.player1.is_lost = 1;
-			mlx->map.map_lines[monster_curr_y][*monster_curr_x] = '0';
-			return ;
-		}
-		mlx->map.map_lines[monster_curr_y][*monster_curr_x] = '0';
-		mlx->map.map_lines[monster_curr_y][*monster_curr_x - 1] = 'M';
-		if (!is_move_valid(mlx, (*monster_curr_x) - 2, monster_curr_y))
+		handle_moving_left(mlx, curr_x, curr_y);
+		if (!is_monster_move_valid(mlx, (*curr_x) - 2, curr_y))
 		{
 			reached_left_edge = 1;
 			reached_right_edge = 0;
 		}
 		return ;
 	}
-	if (is_move_valid(mlx, (*monster_curr_x) + 1, monster_curr_y)
+	if (is_monster_move_valid(mlx, (*curr_x) + 1, curr_y)
 		&& !reached_right_edge)
 	{
-		if (mlx->map.map_lines[monster_curr_y][(*monster_curr_x) + 1] == 'P')
-		{
-			mlx->map.player1.is_lost = 1;
-			mlx->map.map_lines[monster_curr_y][*monster_curr_x] = '0';
-			return ;
-		}
-		mlx->map.map_lines[monster_curr_y][*monster_curr_x] = '0';
-		mlx->map.map_lines[monster_curr_y][(*monster_curr_x) + 1] = 'M';
-		if (!is_move_valid(mlx, (*monster_curr_x) + 2, monster_curr_y))
+		handle_moving_right(mlx, curr_x, curr_y);
+		if (!is_monster_move_valid(mlx, (*curr_x) + 2, curr_y))
 		{
 			reached_right_edge = 1;
 			reached_left_edge = 0;
 		}
-		(*monster_curr_x)++;
+		(*curr_x)++;
 		return ;
 	}
 }

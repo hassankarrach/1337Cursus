@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 04:20:01 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/27 05:04:18 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/27 14:10:11 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,13 @@ static int	on_evry_frame(void *param)
 
 	mlx = (t_mlx *)param;
 	if (mlx->map.collectibles == mlx->map.player1.colectibles_earned
-		&& mlx->exit_frame < 3)
-		mlx->exit_frame++;
+		&& mlx->frames.exit_frame < 3)
+		mlx->frames.exit_frame++;
+	mlx->frames.coin_frame = coin_frame;
+	mlx->frames.cat_frame = cat_frame;
+	mlx->frames.monster_frame = monster_frame;
 	handle_monster_move(mlx);
-	initialize_map(mlx, coin_frame, cat_frame, mlx->exit_frame, monster_frame);
+	initialize_map(mlx);
 	coin_frame = (coin_frame + 1) % 6;
 	cat_frame = (cat_frame + 1) % 6;
 	monster_frame = (monster_frame + 1) % 4;

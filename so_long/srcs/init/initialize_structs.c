@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:27:04 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/27 05:27:05 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/27 14:05:48 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,8 @@ void	initialize_structs(t_mlx *mlx)
 	mlx->cat_direction = 1;
 	mlx->map.player1.is_won = 0;
 	mlx->map.player1.is_lost = 0;
-	mlx->exit_frame = 0;
+	mlx->frames.exit_frame = 0;
+	mlx->frames.cat_frame = 0;
+	mlx->frames.coin_frame = 0;
+	mlx->frames.monster_frame = 0;
 }

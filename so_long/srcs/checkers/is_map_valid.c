@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:09:57 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/27 05:31:37 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/27 15:56:48 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	check_map_lines_length(char **lines)
 	while (lines[i])
 	{
 		if (custom_strlen(lines[i]) != first_line_length)
-			error_handle("Invalid Map pattern (lines are not the same length!).");
+			error_handle("Invalid Map: Uneven line lengths!");
 		i++;
 	}
 }
@@ -70,7 +70,7 @@ static void	check_map_component(char **lines, t_map *map)
 		y++;
 	}
 	if (map->collectibles < 1 || e != 1 || p != 1)
-		error_handle("Invalid Map pattern (duplicated or not found on of the map components).");
+		error_handle("Map Error: Duplicate or missing map components!");
 }
 
 static void	check_border_walls(char **lines)
@@ -99,14 +99,17 @@ void	is_map_valid(char *file_path, t_map *map)
 	char	**lines_arr;
 
 	full_lines = NULL;
-	if (((fd = open(file_path, O_RDONLY)) < 0))
+	fd = open(file_path, O_RDONLY);
+	if (fd < 0)
 		error_handle("can not open the map file.\n");
 	if (!is_map_file_path_valid(file_path))
 		error_handle("invalid path.\n");
-	while ((curr_line = get_next_line(fd)))
+	curr_line = get_next_line(fd);
+	while (curr_line)
 	{
 		full_lines = ft_strjoin(full_lines, curr_line);
 		free(curr_line);
+		curr_line = get_next_line(fd);
 	}
 	lines_arr = ft_split(full_lines, '\n');
 	map->map_lines = lines_arr;
