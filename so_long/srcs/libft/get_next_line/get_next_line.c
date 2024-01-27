@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/27 05:28:20 by hkarrach          #+#    #+#             */
+/*   Updated: 2024/01/27 05:28:36 by hkarrach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../so_long.h"
 
 static char	*get_the_line(char *str)
@@ -57,7 +69,7 @@ static char	*get_the_rest(char *str)
 	return (res);
 }
 
-static 	char	*read_line(int fd, char *str)
+static char	*read_line(int fd, char *str)
 {
 	char	*buffer;
 	int		read_byte;
