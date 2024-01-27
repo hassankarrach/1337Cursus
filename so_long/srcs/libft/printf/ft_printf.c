@@ -1,18 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/03 10:43:40 by hkarrach          #+#    #+#             */
-/*   Updated: 2023/12/18 03:52:58 by hkarrach         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "../../../so_long.h"
 
-#include "ft_printf.h"
-
-int	ft_check(va_list args, char c)
+static int	ft_check(va_list args, char c)
 {
 	int	printed_chars;
 
