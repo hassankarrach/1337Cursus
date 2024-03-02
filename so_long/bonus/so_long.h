@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:04:44 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/27 15:49:43 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/28 11:24:34 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define SO_LONG_H
 
 // INCLUDES
-# include "minilibx/mlx.h"
+# include <mlx.h>
 # include <fcntl.h>
 # include <stdarg.h>
 # include <stdlib.h>
@@ -121,7 +121,8 @@ void			handle_next_move_exit(t_mlx *mlx);
 void			handle_game_exit_won(t_mlx *mlx);
 void			handle_game_lose(t_mlx *mlx);
 void			handle_monster_move(t_mlx *mlx);
-int				is_monster_move_valid(t_mlx *mlx, int next_monster_x, int next_monster_y);
+int				is_monster_move_valid(t_mlx *mlx,
+					int next_monster_x, int next_monster_y);
 //--------------------------------------
 
 // Libft------------------------

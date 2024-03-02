@@ -6,11 +6,11 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:23:34 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/27 15:50:30 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/27 17:44:01 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../so_long.h"
+#include "../so_long.h"
 
 char	pos_to_content(t_mlx *mlx, int pos_x, int pos_y)
 {
@@ -41,16 +41,5 @@ void	update_positions(t_mlx *mlx, int next_pos_x, int next_pos_y)
 	mlx->map.map_lines[next_pos_y][next_pos_x] = 'P';
 	mlx->map.player1.player_pos_x = next_pos_x;
 	mlx->map.player1.player_pos_y = next_pos_y;
-	ft_printf("Number of Moves : %d.\n", mlx->map.player1.moves);
-	ft_printf("%d/%d collectibles you've earned.\n",
-		mlx->map.player1.colectibles_earned, mlx->map.collectibles);
-}
-
-int	is_monster_move_valid(t_mlx *mlx, int next_monster_x, int next_monster_y)
-{
-	if (mlx->map.map_lines[next_monster_y][next_monster_x] == '0'
-		|| mlx->map.map_lines[next_monster_y][next_monster_x] == 'P')
-		return (1);
-	else
-		return (0);
+	ft_printf("Number of Moves => %d.\n", mlx->map.player1.moves);
 }

@@ -6,11 +6,11 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:24:38 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/27 05:24:48 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/27 16:44:29 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../so_long.h"
+#include "../so_long.h"
 
 void	initialize_hooks(t_mlx *mlx)
 {

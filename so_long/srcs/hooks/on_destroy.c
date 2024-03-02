@@ -6,11 +6,11 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:24:03 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/27 05:24:21 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/27 17:01:19 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../so_long.h"
+#include "../so_long.h"
 
 int	on_destroy(t_mlx *mlx)
 {

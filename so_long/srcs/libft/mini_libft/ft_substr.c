@@ -6,11 +6,11 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:29:26 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/27 05:29:27 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/27 16:43:50 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../so_long.h"
+#include "../../so_long.h"
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
