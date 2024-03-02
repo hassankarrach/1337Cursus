@@ -6,11 +6,11 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:29:06 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/27 05:29:07 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/27 16:43:33 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../so_long.h"
+#include "../../so_long.h"
 
 static int	ft_count_words(const char *s, char c)
 {

@@ -6,11 +6,11 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:25:06 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/27 14:31:13 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/28 11:16:40 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../so_long.h"
+#include "../so_long.h"
 
 int	texture_attach(t_mlx *mlx, t_img *texture, int pos_x, int pos_y)
 {
@@ -25,18 +25,15 @@ static void	map_parsing_player(t_mlx *mlx, int pos_x, int pos_y)
 	mlx->map.player1.player_pos_x = pos_x * 60;
 	mlx->map.player1.player_pos_y = pos_y * 60;
 	if (mlx->map.player1.is_lost)
-		texture_attach(mlx, mlx->cat_damaged[mlx->frames.monster_frame],
-			pos_x, pos_y);
+		texture_attach(mlx, mlx->cat_damaged, pos_x, pos_y);
 	else if (mlx->map.player1.is_won)
-		texture_attach(mlx, mlx->exit[3], pos_x, pos_y);
+		texture_attach(mlx, mlx->exit[1], pos_x, pos_y);
 	else
 	{
 		if (mlx->cat_direction)
-			texture_attach(mlx, mlx->cat_right[mlx->frames.cat_frame],
-				pos_x, pos_y);
+			texture_attach(mlx, mlx->cat_right, pos_x, pos_y);
 		else
-			texture_attach(mlx, mlx->cat_left[mlx->frames.cat_frame],
-				pos_x, pos_y);
+			texture_attach(mlx, mlx->cat_left, pos_x, pos_y);
 	}
 }
 
@@ -47,29 +44,18 @@ static void	map_parsing(t_mlx *mlx, char c, int pos_x, int pos_y)
 	else if (c == '0')
 		texture_attach(mlx, mlx->bg, pos_x, pos_y);
 	else if (c == 'C')
-		texture_attach(mlx, mlx->coin[mlx->frames.coin_frame], pos_x, pos_y);
+		texture_attach(mlx, mlx->coin, pos_x, pos_y);
 	else if (c == 'E')
-		texture_attach(mlx, mlx->exit[mlx->frames.exit_frame], pos_x, pos_y);
+	{
+		if (mlx->map.collectibles == mlx->map.player1.colectibles_earned)
+			texture_attach(mlx, mlx->exit[1], pos_x, pos_y);
+		else
+			texture_attach(mlx, mlx->exit[0], pos_x, pos_y);
+	}
 	else if (c == 'P')
 	{
 		map_parsing_player(mlx, pos_x, pos_y);
 	}
-	else if (c == 'M')
-		texture_attach(mlx, mlx->monster[mlx->frames.monster_frame],
-			pos_x, pos_y);
-}
-
-static void	put_cat_moves(t_mlx *mlx)
-{
-	int		text_x;
-	int		text_y;
-	char	*cat_moves;
-
-	text_x = mlx->cat_moves->width + 25;
-	text_y = mlx->map.height + 33;
-	cat_moves = ft_itoa(mlx->map.player1.moves);
-	mlx_string_put(mlx->ptr, mlx->win, text_x, text_y, 0xFFFFFF, cat_moves);
-	free(cat_moves);
 }
 
 void	initialize_map(t_mlx *mlx)
@@ -95,7 +81,4 @@ void	initialize_map(t_mlx *mlx)
 	if (mlx->map.player1.is_won)
 		mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->you_win->img_data,
 			mlx->map.width / 2 - 120, mlx->map.height / 2);
-	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->cat_moves->img_data, 15,
-		mlx->map.height + 15);
-	put_cat_moves(mlx);
 }

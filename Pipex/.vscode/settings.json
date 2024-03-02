@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "pipex_bonus.h": "c",
+        "unistd.h": "c",
+        "stdio.h": "c",
+        "fcntl.h": "c",
+        "mini_libft.h": "c"
+    }
+}

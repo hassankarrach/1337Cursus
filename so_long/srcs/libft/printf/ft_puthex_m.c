@@ -6,11 +6,11 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:30:09 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/27 05:30:10 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/27 16:43:05 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../so_long.h"
+#include "../../so_long.h"
 
 int	ft_puthex_m(unsigned int nb)
 {

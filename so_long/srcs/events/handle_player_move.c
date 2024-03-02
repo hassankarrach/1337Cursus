@@ -6,11 +6,11 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:21:05 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/27 15:15:20 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/27 17:41:03 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../so_long.h"
+#include "../so_long.h"
 
 static void	handle_move_up(t_mlx *mlx, int curr_x, int curr_y)
 {
@@ -25,7 +25,7 @@ static void	handle_move_up(t_mlx *mlx, int curr_x, int curr_y)
 		{
 			if (mlx->map.player1.colectibles_earned != mlx->map.collectibles)
 			{
-				ft_printf("complete clcs to exit!\n");
+				ft_printf("Grab all collectibles before exiting.\n");
 				return ;
 			}
 			else
@@ -34,6 +34,7 @@ static void	handle_move_up(t_mlx *mlx, int curr_x, int curr_y)
 		mlx->map.player1.moves++;
 		mlx->map.map_lines[curr_y / 60][curr_x / 60] = '0';
 		update_positions(mlx, curr_x / 60, (curr_y - 60) / 60);
+		initialize_map(mlx);
 	}
 }
 
@@ -50,7 +51,7 @@ static void	handle_move_right(t_mlx *mlx, int curr_x, int curr_y)
 		{
 			if (mlx->map.player1.colectibles_earned != mlx->map.collectibles)
 			{
-				ft_printf("complete clcs to exit!\n");
+				ft_printf("Grab all collectibles before exiting.\n");
 				return ;
 			}
 			else
@@ -60,6 +61,7 @@ static void	handle_move_right(t_mlx *mlx, int curr_x, int curr_y)
 		mlx->cat_direction = 1;
 		mlx->map.map_lines[curr_y / 60][curr_x / 60] = '0';
 		update_positions(mlx, (curr_x + 60) / 60, curr_y / 60);
+		initialize_map(mlx);
 	}
 }
 
@@ -76,7 +78,7 @@ static void	handle_move_left(t_mlx *mlx, int curr_x, int curr_y)
 		{
 			if (mlx->map.player1.colectibles_earned != mlx->map.collectibles)
 			{
-				ft_printf("complete clcs to exit!\n");
+				ft_printf("Grab all collectibles before exiting.\n");
 				return ;
 			}
 			else
@@ -86,6 +88,7 @@ static void	handle_move_left(t_mlx *mlx, int curr_x, int curr_y)
 		mlx->cat_direction = 0;
 		mlx->map.map_lines[curr_y / 60][curr_x / 60] = '0';
 		update_positions(mlx, (curr_x - 60) / 60, curr_y / 60);
+		initialize_map(mlx);
 	}
 }
 
@@ -102,7 +105,7 @@ static void	handle_move_down(t_mlx *mlx, int curr_x, int curr_y)
 		{
 			if (mlx->map.player1.colectibles_earned != mlx->map.collectibles)
 			{
-				ft_printf("complete clcs to exit!\n");
+				ft_printf("Grab all collectibles before exiting.\n");
 				return ;
 			}
 			else
@@ -111,6 +114,7 @@ static void	handle_move_down(t_mlx *mlx, int curr_x, int curr_y)
 		mlx->map.player1.moves++;
 		mlx->map.map_lines[curr_y / 60][curr_x / 60] = '0';
 		update_positions(mlx, curr_x / 60, (curr_y + 60) / 60);
+		initialize_map(mlx);
 	}
 }
 

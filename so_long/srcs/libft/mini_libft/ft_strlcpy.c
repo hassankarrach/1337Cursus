@@ -6,11 +6,11 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:29:14 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/27 05:29:15 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/27 16:43:40 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../so_long.h"
+#include "../../so_long.h"
 
 size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {

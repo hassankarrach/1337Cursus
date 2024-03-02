@@ -6,11 +6,11 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:17:01 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/27 15:51:16 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/27 17:34:04 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../so_long.h"
+#include "../so_long.h"
 #include <time.h>
 
 static int	has_elapsed_1_seconds(time_t *last_time)

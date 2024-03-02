@@ -6,11 +6,11 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:29:19 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/27 05:29:20 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/27 16:43:45 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../so_long.h"
+#include "../../so_long.h"
 
 int	ft_strncmp(const char *str1, const char *str2, size_t n)
 {

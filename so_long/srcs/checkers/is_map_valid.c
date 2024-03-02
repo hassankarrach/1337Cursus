@@ -6,11 +6,11 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:09:57 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/27 15:56:48 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/29 08:24:18 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../so_long.h"
+#include "../so_long.h"
 
 static void	check_map_rect(t_map *map, char **lines)
 {

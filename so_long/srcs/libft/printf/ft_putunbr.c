@@ -6,11 +6,11 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:30:19 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/27 05:30:20 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/01/27 16:43:16 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../so_long.h"
+#include "../../so_long.h"
 
 int	ft_putunbr(unsigned int nb)
 {
