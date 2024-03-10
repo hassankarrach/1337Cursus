@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 08:33:40 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/03/02 11:43:19 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/09 04:09:35 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ char	*get_exec_full_path(char *exec, t_pipex *pipex)
 	int		i;
 
 	i = 0;
-	if (access(exec, F_OK) == 0)
+	if (access(exec, X_OK) == 0)
 		return (ft_strdup(exec));
 	while (pipex->paths[i])
 	{
 		exec_full_path = joiner(pipex->paths[i], exec);
-		if (access(exec_full_path, F_OK) == 0)
+		if (access(exec_full_path, X_OK) == 0)
 			return (exec_full_path);
 		free(exec_full_path);
 		i++;

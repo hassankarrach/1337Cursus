@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:09:57 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/27 17:34:18 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/10 18:46:48 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ static void	check_map_component(char **lines, t_map *map)
 		x = 0;
 		while (lines[y][x])
 		{
-			if (lines[y][x] == 'C')
+			if (lines[y][x] == 'C' && check_accessibility(map, x, y))
 				map->collectibles++;
 			else if (lines[y][x] == 'P')
 				p++;
-			else if (lines[y][x] == 'E')
+			else if (lines[y][x] == 'E' && check_accessibility(map, x, y))
 				e++;
 			x++;
 		}
@@ -107,12 +107,13 @@ void	is_map_valid(char *file_path, t_map *map)
 	curr_line = get_next_line(fd);
 	while (curr_line)
 	{
+		is_line_valid(curr_line);
 		full_lines = ft_strjoin(full_lines, curr_line);
 		free(curr_line);
 		curr_line = get_next_line(fd);
 	}
 	lines_arr = ft_split(full_lines, '\n');
-	map->map_lines = lines_arr;
+	setting_the_map(lines_arr, map);
 	check_map_lines_length(lines_arr);
 	check_map_component(lines_arr, map);
 	check_border_walls(lines_arr);

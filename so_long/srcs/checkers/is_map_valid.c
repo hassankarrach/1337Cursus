@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:09:57 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/29 08:24:18 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/10 18:56:19 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	check_map_rect(t_map *map, char **lines)
 		map_heigth++;
 	while (lines[0][map_width])
 		map_width++;
-	if (!(map_width > map_heigth))
+	if (map_width == map_heigth)
 		error_handle("Invalid Map pattern (the map is not rectangular!).");
 	map->width = map_width * 60;
 	map->height = map_heigth * 60;
@@ -59,11 +59,11 @@ static void	check_map_component(char **lines, t_map *map)
 		x = 0;
 		while (lines[y][x])
 		{
-			if (lines[y][x] == 'C')
+			if (lines[y][x] == 'C' && check_accessibility(map, x, y))
 				map->collectibles++;
 			else if (lines[y][x] == 'P')
 				p++;
-			else if (lines[y][x] == 'E')
+			else if (lines[y][x] == 'E' && check_accessibility(map, x, y))
 				e++;
 			x++;
 		}
@@ -77,11 +77,16 @@ static void	check_border_walls(char **lines)
 {
 	int	lines_count;
 	int	border_walls;
+	int line_len;
 
 	lines_count = 0;
 	border_walls = 0;
+	line_len = 0;
 	while (lines[lines_count])
 	{
+		line_len = gnl_strlen(lines[lines_count]);
+		if (lines[lines_count][0] != '1' || lines[lines_count][line_len - 1] != '1')
+			error_handle("Invalid Map Wall pattern.");		
 		if (is_border_wall(lines[lines_count]))
 			border_walls++;
 		lines_count++;
@@ -107,12 +112,13 @@ void	is_map_valid(char *file_path, t_map *map)
 	curr_line = get_next_line(fd);
 	while (curr_line)
 	{
+		is_line_valid(curr_line);
 		full_lines = ft_strjoin(full_lines, curr_line);
 		free(curr_line);
 		curr_line = get_next_line(fd);
 	}
 	lines_arr = ft_split(full_lines, '\n');
-	map->map_lines = lines_arr;
+	setting_the_map(lines_arr, map);
 	check_map_lines_length(lines_arr);
 	check_map_component(lines_arr, map);
 	check_border_walls(lines_arr);

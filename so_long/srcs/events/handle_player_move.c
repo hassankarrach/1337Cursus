@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:21:05 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/27 17:41:03 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/10 18:57:29 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,12 +125,12 @@ void	handle_player_move(t_mlx *mlx, char move_direction)
 
 	curr_x = mlx->map.player1.player_pos_x;
 	curr_y = mlx->map.player1.player_pos_y;
-	if (move_direction == 'u')
+	if (move_direction == 'u' && !mlx->map.player1.is_won)
 		handle_move_up(mlx, curr_x, curr_y);
-	else if (move_direction == 'l')
+	else if (move_direction == 'l' && !mlx->map.player1.is_won)
 		handle_move_left(mlx, curr_x, curr_y);
-	else if (move_direction == 'r')
+	else if (move_direction == 'r' && !mlx->map.player1.is_won)
 		handle_move_right(mlx, curr_x, curr_y);
-	else if (move_direction == 'd')
+	else if (move_direction == 'd' && !mlx->map.player1.is_won)
 		handle_move_down(mlx, curr_x, curr_y);
 }

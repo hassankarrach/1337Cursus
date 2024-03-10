@@ -1,7 +1,7 @@
 NAME = pipex
 NAME_BONUS = pipex_bonus
 
-# CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 
 LIBFT = $(addprefix ./Libft/, ft_split.c ft_substr.c ft_strlen.c ft_strjoin.c ft_gnl_strjoin.c ft_memcpy.c ft_strdup.c ft_strncmp.c ft_strlcpy.c ft_calloc.c ft_bzero.c ft_putstr_fd.c)
 SRCS = ./pipex.c ./pipex_utils.c $(LIBFT)
