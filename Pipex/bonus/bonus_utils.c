@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:08:04 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/02/28 15:30:42 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/02 14:34:09 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*get_exec_full_path(char *exec, char **paths)
 	int		i;
 
 	if (access(exec, F_OK) == 0)
-		return (exec);
+		return (ft_strdup(exec));
 	i = 0;
 	while (paths[i])
 	{

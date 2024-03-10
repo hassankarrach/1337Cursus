@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:04:44 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/29 08:52:12 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/10 18:19:23 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,17 @@
 # define SO_LONG_H
 
 // INCLUDES
-# include <mlx.h>
+# include "../minilibx-linux/mlx.h"
 # include <fcntl.h>
 # include <stdarg.h>
 # include <stdlib.h>
 # include <unistd.h>
+
+typedef struct position
+{
+	int			x;
+	int			y;	
+}				t_pos;
 
 typedef struct img
 {
@@ -45,6 +51,7 @@ typedef struct map
 	int			width;
 	int			height;
 	char		**map_lines;
+	char		**map_lines_cpy;
 	int			collectibles;
 	t_player	player1;
 }				t_map;
@@ -77,6 +84,9 @@ void			is_line_valid(char *curr_line);
 int				is_map_file_path_valid(char *file_path);
 int				is_border_wall(char *line);
 int				custom_strlen(char *line);
+void			setting_the_map(char **map_lines, t_map *map);
+void			flood_fill_map_cpy(char	**map_cpy);
+int				check_accessibility(t_map *map, int clc_x, int clc_y);
 //----------------------------------------
 
 //ERROR_HANDLING------------------------------

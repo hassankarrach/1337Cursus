@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:07:04 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/27 17:34:15 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/10 18:40:56 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	is_line_components_valid(char *line)
 	while (line[i])
 	{
 		if (line[i] != '1' && line[i] != '0' && line[i] != 'P' && line[i] != 'C'
-			&& line[i] != 'E' && line[i] != '\n')
+			&& line[i] != 'E' && line[i] != 'M' && line[i] != '\n')
 		{
 			ft_printf("invalid map components.\n");
 			exit(1);
