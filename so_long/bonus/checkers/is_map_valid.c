@@ -6,17 +6,18 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:09:57 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/03/10 18:46:48 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/11 16:11:23 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-static void	check_map_rect(t_map *map, char **lines)
+static void	check_map_rect(t_map *map, char **lines, char *jusr_to_free)
 {
 	int	map_width;
 	int	map_heigth;
 
+	free(jusr_to_free);
 	map_heigth = 0;
 	map_width = 0;
 	while (lines[map_heigth])
@@ -117,6 +118,5 @@ void	is_map_valid(char *file_path, t_map *map)
 	check_map_lines_length(lines_arr);
 	check_map_component(lines_arr, map);
 	check_border_walls(lines_arr);
-	check_map_rect(map, lines_arr);
-	free(full_lines);
+	check_map_rect(map, lines_arr, full_lines);
 }

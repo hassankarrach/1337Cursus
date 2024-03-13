@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:25:06 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/27 17:33:38 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/11 14:20:34 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,9 @@ void	initialize_map(t_mlx *mlx)
 		pos_y++;
 	}
 	if (mlx->map.player1.is_lost)
-		mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->you_lose->img_data,
-			mlx->map.width / 2 - 120, mlx->map.height / 2);
+		on_destroy(mlx);
 	if (mlx->map.player1.is_won)
-		mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->you_win->img_data,
-			mlx->map.width / 2 - 120, mlx->map.height / 2);
+		on_destroy(mlx);
 	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->cat_moves->img_data, 15,
 		mlx->map.height + 15);
 	put_cat_moves(mlx);

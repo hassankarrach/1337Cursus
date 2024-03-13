@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:09:57 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/03/10 18:56:19 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/13 02:55:37 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,28 @@ static void	check_map_rect(t_map *map, char **lines)
 		map_heigth++;
 	while (lines[0][map_width])
 		map_width++;
-	if (map_width == map_heigth)
-		error_handle("Invalid Map pattern (the map is not rectangular!).");
 	map->width = map_width * 60;
 	map->height = map_heigth * 60;
 }
 
-static void	check_map_lines_length(char **lines)
+static void	check_map_lines_length(char **lines, t_map *map)
 {
 	int	i;
 	int	first_line_length;
+	int	line_len;
 
 	i = 0;
 	first_line_length = custom_strlen(lines[0]);
 	while (lines[i])
 	{
-		if (custom_strlen(lines[i]) != first_line_length)
-			error_handle("Invalid Map: Uneven line lengths!");
+		line_len = custom_strlen(lines[i]);
+		if (custom_strlen(lines[i]) != first_line_length
+			|| !is_line_components_valid(lines[i])
+			|| lines[i][0] != '1' || lines[i][line_len - 1] != '1')
+		{
+			free_lines(map);
+			error_handle("Invalid Map pattern component.");
+		}
 		i++;
 	}
 }
@@ -70,14 +75,14 @@ static void	check_map_component(char **lines, t_map *map)
 		y++;
 	}
 	if (map->collectibles < 1 || e != 1 || p != 1)
-		error_handle("Map Error: Duplicate or missing map components!");
+		free_and_error(map, "Map Error: Duplicate or missing map components!");
 }
 
 static void	check_border_walls(char **lines)
 {
 	int	lines_count;
 	int	border_walls;
-	int line_len;
+	int	line_len;
 
 	lines_count = 0;
 	border_walls = 0;
@@ -85,8 +90,9 @@ static void	check_border_walls(char **lines)
 	while (lines[lines_count])
 	{
 		line_len = gnl_strlen(lines[lines_count]);
-		if (lines[lines_count][0] != '1' || lines[lines_count][line_len - 1] != '1')
-			error_handle("Invalid Map Wall pattern.");		
+		if (lines[lines_count][0] != '1'
+			|| lines[lines_count][line_len - 1] != '1')
+			error_handle("Invalid Map Wall pattern.");
 		if (is_border_wall(lines[lines_count]))
 			border_walls++;
 		lines_count++;
@@ -112,16 +118,15 @@ void	is_map_valid(char *file_path, t_map *map)
 	curr_line = get_next_line(fd);
 	while (curr_line)
 	{
-		is_line_valid(curr_line);
 		full_lines = ft_strjoin(full_lines, curr_line);
 		free(curr_line);
 		curr_line = get_next_line(fd);
 	}
 	lines_arr = ft_split(full_lines, '\n');
+	free(full_lines);
 	setting_the_map(lines_arr, map);
-	check_map_lines_length(lines_arr);
+	check_map_lines_length(lines_arr, map);
 	check_map_component(lines_arr, map);
 	check_border_walls(lines_arr);
 	check_map_rect(map, lines_arr);
-	free(full_lines);
 }

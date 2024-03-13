@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:07:04 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/03/10 18:55:52 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:24:07 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	custom_strlen(char *line)
 	return (len);
 }
 
-void	is_line_components_valid(char *line)
+int	is_line_components_valid(char *line)
 {
 	int	i;
 
@@ -47,12 +47,10 @@ void	is_line_components_valid(char *line)
 	{
 		if (line[i] != '1' && line[i] != '0' && line[i] != 'P' && line[i] != 'C'
 			&& line[i] != 'E' && line[i] != '\n')
-		{
-			ft_printf("invalid map components.\n");
-			exit(1);
-		}
+			return (0);
 		i++;
 	}
+	return (1);
 }
 
 int	is_border_wall(char *line)
@@ -69,17 +67,4 @@ int	is_border_wall(char *line)
 		i--;
 	}
 	return (1);
-}
-
-void	is_line_valid(char *curr_line)
-{
-	int	line_len;
-
-	is_line_components_valid(curr_line);
-	line_len = custom_strlen(curr_line);
-	if (curr_line[0] != '1' || curr_line[line_len - 1] != '1')
-	{
-		ft_printf("unvalid map pattern.\n");
-		exit(1);
-	}
 }
