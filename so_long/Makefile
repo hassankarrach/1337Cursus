@@ -3,7 +3,7 @@ BONUS = so_long_bonus
 
 MLX_FLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11
 LIB_MLX = libmlx.a
-# CFLAGS = -Wall -Wextra -Werror
+# CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 INCLUDES = -I/usr/include -Imlx
 
 GNL_SRCS = $(addprefix ./srcs/libft/get_next_line/, get_next_line.c get_next_line_utils.c)

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_accessible.c                                    :+:      :+:    :+:   */
+/*   is_map_valid_helper2.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 17:14:57 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/03/10 18:03:59 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/13 03:44:07 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,10 @@ void    flood_fill_map_cpy(char	**map_cpy)
 
 	map_size.x = ft_strlen(map_cpy[0]);
 	map_size.y = 0;
-	while(map_cpy[map_size.y++]);
-
+	while(map_cpy[map_size.y])
+		map_size.y++;
 	begin.x = get_player_pos(map_cpy, 'x');
 	begin.y = get_player_pos(map_cpy, 'y');
-
 	f_fill(map_cpy, map_size, begin.y, begin.x );
 }
 

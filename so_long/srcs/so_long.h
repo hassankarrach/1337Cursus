@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:04:44 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/03/10 18:19:23 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/13 02:53:55 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ typedef struct data
 	t_img		*coin;
 	t_img		*exit[2];
 	int			cat_direction;
+	int			screen_width;
+	int			screen_heigth;
 }				t_mlx;
 
 # ifndef BUFFER_SIZE
@@ -79,8 +81,7 @@ typedef struct data
 
 //MAP_CHECK-----------------------------------------------
 void			is_map_valid(char *file_path, t_map *map);
-void			is_line_components_valid(char *line);
-void			is_line_valid(char *curr_line);
+int				is_line_components_valid(char *line);
 int				is_map_file_path_valid(char *file_path);
 int				is_border_wall(char *line);
 int				custom_strlen(char *line);
@@ -93,7 +94,8 @@ int				check_accessibility(t_map *map, int clc_x, int clc_y);
 void			error_handle(char *error_msg);
 void			destroy_images(t_mlx *mlx);
 void			free_textures(t_mlx *mlx);
-void			free_lines(t_mlx *mlx);
+void			free_lines(t_map *map);
+void			free_and_error(t_map *map, char *err_msg);
 //-------------------------------------
 
 //Inits----------------------------------------
@@ -121,7 +123,7 @@ void			handle_game_exit_won(t_mlx *mlx);
 void			handle_game_lose(t_mlx *mlx);
 //-------------------------------------------
 
-//Libft-------------------------
+//Libft-----------------------------------
 char			*ft_itoa(int n);
 void			ft_bzero(void *s, size_t n);
 size_t			ft_strlcpy(char *dest, const char *src, size_t size);

@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:27:17 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/03/08 03:39:11 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/11 14:06:07 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ static void	load_other_textures(t_mlx *mlx)
 	mlx->wall = create_texture(mlx, "Assets/1.xpm");
 	mlx->exit[0] = create_texture(mlx, "Assets/exit/0.xpm");
 	mlx->exit[1] = create_texture(mlx, "Assets/exit/3.xpm");
-	mlx->you_win = create_texture(mlx, "Assets/you_win.xpm");
-	mlx->you_lose = create_texture(mlx, "Assets/you_lose.xpm");
 }
 
 void	initialize_textures(t_mlx *mlx)

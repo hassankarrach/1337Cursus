@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:04:44 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/03/10 18:14:11 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/11 15:25:37 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ typedef struct data
 	t_img		*monster[4];
 	t_frames	frames;
 	int			cat_direction;
+	int			screen_width;
+	int			screen_heigth;
 }				t_mlx;
 
 # ifndef BUFFER_SIZE

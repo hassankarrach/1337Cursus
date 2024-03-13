@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:27:04 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/27 16:51:09 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/12 03:10:29 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,5 @@ void	initialize_structs(t_mlx *mlx)
 	mlx->cat_direction = 1;
 	mlx->map.player1.is_won = 0;
 	mlx->map.player1.is_lost = 0;
+	mlx->map.map_lines_cpy = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 17:00:25 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/03/10 17:39:28 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/13 03:42:03 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static char    **get_map_cpy(char **map)
 	if (!map_cpy)
 		return (NULL);
 	i = 0;
-	map[map_rows] = NULL;
+	map_cpy[map_rows] = NULL;
 	while (map[i])
 	{
 		map_cpy[i] = ft_strdup(map[i]);

@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:27:17 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/03/08 03:40:31 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/11 14:35:01 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,6 @@ static void	load_other_textures(t_mlx *mlx)
 	mlx->monster[2] = create_texture(mlx, "Assets/monster/2.xpm");
 	mlx->monster[3] = create_texture(mlx, "Assets/monster/3.xpm");
 	mlx->cat_moves = create_texture(mlx, "Assets/moves.xpm");
-	mlx->you_win = create_texture(mlx, "Assets/you_win.xpm");
-	mlx->you_lose = create_texture(mlx, "Assets/you_lose.xpm");
 }
 
 void	initialize_textures(t_mlx *mlx)
