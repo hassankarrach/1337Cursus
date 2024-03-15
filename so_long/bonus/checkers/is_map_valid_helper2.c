@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 17:14:57 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/03/13 03:44:07 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/15 18:04:07 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,14 @@ void    flood_fill_map_cpy(char	**map_cpy)
 
 int		check_accessibility(t_map *map, int clc_x, int clc_y)
 {
+	if (map->map_lines_cpy[clc_y][clc_x] == 'E')
+	{
+		if (map->map_lines_cpy[clc_y][clc_x - 1] != 'F'
+			&& map->map_lines_cpy[clc_y][clc_x + 1] != 'F')
+				error_handle("unreachable exit!");
+		else
+			return (1);
+	}
 	if(map->map_lines_cpy[clc_y][clc_x] == 'F')
 		return (1);
 	else
