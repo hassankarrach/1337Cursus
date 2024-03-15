@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:09:57 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/03/11 16:11:23 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/13 23:08:57 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,7 @@ static void	check_border_walls(char **lines)
 			border_walls++;
 		lines_count++;
 	}
-	if (!is_border_wall(lines[0]) || !is_border_wall(lines[lines_count - 1])
-		|| border_walls > 2)
+	if (!is_border_wall(lines[0]) || !is_border_wall(lines[lines_count - 1]))
 		error_handle("Invalid Map Wall pattern.");
 }
 

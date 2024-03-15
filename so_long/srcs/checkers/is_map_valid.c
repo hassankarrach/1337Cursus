@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:09:57 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/03/13 02:55:37 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:44:52 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,7 @@ static void	check_border_walls(char **lines)
 			border_walls++;
 		lines_count++;
 	}
-	if (!is_border_wall(lines[0]) || !is_border_wall(lines[lines_count - 1])
-		|| border_walls > 2)
+	if (!is_border_wall(lines[0]) || !is_border_wall(lines[lines_count - 1]))
 		error_handle("Invalid Map Wall pattern.");
 }
 
@@ -110,11 +109,11 @@ void	is_map_valid(char *file_path, t_map *map)
 	char	**lines_arr;
 
 	full_lines = NULL;
+	if (!is_map_file_path_valid(file_path))
+		error_handle("invalid path.\n");
 	fd = open(file_path, O_RDONLY);
 	if (fd < 0)
 		error_handle("can not open the map file.\n");
-	if (!is_map_file_path_valid(file_path))
-		error_handle("invalid path.\n");
 	curr_line = get_next_line(fd);
 	while (curr_line)
 	{

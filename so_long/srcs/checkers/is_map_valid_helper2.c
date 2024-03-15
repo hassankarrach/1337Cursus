@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 17:14:57 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/03/12 04:05:09 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:56:02 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ void	f_fill(char **map_cpy, t_pos map_size, int start_y, int start_x)
 		return ;
 	if (map_cpy[start_y][start_x] == 'F' ||
 			(map_cpy[start_y][start_x] != '0'
-			&& map_cpy[start_y][start_x] != 'P' &&
-			map_cpy[start_y][start_x] != 'E'
+			&& map_cpy[start_y][start_x] != 'P'
 			&& map_cpy[start_y][start_x] != 'C'))
 		return ;
 	map_cpy[start_y][start_x] = 'F';
@@ -71,9 +70,17 @@ void	flood_fill_map_cpy(char	**map_cpy)
 
 int	check_accessibility(t_map *map, int clc_x, int clc_y)
 {
+	if (map->map_lines_cpy[clc_y][clc_x] == 'E')
+	{
+		if (map->map_lines_cpy[clc_y][clc_x - 1] != 'F'
+			&& map->map_lines_cpy[clc_y][clc_x + 1] != 'F')
+				error_handle("unreachable exit!");
+		else
+			return (1);
+	}
 	if (map->map_lines_cpy[clc_y][clc_x] == 'F')
 		return (1);
 	else
-		error_handle("unreachable component!");
+		error_handle("unreachable collectible!");
 	return (0);
 }
