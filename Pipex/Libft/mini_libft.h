@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 15:32:34 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/02/26 17:00:42 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/17 17:34:25 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,7 @@ char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strdup(const char *s);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 char	*ft_gnl_strjoin(char *s1, char *s2);
+char	*ft_strtrim(char const *s1, char const *set);
+char	*ft_strrchr(const char *str, int c);
 
 #endif

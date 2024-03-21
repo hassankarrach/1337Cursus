@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 16:08:28 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/03/10 18:47:04 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/20 21:07:56 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,14 @@ int	main(int argc, char **argv)
 	t_mlx	mlx;
 
 	if (argc != 2)
-		error_handle("Please enter the file path for the map.");
+	{
+		write(2, "Please enter the file path for the map.\n", 40);
+		exit(1);
+	}
 	initialize_structs(&mlx);
-	is_map_valid(argv[1], &mlx.map);
 	initialize_mlx(&mlx);
+	is_map_valid(argv[1], &mlx);
+	initialize_mlx_window(&mlx);
 	initialize_textures(&mlx);
 	initialize_hooks(&mlx);
 	mlx_loop_hook(mlx.ptr, &on_evry_frame, &mlx);

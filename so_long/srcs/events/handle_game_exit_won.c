@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:16:15 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/27 16:44:58 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/19 23:06:09 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,5 @@
 
 void	handle_game_exit_won(t_mlx *mlx)
 {
-	ft_printf("YOU WON!\n");
 	mlx->map.player1.is_won = 1;
 }

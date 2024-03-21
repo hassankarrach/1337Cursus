@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 17:14:57 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/03/15 18:04:07 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/21 01:01:03 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,11 @@ void f_fill(char **map_cpy, t_pos map_size,  int start_y, int start_x)
 {
 	if (start_y < 0 || start_x < 0 || start_y >= map_size.y || start_x >= map_size.x)
 		return;
-	if (map_cpy[start_y][start_x] == 'F' || (map_cpy[start_y][start_x] != '0' && map_cpy[start_y][start_x] != 'P' &&
-			map_cpy[start_y][start_x] != 'E' && map_cpy[start_y][start_x] != 'C'))
+	if (map_cpy[start_y][start_x] == 'F' || 
+		(map_cpy[start_y][start_x] != '0' 
+			&& map_cpy[start_y][start_x] != 'P' 
+			&& map_cpy[start_y][start_x] != 'C'))
 		return;
-
 	map_cpy[start_y][start_x] = 'F';
 	f_fill(map_cpy, map_size, start_y -1, start_x);
 	f_fill(map_cpy, map_size, start_y +1, start_x);
@@ -64,19 +65,21 @@ void    flood_fill_map_cpy(char	**map_cpy)
 	f_fill(map_cpy, map_size, begin.y, begin.x );
 }
 
-int		check_accessibility(t_map *map, int clc_x, int clc_y)
+int		check_accessibility(t_mlx *mlx, int clc_x, int clc_y)
 {
-	if (map->map_lines_cpy[clc_y][clc_x] == 'E')
+	if (mlx->map.map_lines_cpy[clc_y][clc_x] == 'E')
 	{
-		if (map->map_lines_cpy[clc_y][clc_x - 1] != 'F'
-			&& map->map_lines_cpy[clc_y][clc_x + 1] != 'F')
-				error_handle("unreachable exit!");
+		if (mlx->map.map_lines_cpy[clc_y][clc_x - 1] != 'F'
+			&& mlx->map.map_lines_cpy[clc_y][clc_x + 1] != 'F'
+			&& mlx->map.map_lines_cpy[clc_y + 1][clc_x] != 'F'
+			&& mlx->map.map_lines_cpy[clc_y - 1][clc_x] != 'F')
+				error_handle(mlx, "unreachable exit!", 1);
 		else
 			return (1);
 	}
-	if(map->map_lines_cpy[clc_y][clc_x] == 'F')
+	if(mlx->map.map_lines_cpy[clc_y][clc_x] == 'F')
 		return (1);
 	else
-		error_handle("unreachable component!");
+		error_handle(mlx, "unreachable component!", 1);
 	return (0);
 }

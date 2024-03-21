@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:07:04 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/03/11 17:24:07 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:50:13 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	is_map_file_path_valid(char *file_path)
 	char	*file_path_ext;
 
 	file_path_ext = ft_strrchr(file_path, '.');
+	if (!file_path_ext)
+		return 0;
 	if (ft_strlen(file_path_ext) != 4)
 		return (0);
 	return (!ft_strncmp(file_path_ext, ".ber", 4));
@@ -67,4 +69,29 @@ int	is_border_wall(char *line)
 		i--;
 	}
 	return (1);
+}
+
+void	is_line_valid(t_mlx *mlx, char *curr_line, char *full_lines)
+{
+	int	line_len;
+	int is_out_of_screen;
+
+	is_out_of_screen = 0;
+	line_len = custom_strlen(curr_line);
+	mlx->map.map_lines_num++;
+	if (line_len > (mlx->map.screen_width / 60)
+		|| mlx->map.map_lines_num > (mlx->map.screen_heigth / 60 - 1))
+		is_out_of_screen = 1;
+	if (curr_line[0] != '1' || curr_line[line_len - 1] != '1' || is_out_of_screen)
+	{
+		free(curr_line);
+		free(full_lines);
+		mlx_destroy_display(mlx->ptr);
+		free(mlx->ptr);
+		if (is_out_of_screen)
+			ft_printf("%sMap is out of screen.%s\n", RED, CLEAR);
+		else
+			ft_printf("%sinvalid map line.%s\n", RED, CLEAR);
+		exit(1);
+	}	
 }

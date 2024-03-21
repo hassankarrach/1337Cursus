@@ -6,50 +6,48 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:09:57 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/03/15 17:44:52 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/20 20:18:02 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-static void	check_map_rect(t_map *map, char **lines)
+static void	check_map_rect(t_mlx *mlx)
 {
 	int	map_width;
 	int	map_heigth;
 
 	map_heigth = 0;
 	map_width = 0;
-	while (lines[map_heigth])
+	while (mlx->map.map_lines[map_heigth])
 		map_heigth++;
-	while (lines[0][map_width])
+	while (mlx->map.map_lines[0][map_width])
 		map_width++;
-	map->width = map_width * 60;
-	map->height = map_heigth * 60;
+	mlx->map.width = map_width * 60;
+	mlx->map.height = map_heigth * 60;
 }
 
-static void	check_map_lines_length(char **lines, t_map *map)
+static void	check_map_lines_length(t_mlx *mlx)
 {
 	int	i;
 	int	first_line_length;
 	int	line_len;
-
+	
+	if (!mlx->map.map_lines)
+		free_and_error(mlx, "Map is empty.");
 	i = 0;
-	first_line_length = custom_strlen(lines[0]);
-	while (lines[i])
+	first_line_length = custom_strlen(mlx->map.map_lines[0]);
+	while (mlx->map.map_lines[i])
 	{
-		line_len = custom_strlen(lines[i]);
-		if (custom_strlen(lines[i]) != first_line_length
-			|| !is_line_components_valid(lines[i])
-			|| lines[i][0] != '1' || lines[i][line_len - 1] != '1')
-		{
-			free_lines(map);
-			error_handle("Invalid Map pattern component.");
-		}
+		line_len = custom_strlen(mlx->map.map_lines[i]);
+		if (custom_strlen(mlx->map.map_lines[i]) != first_line_length
+			|| !is_line_components_valid(mlx->map.map_lines[i]))
+			free_and_error(mlx, "Invalid Map.");
 		i++;
 	}
 }
 
-static void	check_map_component(char **lines, t_map *map)
+static void	check_map_component(t_mlx *mlx)
 {
 	int	x;
 	int	y;
@@ -59,49 +57,43 @@ static void	check_map_component(char **lines, t_map *map)
 	y = 0;
 	e = 0;
 	p = 0;
-	while (lines[y])
+	while (mlx->map.map_lines[y])
 	{
 		x = 0;
-		while (lines[y][x])
+		while (mlx->map.map_lines[y][x])
 		{
-			if (lines[y][x] == 'C' && check_accessibility(map, x, y))
-				map->collectibles++;
-			else if (lines[y][x] == 'P')
+			if (mlx->map.map_lines[y][x] == 'C' && check_accessibility(mlx, x, y))
+				mlx->map.collectibles++;
+			else if (mlx->map.map_lines[y][x] == 'P')
 				p++;
-			else if (lines[y][x] == 'E' && check_accessibility(map, x, y))
+			else if (mlx->map.map_lines[y][x] == 'E' && check_accessibility(mlx, x, y))
 				e++;
 			x++;
 		}
 		y++;
 	}
-	if (map->collectibles < 1 || e != 1 || p != 1)
-		free_and_error(map, "Map Error: Duplicate or missing map components!");
+	if (mlx->map.collectibles < 1 || e != 1 || p != 1)
+		free_and_error(mlx, "Map Error: Duplicate or missing map components!");
 }
 
-static void	check_border_walls(char **lines)
+static void	check_border_walls(t_mlx *mlx)
 {
 	int	lines_count;
 	int	border_walls;
-	int	line_len;
 
 	lines_count = 0;
 	border_walls = 0;
-	line_len = 0;
-	while (lines[lines_count])
+	while (mlx->map.map_lines[lines_count])
 	{
-		line_len = gnl_strlen(lines[lines_count]);
-		if (lines[lines_count][0] != '1'
-			|| lines[lines_count][line_len - 1] != '1')
-			error_handle("Invalid Map Wall pattern.");
-		if (is_border_wall(lines[lines_count]))
+		if (is_border_wall(mlx->map.map_lines[lines_count]))
 			border_walls++;
 		lines_count++;
 	}
-	if (!is_border_wall(lines[0]) || !is_border_wall(lines[lines_count - 1]))
-		error_handle("Invalid Map Wall pattern.");
+	if (!is_border_wall(mlx->map.map_lines[0]) || !is_border_wall(mlx->map.map_lines[lines_count - 1]))
+		free_and_error(mlx, "Invalid Map Wall pattern.");
 }
 
-void	is_map_valid(char *file_path, t_map *map)
+void	is_map_valid(char *file_path, t_mlx *mlx)
 {
 	int		fd;
 	char	*curr_line;
@@ -110,22 +102,22 @@ void	is_map_valid(char *file_path, t_map *map)
 
 	full_lines = NULL;
 	if (!is_map_file_path_valid(file_path))
-		error_handle("invalid path.\n");
+		error_handle(mlx, "invalid path.\n");
 	fd = open(file_path, O_RDONLY);
 	if (fd < 0)
-		error_handle("can not open the map file.\n");
+		error_handle(mlx, "can not open the map file.\n");
 	curr_line = get_next_line(fd);
 	while (curr_line)
 	{
+		is_line_valid(mlx, curr_line, full_lines);
 		full_lines = ft_strjoin(full_lines, curr_line);
 		free(curr_line);
 		curr_line = get_next_line(fd);
 	}
 	lines_arr = ft_split(full_lines, '\n');
-	free(full_lines);
-	setting_the_map(lines_arr, map);
-	check_map_lines_length(lines_arr, map);
-	check_map_component(lines_arr, map);
-	check_border_walls(lines_arr);
-	check_map_rect(map, lines_arr);
+	setting_the_map(lines_arr, &mlx->map, full_lines);
+	check_map_lines_length(mlx);
+	check_map_component(mlx);
+	check_border_walls(mlx);
+	check_map_rect(mlx);
 }

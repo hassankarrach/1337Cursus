@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 17:14:57 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/03/15 17:56:02 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/20 20:17:26 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ void	f_fill(char **map_cpy, t_pos map_size, int start_y, int start_x)
 	if (map_cpy[start_y][start_x] == 'F' ||
 			(map_cpy[start_y][start_x] != '0'
 			&& map_cpy[start_y][start_x] != 'P'
-			&& map_cpy[start_y][start_x] != 'C'))
+			&& map_cpy[start_y][start_x] != 'C'
+			))
 		return ;
 	map_cpy[start_y][start_x] = 'F';
 	f_fill(map_cpy, map_size, start_y -1, start_x);
@@ -68,19 +69,23 @@ void	flood_fill_map_cpy(char	**map_cpy)
 	f_fill(map_cpy, map_size, begin.y, begin.x);
 }
 
-int	check_accessibility(t_map *map, int clc_x, int clc_y)
+int	check_accessibility(t_mlx *mlx, int clc_x, int clc_y)
 {
-	if (map->map_lines_cpy[clc_y][clc_x] == 'E')
+	if (mlx->map.map_lines_cpy[clc_y][clc_x] == 'E')
 	{
-		if (map->map_lines_cpy[clc_y][clc_x - 1] != 'F'
-			&& map->map_lines_cpy[clc_y][clc_x + 1] != 'F')
-				error_handle("unreachable exit!");
+		if (mlx->map.map_lines_cpy[clc_y][clc_x - 1] != 'F'
+			&& mlx->map.map_lines_cpy[clc_y][clc_x + 1] != 'F'
+			&& mlx->map.map_lines_cpy[clc_y - 1][clc_x] != 'F'
+			&& mlx->map.map_lines_cpy[clc_y + 1][clc_x] != 'F')
+		{
+			free_and_error(mlx, "unreachable exit!");
+		}
 		else
 			return (1);
 	}
-	if (map->map_lines_cpy[clc_y][clc_x] == 'F')
+	if (mlx->map.map_lines_cpy[clc_y][clc_x] == 'F')
 		return (1);
 	else
-		error_handle("unreachable collectible!");
+		free_and_error(mlx, "unreachable collectible!");
 	return (0);
 }

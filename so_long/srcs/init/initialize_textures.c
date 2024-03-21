@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:27:17 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/03/13 16:55:32 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/20 20:36:23 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static t_img	*create_texture(t_mlx *mlx, char *path)
 
 	texture = malloc(sizeof(t_img));
 	if (!texture)
-		return (NULL);
+		exit (1);
 	texture->path = path;
 	texture->height = 0;
 	texture->width = 0;
@@ -26,6 +26,12 @@ static t_img	*create_texture(t_mlx *mlx, char *path)
 	texture->y_pos = 0;
 	texture->img_data = mlx_xpm_file_to_image(mlx->ptr, texture->path,
 			&texture->width, &texture->height);
+	if (!texture->img_data)
+	{
+		write(2, "Error compiling a xpm assest.\n", 30);
+		free(texture);
+		on_destroy(mlx);
+	}
 	return (texture);
 }
 

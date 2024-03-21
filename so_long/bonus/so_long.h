@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:04:44 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/03/11 15:25:37 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/21 01:36:19 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@
 # include <unistd.h>
 
 # include <stdio.h>
+
+# define RED "\e[0;31m"
+# define GREEN "\e[1;32m"
+# define GOLD "\e[38;2;255;215;0m"
+# define CLEAR "\e[0;37m"
 
 typedef struct position
 {
@@ -63,6 +68,7 @@ typedef struct map
 	char		**map_lines;
 	char		**map_lines_cpy;
 	int			collectibles;
+	int			map_lines_num;
 	t_player	player1;
 }				t_map;
 
@@ -89,31 +95,33 @@ typedef struct data
 }				t_mlx;
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1337
+#  define BUFFER_SIZE 1
 # endif
 
 //---------------------------------------MAP_CHECK.
-void			is_map_valid(char *file_path, t_map *map);
-void			is_line_components_valid(char *line);
-void			is_line_valid(char *curr_line);
+char			*get_next_line(int fd);
+void			is_map_valid(char *file_path, t_mlx *mlx);
+int				is_line_components_valid(char *line);
+void			is_line_valid(t_mlx *mlx, char *curr_line, char *full_lines);
 int				is_map_file_path_valid(char *file_path);
 int				is_border_wall(char *line);
 int				custom_strlen(char *line);
-void			setting_the_map(char **map_lines, t_map *map);
+void			setting_the_map(char **map_lines, t_map *map, char *jusr_to_free);
 void			flood_fill_map_cpy(char	**map_cpy);
-int				check_accessibility(t_map *map, int clc_x, int clc_y);
+int				check_accessibility(t_mlx *mlx, int clc_x, int clc_y);
 //--------------------------------
 
 //-----------------------ERROR_HANDLING
-void			error_handle(char *error_msg);
+void			error_handle(t_mlx *mlx, char *error_msg, int flag);
 void			destroy_images(t_mlx *mlx);
 void			free_textures(t_mlx *mlx);
-void			free_lines(t_mlx *mlx);
+void			free_lines(t_map *map);
 //-----------------------------
 
 //--------------------------------Inits
 void			initialize_structs(t_mlx *mlx);
-int				initialize_mlx(t_mlx *mlx);
+void			initialize_mlx(t_mlx *mlx);
+void			initialize_mlx_window(t_mlx *mlx);
 void			initialize_map(t_mlx *mlx);
 void			initialize_textures(t_mlx *mlx);
 int				texture_attach(t_mlx *mlx, t_img *texture, int pos_x,
@@ -155,7 +163,6 @@ char			*ft_strrchr(const char *str, int c);
 int				gnl_strlen(char *str);
 int				gnl_strchr(char *s, char c);
 char			*gnl_strjoin(char *s1, char *s2);
-char			*get_next_line(int fd);
 int				ft_printf(const char *format, ...);
 int				ft_putadress(unsigned long nb);
 int				ft_putchar(char c);
@@ -164,6 +171,7 @@ int				ft_puthex(unsigned int nb);
 int				ft_putnbr(int nb);
 int				ft_putstr(char *s);
 int				ft_putunbr(unsigned int nb);
+char			*ft_strtrim(char const *s1, char const *set);
 //-----------------------------
 
 #endif

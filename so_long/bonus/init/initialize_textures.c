@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:27:17 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/03/11 14:35:01 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/21 02:18:54 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ static t_img	*create_texture(t_mlx *mlx, char *path)
 	texture->y_pos = 0;
 	texture->img_data = mlx_xpm_file_to_image(mlx->ptr, texture->path,
 			&texture->width, &texture->height);
+	if (!texture->img_data)
+	{
+		write(2, "Error compiling a xpm assest.", 29);
+		free(texture);
+		on_destroy(mlx);
+	}
 	return (texture);
 }
 

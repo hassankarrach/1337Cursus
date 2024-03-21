@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 08:33:40 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/03/09 04:09:35 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/18 03:13:09 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,14 @@ char	*get_exec_full_path(char *exec, t_pipex *pipex)
 	int		i;
 
 	i = 0;
+	if (!exec)
+		return (NULL);
 	if (access(exec, X_OK) == 0)
 		return (ft_strdup(exec));
+	if (!pipex->paths)
+		return (NULL);
+	if (exec && (exec[0] == '/' || exec[0] == '.'))
+		return (NULL);
 	while (pipex->paths[i])
 	{
 		exec_full_path = joiner(pipex->paths[i], exec);
@@ -71,16 +77,21 @@ void	freer(t_pipex *pipex)
 		free(pipex->sec_cmd[i++]);
 	free(pipex->sec_cmd);
 	i = 0;
-	while (pipex->paths[i])
-		free(pipex->paths[i++]);
-	free(pipex->paths);
-	free(pipex->first_cmd_executable);
-	free(pipex->sec_cmd_executable);
+	if (pipex->paths)
+	{
+		while (pipex->paths[i])
+			free(pipex->paths[i++]);
+		free(pipex->paths);
+	}
+	if (pipex->first_cmd_executable)
+		free(pipex->first_cmd_executable);
+	if (pipex->sec_cmd_executable)
+		free(pipex->sec_cmd_executable);
 }
 
-void	error(t_pipex *pipex)
+void	error(t_pipex *pipex, int exit_status)
 {
 	perror("error ");
 	freer(pipex);
-	exit (EXIT_FAILURE);
+	exit (exit_status);
 }

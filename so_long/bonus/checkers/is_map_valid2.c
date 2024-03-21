@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 17:00:25 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/03/13 03:42:03 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/18 17:26:00 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,18 @@ static char    **get_map_cpy(char **map)
 	return (map_cpy);
 }
 
-void    setting_the_map(char **map_lines, t_map *map)
+void    setting_the_map(char **map_lines, t_map *map, char *jusr_to_free)
 {
-    map->map_lines = map_lines;
-    map->map_lines_cpy = get_map_cpy(map_lines);
-    flood_fill_map_cpy(map->map_lines_cpy);
+	free(jusr_to_free);
+	if (map_lines)
+	{
+    	map->map_lines = map_lines;
+    	map->map_lines_cpy = get_map_cpy(map_lines);
+    	flood_fill_map_cpy(map->map_lines_cpy);
+	}
+	else
+	{
+		map->map_lines =  NULL;
+		map->map_lines_cpy = NULL;
+	}
 }
