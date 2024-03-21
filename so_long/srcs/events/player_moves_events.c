@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 05:23:34 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/01/27 17:44:01 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/18 16:14:42 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,5 @@ void	update_positions(t_mlx *mlx, int next_pos_x, int next_pos_y)
 	mlx->map.map_lines[next_pos_y][next_pos_x] = 'P';
 	mlx->map.player1.player_pos_x = next_pos_x;
 	mlx->map.player1.player_pos_y = next_pos_y;
-	ft_printf("Number of Moves => %d.\n", mlx->map.player1.moves);
+	ft_printf("Number of Moves => %s%d%s.\n", "\e[38;2;255;215;0m", mlx->map.player1.moves, "\e[0;37m");
 }

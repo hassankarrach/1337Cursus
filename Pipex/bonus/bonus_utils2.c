@@ -6,13 +6,13 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 11:26:54 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/02/29 15:21:43 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/17 23:04:07 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	handle_error(t_pipex *pipex, char *err_txt)
+void	handle_error(t_pipex *pipex, char *err_txt, int EXIT_STATUS)
 {
 	perror(err_txt);
 	if (pipex->env_paths)
@@ -21,7 +21,7 @@ void	handle_error(t_pipex *pipex, char *err_txt)
 		free_2d(pipex->curr_cmd);
 	if (pipex->curr_cmd_executable)
 		free(pipex->curr_cmd_executable);
-	exit(EXIT_FAILURE);
+	exit(EXIT_STATUS);
 }
 
 static char	*get_next_line(t_pipex *pipex)
@@ -69,7 +69,8 @@ static void	child_proc(t_pipex *pipex, int fd[])
 	while (line)
 	{
 		if (ft_strncmp(line, pipex->limiter,
-				ft_strlen(pipex->limiter)) == 0)
+				ft_strlen(line) - 1) == 0
+			&& ft_strlen(line) - 1 == ft_strlen(pipex->limiter))
 			break ;
 		write(fd[1], line, ft_strlen(line));
 		free(line);
@@ -93,7 +94,7 @@ void	handle_here_doc(t_pipex *pipex, int argc)
 	if (argc >= 6)
 	{
 		if (pipe(fd) == -1)
-			handle_error(pipex, "Error creating pipe");
+			handle_error(pipex, "Error creating pipe", EXIT_FAILURE);
 		pid = fork();
 		if (pid == 0)
 			child_proc(pipex, fd);
@@ -101,5 +102,5 @@ void	handle_here_doc(t_pipex *pipex, int argc)
 			handle_parent_proc(fd);
 	}
 	else
-		handle_error(pipex, "incorrect number of arguments");
+		handle_error(pipex, "incorrect number of arguments", EXIT_FAILURE);
 }
