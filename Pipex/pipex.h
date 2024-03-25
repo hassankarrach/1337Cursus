@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zero <zero@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 15:24:18 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/03/17 23:02:55 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/23 03:59:46 by zero             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <fcntl.h>
 # include "./Libft/mini_libft.h"
 
-# define EXIT_SUCCESS 0
+# define exit_statusEXIT_SUCCESS 0
 # define EXIT_FAILURE 1
 # define EXIT_FILE_ERROR 3
 # define EXIT_MEMORY_ERROR 4
