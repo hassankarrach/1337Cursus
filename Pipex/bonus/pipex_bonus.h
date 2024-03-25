@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zero <zero@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 15:38:39 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/03/17 23:04:52 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/25 04:14:09 by zero             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ typedef struct s_pipex
 	char	*limiter;
 	int		is_here_doc;
 	int		cmds_count;
+	int		exit_status;
+	int		last_cmd_pid;
 	int		i;
 }	t_pipex;
 
@@ -45,5 +47,6 @@ void	handle_execute(t_pipex *pipex);
 void	handle_here_doc(t_pipex *pipex, int argc);
 void	handle_error(t_pipex *pipex, char *err_txt, int EXIT_STATUS);
 void	free_2d(char **doub_ptr);
+void	piping_and_clear(t_pipex *pipex, char **argv, int argc, int *out_file_fd);
 
 #endif

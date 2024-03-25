@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bonus_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zero <zero@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 11:26:54 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/03/17 23:04:07 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/03/22 02:46:56 by zero             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,10 @@ static void	handle_parent_proc(int fd[])
 static void	child_proc(t_pipex *pipex, int fd[])
 {
 	char	*line;
+	int		in_file;
 
 	close(fd[0]);
+	in_file = open(".here_doc", O_CREAT | O_WRONLY | O_TRUNC , 0777);
 	line = get_next_line(pipex);
 	while (line)
 	{
@@ -72,11 +74,12 @@ static void	child_proc(t_pipex *pipex, int fd[])
 				ft_strlen(line) - 1) == 0
 			&& ft_strlen(line) - 1 == ft_strlen(pipex->limiter))
 			break ;
-		write(fd[1], line, ft_strlen(line));
+		write(in_file, line, ft_strlen(line));
 		free(line);
 		line = get_next_line(pipex);
 	}
 	free(line);
+	close(in_file);
 	if (pipex->env_paths)
 		free_2d(pipex->env_paths);
 	if (pipex->curr_cmd)
