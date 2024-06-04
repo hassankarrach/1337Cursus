@@ -1,58 +1,38 @@
 #include "../includes/philo.h"
 
+static void	parse_args(int ac, char **av, t_philo_data *philo)
+{
+	if (ac > 6 || ac < 5)
+		print_error("invalid number of argments.", 1);
+	philo->number_of_philosophers = ft_atoi(av[1]);
+	philo->time_to_die = ft_atoi(av[2]);
+	philo->time_to_eat = ft_atoi(av[3]);
+	philo->time_to_sleep = ft_atoi(av[4]);
+	if (ac == 6)
+		philo->number_of_times_each_philosopher_must_eat = ft_atoi(av[5]);
 
-pthread_mutex_t mutexFuel;
-pthread_cond_t condFuel;
-int fuel = 0;
-
-void* fuel_filling(void* arg) {
-    for (int i = 0; i < 5; i++) {
-        pthread_mutex_lock(&mutexFuel);
-        fuel += 15;
-        printf("Filled fuel... %d\n", fuel);
-        pthread_mutex_unlock(&mutexFuel);
-        pthread_cond_signal(&condFuel);
-        sleep(1);
-    }
-}
-
-void* car(void* arg) {
-    pthread_mutex_lock(&mutexFuel);
-    while (fuel < 40) {
-        printf("No fuel. Waiting...\n");
-        pthread_cond_wait(&condFuel, &mutexFuel);
-        // Equivalent to:
-        // pthread_mutex_unlock(&mutexFuel);
-        // wait for signal on condFuel
-        // pthread_mutex_lock(&mutexFuel);
-    }
-    fuel -= 40;
-    printf("Got fuel. Now left: %d\n", fuel);
-    pthread_mutex_unlock(&mutexFuel);
+	if (philo->number_of_philosophers < 1)
+		print_error("must be at least one philosopher.", 1);
+	if (ac == 6 && philo->number_of_times_each_philosopher_must_eat < 1)
+		print_error("a philosopher must eat at least once, if specefied.", 1);
+	if (philo->time_to_die < 0 || philo->time_to_eat < 0 || philo->time_to_sleep < 0)
+		print_error("a timestamp must be greater than zero.", 1);
 }
 
 int main(int argc, char* argv[]) {
-    pthread_t th[2];
-    pthread_mutex_init(&mutexFuel, NULL);
-    pthread_cond_init(&condFuel, NULL);
-    for (int i = 0; i < 2; i++) {
-        if (i == 1) {
-            if (pthread_create(&th[i], NULL, &fuel_filling, NULL) != 0) {
-                perror("Failed to create thread");
-            }
-        } else {
-            if (pthread_create(&th[i], NULL, &car, NULL) != 0) {
-                perror("Failed to create thread");
-            }
-        }
-    }
+	t_philo_data philo_data;
+	
+	parse_args(argc, argv, &philo_data);
+	init_philosophers_list(&philo_data);
 
-    for (int i = 0; i < 2; i++) {
-        if (pthread_join(th[i], NULL) != 0) {
-            perror("Failed to join thread");
-        }
-    }
-    pthread_mutex_destroy(&mutexFuel);
-    pthread_cond_destroy(&condFuel);
-    return 0;
+	pthread_t philosophers[philo_data.number_of_philosophers];
+	pthread_mutex_t forks_mutexes[philo_data.number_of_philosophers];
+
+	create_threads(&philo_data);
+	
+	init_mutexes(forks_mutexes, philo_data.number_of_philosophers);
+	init_threads(&philo_data, philosophers, philo_data.number_of_philosophers);
+
+	threads_wait(philosophers, philo_data.number_of_philosophers);
+	return 0;
 }
