@@ -6,7 +6,10 @@ NAME = philo
 # Libs-Srcs
 
 # MiniShell-Srcs
-SRCS =  ./src/philo.c
+SRC_UTILS = $(addprefix ./src/utils/, ft_atoi.c errors.c threads_wait.c)
+SRC_INITS = $(addprefix ./src/inits/, inits.c)
+SRC_PHILOSOPHER = $(addprefix ./src/philosopher/, create_philosopher.c lifecycle_philosopher.c)
+SRCS =  ./src/philo.c $(SRC_UTILS) $(SRC_INITS) $(SRC_PHILOSOPHER)
 
 # Objects
 OBJS = $(SRCS:.c=.o)
