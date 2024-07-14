@@ -2,64 +2,76 @@
 # define PHILO_H
 
 #include <pthread.h>
+#include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <errno.h>
+#include <stdint.h>
+#include <sys/time.h>
 
-typedef pthread_mutex_t t_mtx;
-
-typedef enum	t_status{
-	EATING,
-	THINKING,
-	SLEEPING,
-	STARVING,
-	DEAD
-}	status;
-
-typedef	struct s_fork
-{
-	t_mtx	fork;
-	int		fork_id;
-}	t_fork;
+// typedef enum	e_status{
+// 	EATING,
+// 	THINKING,
+// 	SLEEPING,
+// 	STARVING,
+// 	DEAD
+// };
+// typedef enum	e_fork
+// {
+// 	LEFT,
+// 	RIGHT
+// };
 
 typedef struct s_philosopher_thread{
-	int	id;
-	status state;
-	int time_to_die;
-	int time_to_eat;
-	int time_to_sleep;
+	int		id; //philosopher number
 
-	t_fork	*left_fork;
-	t_fork	*right_fork;
+	pthread_mutex_t	left_fork;	//The philosophers own fork.
+	pthread_mutex_t	*right_fork; //The other fork he will need.
 
-	long	last_meal_time;
-	long	meals_count;
+	uint64_t	last_meal_time;
+	long		meals_count;
+
+	pthread_t		thread;
+
+	struct s_program *t_prog;
 }	t_philosopher_thread;
 
-typedef struct s_philo_data{
-	int number_of_philosophers;
-	int time_to_die;
-	int time_to_eat;
-	int time_to_sleep;
-	int number_of_times_each_philosopher_must_eat;
-	t_philosopher_thread **philosopher_threads;
-}   t_philo_data;
+typedef struct s_program{
+	int						number_of_philosophers;
+
+	u_int64_t				start_time;
+
+	int 					time_2_die;
+	int 					time_2_eat;
+	int 					time_2_sleep;
+
+	//flags
+	int						death_occured; //A flag if a philosopher happend to die.
+	int						everybody_full; // A flag if all philos are finished.
+
+	int						total_finished; // a total of finished philos
+	int 					max_meals; //optional
+
+	pthread_mutex_t			sync_mutex; // Mutex for synchronizing access to shared variables
+	t_philosopher_thread	philosopher_threads[200];
+}   t_program;
+
+
+// Parsing.
+void					is_only_numbers(char **av);
 
 // Utils.
-int		ft_atoi(const char *str);
-void	print_error(char *err_msg, int should_exit);
-void	threads_wait(pthread_t *philosophers, int philosophers_count);
+int						ft_atoi(const char *str);
+int						print_error(char *err_msg, int should_exit);
+u_int64_t				get_time(void);
+int						ft_usleep(useconds_t time);
 
-// == philosophers ================
-void *philosopher_life(void *data);
-t_philosopher_thread *new_philosopher(int id);
-void create_threads(t_philo_data *philo_data);
-void init_philosophers_list(t_philo_data *philo_data);
-void *philosopher_life(void *data);
+// philosophers.
+void					*philosopher_life(void *data);
 
-// == inits =======================
-void init_mutexes(pthread_mutex_t *forks_mutexes, int forks_count);
-void init_threads(t_philo_data *philo_data, pthread_t *philosophers, int philosophers_count);
+// inits.
+void 					init_mutexes(pthread_mutex_t *forks_mutexes, int forks_count);
+void 					init_threads(t_program *philo_data, pthread_t *philosophers, int philosophers_count);
 
 #endif
