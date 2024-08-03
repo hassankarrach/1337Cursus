@@ -1,6 +1,7 @@
 #ifndef PHILO_H
-# define PHILO_H
+#define PHILO_H
 
+// includes ====================================================================
 #include <pthread.h>
 #include <string.h>
 #include <stdio.h>
@@ -9,69 +10,92 @@
 #include <errno.h>
 #include <stdint.h>
 #include <sys/time.h>
-
-// typedef enum	e_status{
-// 	EATING,
-// 	THINKING,
-// 	SLEEPING,
-// 	STARVING,
-// 	DEAD
-// };
-// typedef enum	e_fork
-// {
-// 	LEFT,
-// 	RIGHT
-// };
-
-typedef struct s_philosopher_thread{
-	int		id; //philosopher number
-
-	pthread_mutex_t	left_fork;	//The philosophers own fork.
-	pthread_mutex_t	*right_fork; //The other fork he will need.
-
-	uint64_t	last_meal_time;
-	long		meals_count;
-
-	pthread_t		thread;
-
-	struct s_program *t_prog;
-}	t_philosopher_thread;
-
-typedef struct s_program{
-	int						number_of_philosophers;
-
-	u_int64_t				start_time;
-
-	int 					time_2_die;
-	int 					time_2_eat;
-	int 					time_2_sleep;
-
-	//flags
-	int						death_occured; //A flag if a philosopher happend to die.
-	int						everybody_full; // A flag if all philos are finished.
-
-	int						total_finished; // a total of finished philos
-	int 					max_meals; //optional
-
-	pthread_mutex_t			sync_mutex; // Mutex for synchronizing access to shared variables
-	t_philosopher_thread	philosopher_threads[200];
-}   t_program;
+// ============================================================================
 
 
-// Parsing.
-void					is_only_numbers(char **av);
+// defines =====================================================================
+//	alloc_err
+# define ALLOC_ERR_1 "ERROR WHILE ALLOCATING THREADS IDs"
+# define ALLOC_ERR_3 "ERROR WHILE ALLOCATING PHILOS"
+# define ALLOC_ERR_2 "ERROR WHILE ALLOCATING FORKS"
+//	input_err
+# define ERR_IN_1 "INVALID INPUT CHARACTER"
+# define ERR_IN_2 "INVALID INPUT VALUES"
+//	pthread_err
+# define TH_ERR "ERROR WHILE CREATING THREADS"
+# define JOIN_ERR "ERROR WHILE JOINING THREADS"
+# define INIT_ERR_1 "ERROR WHILE INIT FORKS"
+//	time_err
+# define TIME_ERR "UNABLE TO RETRIVE UTC"
+//	philo_msg
+# define TAKE_FORKS "has taken a fork"
+# define THINKING "is thinking"
+# define SLEEPING "is sleeping"
+# define EATING "is eating"
+# define DIED "died"
+// ============================================================================
 
-// Utils.
-int						ft_atoi(const char *str);
-int						print_error(char *err_msg, int should_exit);
-u_int64_t				get_time(void);
-int						ft_usleep(useconds_t time);
 
-// philosophers.
-void					*philosopher_life(void *data);
+// structs =====================================================================
+struct	s_args;
+typedef struct s_philo
+{
+	struct s_args	*args;
+	pthread_t		t1;
+	int				id;
+	int				eat_cont;
+	int				status;
+	int				eating;
+	uint64_t		time_to_die;
+	pthread_mutex_t	lock;
+	pthread_mutex_t	*r_fork;
+	pthread_mutex_t	*l_fork;
+}	t_philo;
 
-// inits.
-void 					init_mutexes(pthread_mutex_t *forks_mutexes, int forks_count);
-void 					init_threads(t_program *philo_data, pthread_t *philosophers, int philosophers_count);
+typedef struct s_args{
+	pthread_t		*tid;
+	int				number_of_philosophers;
+	int				max_meals;
+	int				dead_accured;
+	int				finished;
+	t_philo			*philos;
+	u_int64_t		time2die;
+	u_int64_t		time2eat;
+	u_int64_t		time2sleep;
+	u_int64_t		start_time;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	lock;
+	pthread_mutex_t	write;
+}   t_args;
+// ============================================================================
+
+// prototypes =================================================================
+	// parsing.c
+	void		parse_args(int ac, char **av, t_args *args);
+
+	// utils
+	long		ft_atoi(const char *str);
+	u_int64_t	get_time(void);
+	int			ft_usleep(useconds_t time);
+	void		ft_exit(t_args *data);
+	int			error(char *str, t_args *data);
+
+	// init
+	int			init(t_args *args);
+
+	// actions
+	void		messages(char *str, t_philo *philo);
+	void		take_forks(t_philo *philo);
+	void		drop_forks(t_philo *philo);
+	void		eat(t_philo *philo);
+
+	void		clear_data(t_args	*args);
+
+	// threads
+	void		*monitor(void *philo_ptr);
+	void		*supervisor(void *philo_ptr);
+	void		*routine(void *philo_ptr);
+	int			thread_init(t_args *args);
+// ============================================================================
 
 #endif
