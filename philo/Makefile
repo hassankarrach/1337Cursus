@@ -1,12 +1,16 @@
 NAME = philo
 
 # Flags
-#CFLAGS = #-Wall -Wextra -Werror
-
-# Libs-Srcs
-
-# MiniShell-Srcs
-SRCS =  $(addprefix ./src/, philo.c actions.c init.c utils.c parsing.c threads.c) 
+CFLAGS = #-Wall -Wextra -Werror -fsanitize=thread
+# Philo_Srcs
+SRCS =  philo.c \
+		utils.c \
+		init.c \
+		routine.c \
+		monitor.c \
+		actions.c \
+		destroy.c \
+		mutex_utils.c
 
 # Objects
 OBJS = $(SRCS:.c=.o)
