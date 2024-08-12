@@ -66,30 +66,40 @@ void is_only_numbers(char **av)
 }
 size_t get_time(void)
 {
-    struct timeval tv;
+	struct timeval tv;
+	/*
+		tv.tv_sec => number of seconds since the unix epoch (1970)
+		tv.tv_usec=> additional microseconds for precision (in micro-seconds)
 
-    /*
-        tv.tv_sec => number of seconds since the unix epoch (1970)
-        tv.tv_usec=> additional microseconds for precision (in micro-seconds)
+		res => would be in milliseconds, so we convert the seconds to milli by *1000
+			   then, adding the additional microseconds (but first, convert them to milli by /1000)
 
-        res => would be in milliseconds, so we convert the seconds to milli by *1000
-               then, adding the additional microseconds (but first, convert them to milli by /1000)
-
-               1sec = 1000 milli-sec
-               1milli-sec = 1000 micro-sec
-    */
-
-    if (gettimeofday(&tv, NULL))
-        return (print_error("gettimeofday() FAILURE\n", 0));
-    return ((tv.tv_sec * (size_t)1000) + (tv.tv_usec / 1000));
+			   1sec = 1000 milli-sec
+			   1milli-sec = 1000 micro-sec
+	*/
+	if (gettimeofday(&tv, NULL))
+		return (print_error("gettimeofday() FAILURE\n", 0));
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
-int ft_usleep(int time)
+void ft_usleep(int time)
 {
-    size_t start;
+	size_t start;
 
-    start = get_time();
-    while ((get_time() - start) < (size_t)time) // keep checking. also add flag later to stop the loop if simulation is ended.
-        usleep(time / 10); // sleep 10% of time to reduce CPU usage.
-    return (0);
+	start = get_time();
+	while ((get_time() - start) < (size_t)time) // keep checking. also add flag later to stop the loop if simulation is ended.
+		usleep(100);							// sleep for 100 micro-seconds
+}
+
+void wait_philos(t_prog *args)
+{
+	bool philos_are_ready;
+	while (1)
+	{
+		pthread_mutex_lock(&args->table_lock);
+		philos_are_ready = args->philos_are_ready;
+		pthread_mutex_unlock(&args->table_lock);
+		if (philos_are_ready)
+			break;
+	}
 }

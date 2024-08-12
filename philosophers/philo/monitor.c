@@ -2,17 +2,16 @@
 
 int is_philo_dead_starving(t_philo *philo) // This function will check if a philo is dead due to starvation
 {
-	int curr_time;
+	size_t curr_time;
 
 	curr_time = get_time();
 	pthread_mutex_lock(&philo->args->death_lock);
 	if (philo->args->death_alert)
 	{
-		printf("reachs\n");
 		pthread_mutex_unlock(&philo->args->death_lock);
 		return (1);
 	}
-	if (curr_time - philo->last_meal_time > philo->args->time_2_die)
+	if (curr_time - philo->last_meal_time > (size_t)philo->args->time_2_die)
 	{
 		philo->args->death_alert = 1;
 		pthread_mutex_unlock(&philo->args->death_lock);
@@ -36,6 +35,7 @@ int all_philos_full(t_prog *args) // This function will check if all philos fini
 	return (0);
 }
 
+
 void monitor_simulation(t_prog *args)
 {
 	int philo_id;
@@ -45,7 +45,6 @@ void monitor_simulation(t_prog *args)
 	{
 		if (is_philo_dead_starving(&args->philosopher_threads[philo_id]) || all_philos_full(args))
 			break;
-		
 		philo_id++;
 		if (philo_id == args->number_of_philosophers)
 			philo_id = 0;

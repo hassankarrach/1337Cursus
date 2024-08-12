@@ -20,9 +20,11 @@ void init_philos(t_prog *args)
     int i;
 
     i = 0;
+    args->philos_are_ready = 0;
     pthread_mutex_init(&args->print_lock, NULL);
     pthread_mutex_init(&args->death_lock, NULL);
     pthread_mutex_init(&args->meals_lock, NULL);
+    pthread_mutex_init(&args->table_lock, NULL);
     
     args->philosopher_threads = malloc(sizeof(t_philo) * args->number_of_philosophers);
     if (!args->philosopher_threads)

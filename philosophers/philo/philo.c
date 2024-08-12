@@ -15,13 +15,11 @@ static void parser(int ac, char **av, t_prog *arg)
         arg->max_meals = -1;
     if (arg->number_of_philosophers < 1 || arg->number_of_philosophers > 200)
         print_error("invalid number of philosophers!", 1);
-    if (ac == 6 && arg->max_meals < 1)
-        print_error("a philosopher must eat at least once!", 1);
+    if (ac == 6 && arg->max_meals < 0)
+        print_error("invalid number of meals!", 1);
     if (arg->time_2_die < 0 || arg->time_2_eat < 0 || arg->time_2_sleap < 0
         || arg->time_2_die > INT_MAX || arg->time_2_eat > INT_MAX || arg->time_2_sleap > INT_MAX)
         print_error("invalid time!", 1);
-
-    arg->start_time = get_time();
 }
 
 int main(int ac, char **av)
@@ -41,6 +39,13 @@ int main(int ac, char **av)
         pthread_create(&args.philosopher_threads[i].thread, NULL, &routine, &args.philosopher_threads[i]);
         i++;
     }
+
+    args.start_time = get_time(); // get start time
+
+	pthread_mutex_lock(&args.table_lock);
+	args.philos_are_ready = true;
+	pthread_mutex_unlock(&args.table_lock);
+
     monitor_simulation(&args);
     
     join_threads(&args);

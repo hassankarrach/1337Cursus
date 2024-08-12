@@ -26,8 +26,8 @@ typedef struct s_philo
 	// Philosopher Id
 	int id;
 	// meals calcs
-	long last_meal_time;
-	long meals_count;
+	size_t last_meal_time;
+	size_t meals_count;
 	bool is_full;
 	// Thread struct
 	pthread_t thread;
@@ -43,12 +43,13 @@ typedef struct s_prog
 {
 	int number_of_philosophers;
 	// save time of program starting.
-	long start_time;
+	size_t start_time;
 	// params
 	int time_2_die;
 	int time_2_eat;
 	int time_2_sleap;
 	// ========== Flags
+	bool philos_are_ready;
 	int death_alert;
 	int evrybody_full;
 	int finished_philos;
@@ -56,11 +57,12 @@ typedef struct s_prog
 	// ==========
 
 	// lockers
+	pthread_mutex_t table_lock; // to lock is_rady flag (for now)
 	pthread_mutex_t print_lock;
 	pthread_mutex_t death_lock;
 	pthread_mutex_t meals_lock;
 
-	t_philo 		*philosopher_threads;
+	t_philo *philosopher_threads;
 	pthread_mutex_t *forks;
 } t_prog;
 
@@ -68,7 +70,7 @@ typedef struct s_prog
 void is_only_numbers(char **av);
 // Utils.
 size_t get_time(void);
-int ft_usleep(int time);
+void ft_usleep(int time);
 int print_error(char *err_msg, int should_exit);
 long ft_atol(const char *ptr);
 void *ft_memset(void *ptr, int value, size_t len);
@@ -84,5 +86,7 @@ void join_threads(t_prog *args);
 int is_philo_dead_starving(t_philo *philo);
 void monitor_simulation(t_prog *args);
 
+// new
+void wait_philos(t_prog *args);
 
 #endif
