@@ -2,7 +2,7 @@
 
 int is_philo_dead_starving(t_philo *philo) // This function will check if a philo is dead due to starvation
 {
-	uint64_t curr_time;
+	int curr_time;
 
 	curr_time = get_time();
 	pthread_mutex_lock(&philo->args->death_lock);

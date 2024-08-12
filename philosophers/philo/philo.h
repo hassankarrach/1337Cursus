@@ -10,6 +10,7 @@
 #include <stdint.h>
 #include <sys/time.h>
 #include <stdbool.h>
+#include <limits.h>
 
 // Macros
 #define TAKE_FORK "has taken a fork";
@@ -44,9 +45,9 @@ typedef struct s_prog
 	// save time of program starting.
 	long start_time;
 	// params
-	long time_2_die;
-	long time_2_eat;
-	long time_2_sleap;
+	int time_2_die;
+	int time_2_eat;
+	int time_2_sleap;
 	// ========== Flags
 	int death_alert;
 	int evrybody_full;
@@ -55,7 +56,6 @@ typedef struct s_prog
 	// ==========
 
 	// lockers
-	pthread_mutex_t sync_mutex; // not used (yet || useless)
 	pthread_mutex_t print_lock;
 	pthread_mutex_t death_lock;
 	pthread_mutex_t meals_lock;
@@ -68,7 +68,7 @@ typedef struct s_prog
 void is_only_numbers(char **av);
 // Utils.
 size_t get_time(void);
-int ft_usleep(__useconds_t time);
+int ft_usleep(int time);
 int print_error(char *err_msg, int should_exit);
 long ft_atol(const char *ptr);
 void *ft_memset(void *ptr, int value, size_t len);

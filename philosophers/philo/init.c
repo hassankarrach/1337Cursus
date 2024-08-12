@@ -29,6 +29,7 @@ void init_philos(t_prog *args)
         print_error("malloc failed.", 1);
     while (i < args->number_of_philosophers)
     {
+        pthread_mutex_init(&args->philosopher_threads[i].philo_mutex, NULL);
         args->philosopher_threads[i].id = i + 1;
         args->philosopher_threads[i].last_meal_time = get_time();
         args->philosopher_threads[i].meals_count = 0;

@@ -2,9 +2,6 @@
 
 static void parser(int ac, char **av, t_prog *arg)
 {
-    int i;
-
-    i = 0;
     if (ac > 6 || ac < 5)
         print_error("invalid number of arguments.", 1);
     is_only_numbers(av);
@@ -20,10 +17,10 @@ static void parser(int ac, char **av, t_prog *arg)
         print_error("invalid number of philosophers!", 1);
     if (ac == 6 && arg->max_meals < 1)
         print_error("a philosopher must eat at least once!", 1);
-    if (arg->time_2_die < 0 || arg->time_2_eat < 0 || arg->time_2_sleap < 0)
-        print_error("timestamp must be greater than zero.", 1);
+    if (arg->time_2_die < 0 || arg->time_2_eat < 0 || arg->time_2_sleap < 0
+        || arg->time_2_die > INT_MAX || arg->time_2_eat > INT_MAX || arg->time_2_sleap > INT_MAX)
+        print_error("invalid time!", 1);
 
-    // pthread_mutex_init(&arg->sync_mutex, NULL);
     arg->start_time = get_time();
 }
 

@@ -66,28 +66,30 @@ void is_only_numbers(char **av)
 }
 size_t get_time(void)
 {
-	struct timeval tv;
-	/*
-		tv.tv_sec => number of seconds since the unix epoch (1970)
-		tv.tv_usec=> additional microseconds for precision (in micro-seconds)
+    struct timeval tv;
 
-		res => would be in milliseconds, so we convert the seconds to milli by *1000
-			   then, adding the aditional microseconds (but first, convert them to milli by /1000)
+    /*
+        tv.tv_sec => number of seconds since the unix epoch (1970)
+        tv.tv_usec=> additional microseconds for precision (in micro-seconds)
 
-			   1sec = 1000 milli-sec
-			   1milli-sec = 1000 micro-sec
-	*/
+        res => would be in milliseconds, so we convert the seconds to milli by *1000
+               then, adding the additional microseconds (but first, convert them to milli by /1000)
 
-	if (gettimeofday(&tv, NULL))
-		return (print_error("gettimeofday() FAILURE\n", 0));
-	return ((tv.tv_sec * (uint64_t)1000) + (tv.tv_usec / 1000));
+               1sec = 1000 milli-sec
+               1milli-sec = 1000 micro-sec
+    */
+
+    if (gettimeofday(&tv, NULL))
+        return (print_error("gettimeofday() FAILURE\n", 0));
+    return ((tv.tv_sec * (size_t)1000) + (tv.tv_usec / 1000));
 }
-int ft_usleep(__useconds_t time)
-{
-	uint64_t start;
 
-	start = get_time();
-	while ((get_time() - start) < time) // keep check. also add flag later to stop the loop if simulaiton is ended.
-		usleep(time / 10);				// sleap 10%/time to reduce CPU usage.
-	return (0);
+int ft_usleep(int time)
+{
+    size_t start;
+
+    start = get_time();
+    while ((get_time() - start) < (size_t)time) // keep checking. also add flag later to stop the loop if simulation is ended.
+        usleep(time / 10); // sleep 10% of time to reduce CPU usage.
+    return (0);
 }
