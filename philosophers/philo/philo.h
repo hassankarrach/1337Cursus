@@ -1,58 +1,46 @@
-#ifndef PHILO_H
-# define PHILO_H
-
+#ifndef PHILOSOPHERS_H
+# define PHILOSOPHERS_H
 # include <stdio.h>
-# include <unistd.h>
 # include <stdlib.h>
-# include <sys/time.h>
+# include <unistd.h> 
 # include <pthread.h>
+# include <sys/time.h>
 
-
-typedef struct s_arg
+typedef struct s_philosopher
 {
-	int						total_philosophers;
-	int						time2die;
-	int						time2eat;
-	int						time2sleep;
-	int						max_eat;
-	long int				start_time;
-	pthread_mutex_t			write_mutex;
-	pthread_mutex_t			dead_mutex;
-	pthread_mutex_t			time_eat_mutex;
-	pthread_mutex_t			finish_mutex;
-	int						finished_philosophers;
-	int						should_stop; // 0 if none philosopher is dead, 1 if a philosopher is dead, 2 if all philosophers ate m_eat times
-}							t_arg;
+	pthread_mutex_t		eating; // mutex for eating
+	struct s_program	*prog;	// pointer to the program
+	pthread_t			thd_philo; // thread for philosopher
+	pthread_t			alive; // thread for checking if philosopher is alive
+	int					pid; // philosopher id
+	int					left; // left fork
+	int					right;	// right fork
+	int					meals_count; // number of times philosopher ate
+	long long			last_eat_time; // last time philosopher ate
+	int					is_eating; // is philosopher eating
+}				t_philosopher;
 
-typedef struct s_philo
+typedef struct s_program
 {
-	int						id;
-	pthread_t				thread_id;
-	pthread_t				thread_death_id; // id of the thread monitoring death
-	pthread_mutex_t			*right_fork;
-	pthread_mutex_t			left_fork;
-	t_arg					*args;
-	long int				last_eat;
-	unsigned int			number_of_meals;
-	int						finish; // 1 when a philosopher ate m_eat times, if not, 0
-}							t_philo;
+	pthread_mutex_t	*forks; // forks
+	t_philosopher	**philosopher; // philosophers
+	pthread_mutex_t	write; // mutex for writing
+	long long		start; // start time
+	int				nb_philo; // number of philosophers
+	int				death; // is philosopher dead
+	int				time_to_die; // time to die
+	int				time_to_eat; // time to eat
+	int				time_to_sleep; // time to sleep
+	int				time_to_think; // time to think
+	int				max_meals; // number of times each philosopher must eat
+}				t_program;
 
-typedef	struct          s_pogram
-{
-	t_philo               *philos;              // structure for each philosopher
-	t_arg                 args;                // structure with arguments, same for all philosophers
-}					   t_program;
-
-int				parse_args(int argc, char **argv, t_program *prog);
-int				initialize(t_program *prog);
-int				ft_exit(char *str);
-void			write_status(char *str, t_philo *philo);
-long int		actual_time(void);
-void			ft_putstr_fd(char *s, int fd);
-void			ft_usleep(long int time_in_ms);
-int				threading(t_program *prog);
-void			activity(t_philo *philo);
-int				check_death(t_philo *philo, int i);
-int				ft_strlen(char *str);
+void			*start_routine(void *data);
+void			print_status(t_program *table, int id, char *str);
+int				ft_atoi(char *str);
+int				is_args_valid(int ac, char **av);
+long long		ft_time(void);
+t_philosopher	**init_philo(t_program *table);
+pthread_mutex_t	*init_fork(t_program *table);
 
 #endif
