@@ -1,93 +1,51 @@
 #include "philo.h"
 
-int	death(t_philosopher *philo)
+static void parser(int ac, char **av, t_prog *arg)
 {
-	philo->prog->death = 0;
-	pthread_mutex_lock(&philo->prog->write);
-	printf("%lld %d %s", ft_time()
-		- philo->prog->start, philo->pid + 1, "died\n");
-	return (0);
-}
-int	is_alive(t_philosopher *philo) // a monitor function that checks if philosopher is alive
-{
-	int	i;
+    int i;
 
-	while (1) // infinite loop, so it keeps checking if philosopher is alive
-	{
-		i = 0;
-		while (i < philo->prog->nb_philo) // for each philosopher
-		{
-			if (!philo->is_eating && ft_time() // check if philosopher should be dead
-				- philo->last_eat_time >= philo->prog->time_to_die)
-			{
-				if (philo->meals_count != philo->prog->max_meals) // if philosopher didn't eat enough
-					return (death(philo));
-				return (0);
-			}
-			else if (philo->prog->time_to_die < philo->prog->time_to_eat
-				|| philo->prog->time_to_die < philo->prog->time_to_sleep)
-				return (death(philo));
-			i++;
-		}
-	}
-	return (1);
-}
-static int	start_threads(t_program *prog)
-{
-	int	i;
+    i = 0;
+    if (ac > 6 || ac < 5)
+        print_error("invalid number of arguments.", 1);
+    is_only_numbers(av);
+    arg->number_of_philosophers = ft_atol(av[1]);
+    arg->time_2_die = ft_atol(av[2]);
+    arg->time_2_eat = ft_atol(av[3]);
+    arg->time_2_sleap = ft_atol(av[4]);
+    if (ac == 6)
+        arg->max_meals = ft_atol(av[5]);
+    else
+        arg->max_meals = -1;
+    if (arg->number_of_philosophers < 1 || arg->number_of_philosophers > 200)
+        print_error("invalid number of philosophers!", 1);
+    if (ac == 6 && arg->max_meals < 1)
+        print_error("a philosopher must eat at least once!", 1);
+    if (arg->time_2_die < 0 || arg->time_2_eat < 0 || arg->time_2_sleap < 0)
+        print_error("timestamp must be greater than zero.", 1);
 
-	i = 0;
-	prog->start = ft_time(); // get start time
-	while (i < prog->nb_philo) // create threads for each philosopher
-	{
-		prog->philosopher[i]->last_eat_time = ft_time(); // get last eat time
-		if (pthread_create(&prog->philosopher[i]->thd_philo, NULL,
-				&start_routine, (void *)prog->philosopher[i]) != 0)
-			return (0);
-		i++;
-		usleep(100); // sleep for 100 microseconds, so threads don't start at the same time
-	}
-	is_alive(*prog->philosopher); // check if philosopher is alive
-	return (1);
-}
-static t_program	*parser(int argc, char **argv)
-{
-	t_program	*prog;
-	int		counter;
-
-	counter = 1; // skip program name
-	prog = (t_program *)malloc(sizeof(t_program) * 1); // allocate memory for program struct
-	if (prog == NULL)
-		return (NULL);
-	prog->nb_philo = ft_atoi(argv[counter++]);
-	prog->time_to_die = ft_atoi(argv[counter++]);
-	prog->time_to_eat = ft_atoi(argv[counter++]);
-	prog->time_to_sleep = ft_atoi(argv[counter++]);
-	prog->max_meals = -1;
-	prog->death = 1;
-	if (argc - 1 == 5)
-		prog->max_meals = ft_atoi(argv[counter]);
-	prog->forks = init_fork(prog);
-	prog->philosopher = init_philo(prog);
-	if (prog->philosopher == NULL || prog->nb_philo == 0)
-		return (NULL);
-	if (pthread_mutex_init(&prog->write, NULL) != 0)
-		return (NULL);
-	return (prog);
+    // pthread_mutex_init(&arg->sync_mutex, NULL);
+    arg->start_time = get_time();
 }
 
-int	main(int argc, char **argv)
+int main(int ac, char **av)
 {
-	t_program	*prog;
+    t_prog args;
+    int i;
 
-	prog = NULL;
-	if (is_args_valid(argc, argv) != 1) // check if arguments are valid
-	{
-		printf("Error: Invalid Argument\n");
-		return (0);
-	}
-	prog = parser(argc, argv); // fill program struct
-	if (prog == NULL)
-		return (0);
-	start_threads(prog);
-}
+    ft_memset(&args, 0, sizeof(t_prog));
+    parser(ac, av, &args);
+
+    init_forks(&args);
+    init_philos(&args);
+
+    i = 0;
+    while (i < args.number_of_philosophers)
+    {
+        pthread_create(&args.philosopher_threads[i].thread, NULL, &routine, &args.philosopher_threads[i]);
+        i++;
+    }
+    monitor_simulation(&args);
+    
+    join_threads(&args);
+    return (0);
+}	
