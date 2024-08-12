@@ -8,7 +8,7 @@ int	death(t_philosopher *philo)
 		- philo->prog->start, philo->pid + 1, "died\n");
 	return (0);
 }
-int	is_alive(t_philosopher *philo)
+int	is_alive(t_philosopher *philo) // a monitor function that checks if philosopher is alive
 {
 	int	i;
 

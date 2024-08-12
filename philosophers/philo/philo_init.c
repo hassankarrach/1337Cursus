@@ -46,7 +46,7 @@ t_philosopher	**init_philo(t_program *prog)
 	return (philos);
 }
 
-long long	ft_time(void)
+long long	ft_time(void) // a function that returns current time in milliseconds
 {
 	struct timeval	time;
 
