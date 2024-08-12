@@ -11,14 +11,17 @@ int is_philo_dead_starving(t_philo *philo) // This function will check if a phil
 		pthread_mutex_unlock(&philo->args->death_lock);
 		return (1);
 	}
+	pthread_mutex_lock(&philo->philo_mutex);
 	if (curr_time - philo->last_meal_time > (size_t)philo->args->time_2_die)
 	{
 		philo->args->death_alert = 1;
 		pthread_mutex_unlock(&philo->args->death_lock);
+		pthread_mutex_unlock(&philo->philo_mutex);
 		put_message(philo, "died");
 		return (1);
 	}
 	pthread_mutex_unlock(&philo->args->death_lock);
+	pthread_mutex_unlock(&philo->philo_mutex);
 	return (0);
 }
 

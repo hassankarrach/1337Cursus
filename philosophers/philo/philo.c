@@ -34,13 +34,13 @@ int main(int ac, char **av)
     init_philos(&args);
 
     i = 0;
+    args.start_time = get_time(); // get start time
     while (i < args.number_of_philosophers)
     {
         pthread_create(&args.philosopher_threads[i].thread, NULL, &routine, &args.philosopher_threads[i]);
         i++;
     }
 
-    args.start_time = get_time(); // get start time
 
 	pthread_mutex_lock(&args.table_lock);
 	args.philos_are_ready = true;
