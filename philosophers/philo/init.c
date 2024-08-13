@@ -39,6 +39,10 @@ void init_philos(t_prog *args)
         // forks
         args->philosopher_threads[i].left_fork = &args->forks[i];
         args->philosopher_threads[i].right_fork = &args->forks[(i + 1) % args->number_of_philosophers];
+        // if (i == 0)
+        //     args->philosopher_threads[i].right_fork = &args->forks[args->number_of_philosophers - 1];
+        // else
+        //     args->philosopher_threads[i].right_fork = &args->forks[i - 1];
         i++;
     }
 }

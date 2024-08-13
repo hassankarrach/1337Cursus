@@ -4,7 +4,6 @@ int is_philo_dead_starving(t_philo *philo) // This function will check if a phil
 {
 	size_t curr_time;
 
-	curr_time = get_time();
 	pthread_mutex_lock(&philo->args->death_lock);
 	if (philo->args->death_alert)
 	{
@@ -12,6 +11,7 @@ int is_philo_dead_starving(t_philo *philo) // This function will check if a phil
 		return (1);
 	}
 	pthread_mutex_lock(&philo->philo_mutex);
+	curr_time = get_time();
 	if (curr_time - philo->last_meal_time > (size_t)philo->args->time_2_die)
 	{
 		philo->args->death_alert = 1;

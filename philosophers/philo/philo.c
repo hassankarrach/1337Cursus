@@ -41,12 +41,11 @@ int main(int ac, char **av)
         i++;
     }
 
-
-	pthread_mutex_lock(&args.table_lock);
-	args.philos_are_ready = true;
-	pthread_mutex_unlock(&args.table_lock);
-
+	// pthread_mutex_lock(&args.table_lock);
+	// args.philos_are_ready = true;
+	// pthread_mutex_unlock(&args.table_lock);
     monitor_simulation(&args);
+
     
     join_threads(&args);
     return (0);

@@ -91,9 +91,9 @@ void *routine(void *ptr)
     pthread_mutex_t *second_fork;
 
     philo = (t_philo *)ptr;
-    wait_philos(philo->args);
     if (philo->args->max_meals == 0)
         return (NULL);
+
     if (philo->id % 2 == 0)
     {
         first_fork = philo->left_fork;
@@ -106,7 +106,7 @@ void *routine(void *ptr)
     }
     // Add a small delay based on philosopher ID to improve fairness
     if (philo->id % 2 == 0)
-        usleep(15000);
+        usleep(500);
 
     while (!simulation_should_end(philo->args))
     {
