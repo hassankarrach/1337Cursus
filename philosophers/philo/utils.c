@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/14 08:07:43 by hkarrach          #+#    #+#             */
+/*   Updated: 2024/08/14 08:30:14 by hkarrach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
-void *ft_memset(void *ptr, int value, size_t len)
+void	*ft_memset(void *ptr, int value, size_t len)
 {
-	unsigned char *p;
+	unsigned char	*p;
 
 	p = (unsigned char *)ptr;
 	while (len > 0)
@@ -12,12 +24,13 @@ void *ft_memset(void *ptr, int value, size_t len)
 	}
 	return (ptr);
 }
-long ft_atol(const char *ptr)
-{
-	char *str;
-	long result;
 
-	str = (char *)ptr;
+long	ft_atol(const char *nptr)
+{
+	char	*str;
+	long	result;
+
+	str = (char *)nptr;
 	result = 0;
 	while (*str && *str == ' ')
 		str++;
@@ -30,7 +43,8 @@ long ft_atol(const char *ptr)
 	}
 	return (result);
 }
-int print_error(char *err_msg, int should_exit)
+
+int	print_error(char *err_msg, int should_exit)
 {
 	write(2, "Error:\n", 7);
 	printf("%s", err_msg);
@@ -38,68 +52,21 @@ int print_error(char *err_msg, int should_exit)
 		exit(1);
 	return (1);
 }
-void is_only_numbers(char **av)
+
+long	get_time(void)
 {
-	int i;
-	int j;
+	struct timeval	tv;
 
-	i = 0;
-	av++;
-	while (av[i])
-	{
-		j = 0;
-		while (av[i][j])
-		{
-			if (av[i][j] == ' ')
-			{
-				j++;
-				continue;
-			}
-			if (av[i][j] < '0' || av[i][j] > '9')
-			{
-				print_error("invalid arg!", 1);
-			}
-			j++;
-		}
-		i++;
-	}
-}
-size_t get_time(void)
-{
-	struct timeval tv;
-	/*
-		tv.tv_sec => number of seconds since the unix epoch (1970)
-		tv.tv_usec=> additional microseconds for precision (in micro-seconds)
-
-		res => would be in milliseconds, so we convert the seconds to milli by *1000
-			   then, adding the additional microseconds (but first, convert them to milli by /1000)
-
-			   1sec = 1000 milli-sec
-			   1milli-sec = 1000 micro-sec
-	*/
 	if (gettimeofday(&tv, NULL))
 		return (print_error("gettimeofday() FAILURE\n", 0));
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
-void ft_usleep(int time)
+void	ft_usleep(long time, t_prog *args)
 {
-	size_t start;
+	long	start;
 
 	start = get_time();
-	while ((get_time() - start) < (size_t)time) // keep checking. also add flag later to stop the loop if simulation is ended.
-		usleep(100);							// sleep for 100 micro-seconds
-}
-
-void wait_philos(t_prog *args)
-{
-	bool philos_are_ready;
-	while (1)
-	{
-		pthread_mutex_lock(&args->table_lock);
-		philos_are_ready = args->philos_are_ready;
-		pthread_mutex_unlock(&args->table_lock);
-		if (philos_are_ready)
-			break;
-	}
+	while ((get_time() - start) < time && !simulation_should_end(args))
+		usleep(50);
 }

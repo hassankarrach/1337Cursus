@@ -9,7 +9,7 @@ SRCS =  philo.c \
 		routine.c \
 		monitor.c \
 		actions.c \
-		destroy.c \
+		clear.c \
 
 # Objects
 OBJS = $(SRCS:.c=.o)
