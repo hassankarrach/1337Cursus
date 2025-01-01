@@ -21,11 +21,11 @@ int main()
 
 
 	const WrongAnimal *metaWrong = new WrongAnimal();
-	const WrongAnimal *jWrong = new WrongCat();
+	const WrongAnimal *Wrong_cat = new WrongCat();
 
-	std::cout << jWrong->getType() << " " << std::endl;
+	std::cout << Wrong_cat->getType() << " " << std::endl;
 
-	jWrong->makeSound();
+	Wrong_cat->makeSound();
 	metaWrong->makeSound();
 
 	
@@ -35,5 +35,5 @@ int main()
 	delete j;
 	delete i;
 	delete metaWrong;
-	delete jWrong;
+	delete Wrong_cat;
 }

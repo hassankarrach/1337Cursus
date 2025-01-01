@@ -19,7 +19,8 @@ public:
 
 	// Member functions
 	void makeSound() const;
-	
+	Brain *getBrain() const;
+
 	// Destructor
 	~Dog();
 };

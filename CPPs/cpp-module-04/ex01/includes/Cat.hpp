@@ -12,7 +12,6 @@ private:
 public:
 	// Constructors
 	Cat();
-	Cat(std::string &type);
 	Cat(const Cat &cat);
 
 	// Operator overloads
@@ -20,6 +19,7 @@ public:
 
 	// Member functions
 	void makeSound() const;
+	Brain *getBrain() const;
 	
 	// Destructor
 	~Cat();

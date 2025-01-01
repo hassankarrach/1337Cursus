@@ -8,7 +8,6 @@ class Cat : public Animal
 public:
 	// Constructors
 	Cat();
-	Cat(std::string &type);
 	Cat(const Cat &cat);
 
 	// Operator overloads
