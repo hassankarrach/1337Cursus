@@ -5,7 +5,7 @@ Ice::Ice( void )
 	this->AMateria::_type = "ice";
 }
 
-Ice::Ice( const Ice &other )
+Ice::Ice( const Ice &other ) : AMateria( other )
 {
 	this->AMateria::_type = other._type;
 }

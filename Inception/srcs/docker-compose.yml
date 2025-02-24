@@ -1,0 +1,62 @@
+version: '3' # should match the version of docker-compose installed
+
+# ===Services===
+services:
+  nginx:
+    build: 
+      context: ./requirements/nginx
+      dockerfile: dockerfile
+    container_name: nginx
+    ports:
+      - "443:443"
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - inceptionNet
+    restart: always
+  mariadb:
+    build: 
+      context: ./requirements/mariadb
+      dockerfile: dockerfile
+    container_name: mariadb
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - inceptionNet
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      
+    restart: always
+  wordpress:
+    build: 
+      context: ./requirements/wordpress
+      dockerfile: dockerfile
+      container_name: wordpress
+      volumes:
+        - wordpress_data:/var/www/html
+      depends_on:
+        - mariadb
+      networks:
+        - inceptionNet
+      restart: always
+# ===Networks===
+networks:
+  inceptionNet:
+    driver: bridge
+# ===Volumes===
+volumes:
+  wordpress_data:
+    driver: local
+    diver_opts:
+      type: none
+      o: bind
+      device: /home/hkarrach/Desktop/13Cursus/Inception/Volumes/wordpress
+  mariadb_data:
+    driver: local
+    diver_opts:
+      type: none
+      o: bind
+      device: /home/hkarrach/Desktop/13Cursus/Inception/Volumes/mariadb

@@ -19,7 +19,6 @@ int main()
 	// ===========================================
 	std::cout << "=====================" << std::endl;
 
-
 	const WrongAnimal *metaWrong = new WrongAnimal();
 	const WrongAnimal *Wrong_cat = new WrongCat();
 
@@ -28,9 +27,9 @@ int main()
 	Wrong_cat->makeSound();
 	metaWrong->makeSound();
 
-	
-
 	// ===========================================
+	// Destructor calls
+	std::cout << "=========================  Destructors start here :" << std::endl;
 	delete meta;
 	delete j;
 	delete i;
