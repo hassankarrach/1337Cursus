@@ -1,62 +1,103 @@
-version: '3' # should match the version of docker-compose installed
-
 # ===Services===
 services:
   nginx:
+    image: nginx
+    container_name: nginx
     build: 
       context: ./requirements/nginx
-      dockerfile: dockerfile
-    container_name: nginx
+      dockerfile: Dockerfile
     ports:
       - "443:443"
     volumes:
-      - wordpress_data:/var/www/html
+      - wp_files:/var/www/wordpress
     networks:
-      - inceptionNet
+      - Inception.net
+    depends_on:
+      - wordpress
     restart: always
-  mariadb:
+  mariadb: 
+    image: mariadb
+    container_name: mariadb
     build: 
       context: ./requirements/mariadb
-      dockerfile: dockerfile
-    container_name: mariadb
+      dockerfile: Dockerfile
     volumes:
-      - mariadb_data:/var/lib/mysql
+      - wp_database:/var/lib/mysql
     networks:
-      - inceptionNet
+      - Inception.net
     environment:
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DB_ROOT_PASS=${DB_ROOT_PASS}
+      - DB_USER=${DB_USER}
+      - DB_USER_PASS=${DB_USER_PASS}
       
     restart: always
   wordpress:
-    build: 
+    image: wordpress
+    container_name: wordpress
+    hostname: wordpress
+    build:
       context: ./requirements/wordpress
-      dockerfile: dockerfile
-      container_name: wordpress
-      volumes:
-        - wordpress_data:/var/www/html
-      depends_on:
-        - mariadb
-      networks:
-        - inceptionNet
-      restart: always
+      dockerfile: Dockerfile
+    environment:
+      - DOMAIN_NAME=${DOMAIN_NAME}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_USER_PASS=${DB_USER_PASS}
+      - WP_USER=${WP_USER}
+      - WP_USER_PASS=${WP_USER_PASS}
+      - WP_ADMIN=${WP_ADMIN}
+      - WP_ADMIN_PASS=${WP_ADMIN_PASS}
+    volumes:
+      - wp_files:/var/www/wordpress
+    depends_on:
+      - mariadb
+      - redis
+    networks:
+      - Inception.net
+    restart: always
+  # BONUS
+  redis:
+    image: redis
+    container_name: redis
+    build: 
+      context: ./requirements/bonus/redis
+      dockerfile: Dockerfile
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    networks:
+      - Inception.net
+    restart: always
+  ftp :
+    image : ftp
+    container_name : ftp
+    build: 
+      context: ./requirements/bonus/ftp
+      dockerfile: Dockerfile
+    environment:
+      - FTP_USER=${FTP_USER}
+      - FTP_PASS=${FTP_PASS}
+    networks:
+      - Inception.net
+    restart: always
 # ===Networks===
 networks:
-  inceptionNet:
+  Inception.net:
+    name : Inception.net
     driver: bridge
 # ===Volumes===
 volumes:
-  wordpress_data:
+  wp_database:
+    name : wp_database
     driver: local
-    diver_opts:
+    driver_opts:
       type: none
       o: bind
-      device: /home/hkarrach/Desktop/13Cursus/Inception/Volumes/wordpress
-  mariadb_data:
+      device: /home/zero/data/wp_database
+  wp_files:
+    name : wp_files
     driver: local
-    diver_opts:
+    driver_opts:
       type: none
       o: bind
-      device: /home/hkarrach/Desktop/13Cursus/Inception/Volumes/mariadb
+      device: /home/zero/data/wp_files
