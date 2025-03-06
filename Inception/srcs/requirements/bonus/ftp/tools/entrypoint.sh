@@ -1,13 +1,17 @@
-#!bin/sh
+#!/bin/sh
 
-# Create a user
-adduser -D -h /var/ftp $FTP_USER && \
-echo "$FTP_USER:$FTP_PASSWORD" | chpasswd && \ 
-echo "User $FTP_USER has been created" && \
-mkdir -p /var/ftp && \ 
-chown -R $FTP_USER:$FTP_USER /var/ftp && \
-chmod 755 /var/ftp
+echo "FTP Server Setuping ..."
 
-# Start the FTP server
-echo "Starting vsftpd server..."
-vsftpd /etc/vsftpd/vsftpd.conf
+# Create a new user
+useradd -m $FTP_USER
+echo "${FTP_USER}:${FTP_PASS}" | chpasswd
+
+# permissions
+usermod -aG www-data $FTP_USER
+
+mkdir -p /var/run/vsftpd/empty
+echo local_root=/var/www/wordpress >> /etc/vsftpd.conf
+echo write_enable=YES >> /etc/vsftpd.conf
+echp chown_uploads=YES >> /etc/vsftpd.conf # change the owner of the uploaded files
+echo chown_username=www-data >> /etc/vsftpd.conf
+exec vsftpd

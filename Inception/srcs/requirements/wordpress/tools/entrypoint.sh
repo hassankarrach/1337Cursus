@@ -50,16 +50,16 @@ if [ ! -f /var/www/wordpress/wp-config.php ]; then
 
     echo "Fixing permissions after installation..."
     chown -R www-data:www-data /var/www/wordpress
-    chmod -R 755 /var/www/wordpress
+    chmod -R 775 /var/www/wordpress
     chown -R www-data:www-data /var/www/wordpress/wp-content
-    chmod -R 755 /var/www/wordpress/wp-content
+    chmod -R 775 /var/www/wordpress/wp-content
 else
     echo "WordPress is already installed"
     echo "Ensuring correct permissions..."
     chown -R www-data:www-data /var/www/wordpress
-    chmod -R 755 /var/www/wordpress
+    chmod -R 775 /var/www/wordpress
     chown -R www-data:www-data /var/www/wordpress/wp-content
-    chmod -R 755 /var/www/wordpress/wp-content
+    chmod -R 775 /var/www/wordpress/wp-content
 fi
 
 # Configure php-fpm to listen on port 9000

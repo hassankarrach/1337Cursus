@@ -74,12 +74,52 @@ services:
     build: 
       context: ./requirements/bonus/ftp
       dockerfile: Dockerfile
+    ports:
+      - "21:21"
+      - "20:20"
+    volumes:
+      - wp_files:/var/www/wordpress
     environment:
       - FTP_USER=${FTP_USER}
       - FTP_PASS=${FTP_PASS}
     networks:
       - Inception.net
     restart: always
+  adminer:
+    image: adminer
+    container_name: adminer
+    networks:
+      - Inception.net
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mariadb
+    restart: always
+  webapp:
+    image: webapp
+    container_name: webapp
+    build: 
+      context: ./requirements/bonus/webapp
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    networks:
+      - Inception.net
+    restart: always
+  cadvisor:
+    container_name: cadvisor
+    build: ./requirements/bonus/cadvisor
+    image: cadvisor
+    restart: always
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    ports:
+      - "8081:6000"
+    networks:
+      - Inception.net
 # ===Networks===
 networks:
   Inception.net:
