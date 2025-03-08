@@ -25,4 +25,13 @@
 		# CMD : easilly overriden (ex : docker run mariadb bash)
 		# ENTRYPOINT : Forces init.sh to run, makes it harder to override (usefull for ensuring initialization).
 
+
+   # CMD VS ENTRYPOINT (THE COMPHREHENSIVE) 
+
+Feature			CMD																								ENTRYPOINT
+Purpose			Provides a default command but can be overridden at runtime	Defines the main executable, 		cannot be easily overridden
+Overridable?	Yes, by passing a command in docker run															No (unless --entrypoint is explicitly used)
+Syntax			CMD ["executable", "arg1", "arg2"] (preferred JSON array format)								ENTRYPOINT ["executable", "arg1", "arg2"] (preferred JSON format)
+Example			CMD ["nginx", "-g", "daemon off;"]																ENTRYPOINT ["nginx", "-g", "daemon off;"]
+Use Case		Good for providing default behavior (e.g., running a script or process by default)				Best for forcing a mandatory command (e.g., when building a CLI tool)
 		

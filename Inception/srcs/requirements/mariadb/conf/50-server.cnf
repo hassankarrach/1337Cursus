@@ -4,3 +4,14 @@ socket = /run/mysqld/mysqld.sock
 bind-address = 0.0.0.0
 port = 3306
 user = mysql
+
+# Security settings
+skip-name-resolve
+skip-networking=0
+skip-grant-tables=0
+
+# Explicitly disable socket authentication
+skip-external-locking
+
+# Authentication plugin control
+plugin-load-add=auth_socket.so
