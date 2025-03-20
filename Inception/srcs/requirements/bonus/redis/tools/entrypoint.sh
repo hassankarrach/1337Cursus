@@ -10,4 +10,4 @@ if [ ! -f "/etc/redis/redis.conf.bak" ]; then
 fi
 
 # Start Redis server in protected mode off
-redis-server --protected-mode no
+exec redis-server --protected-mode no

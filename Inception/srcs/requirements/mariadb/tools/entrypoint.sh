@@ -25,6 +25,8 @@ CREATE USER '${DB_USER}'@'%' IDENTIFIED by '${DB_USER_PASS}';
 GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO '${DB_USER}'@'%';
 FLUSH PRIVILEGES;
 EOF
+else
+    echo "Database directory already initialized"
 fi
 
 # Start MariaDB with the mysql user

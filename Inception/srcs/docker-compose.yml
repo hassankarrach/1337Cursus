@@ -88,10 +88,13 @@ services:
   adminer:
     image: adminer
     container_name: adminer
+    build :
+      context: ./requirements/bonus/adminer
+      dockerfile: Dockerfile
+    volumes:
+      - wp_files:/var/www/wordpress
     networks:
       - Inception.net
-    ports:
-      - "8080:8080"
     depends_on:
       - mariadb
     restart: always
@@ -101,8 +104,6 @@ services:
     build: 
       context: ./requirements/bonus/webapp
       dockerfile: Dockerfile
-    ports:
-      - "8082:8082"
     networks:
       - Inception.net
     restart: always
@@ -111,13 +112,11 @@ services:
     build: ./requirements/bonus/cadvisor
     image: cadvisor
     restart: always
-    volumes:
+    volumes: 
       - /:/rootfs:ro
       - /var/run:/var/run:rw
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
-    ports:
-      - "8081:6000"
     networks:
       - Inception.net
 # ===Networks===

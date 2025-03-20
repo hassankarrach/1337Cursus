@@ -26,7 +26,7 @@ if [ ! -f /var/www/wordpress/wp-config.php ]; then
                    --allow-root
 
     echo "Setting up Redis cache..."
-    sed -i "/<?php/a define('WP_CACHE', true);\ndefine('WP_REDIS_HOST', 'redis');\ndefine('WP_REDIS_PORT', 6379);" wp-config.php
+    sed -i "/<?php/a define('WP_CACHE', true);\ndefine('WP_REDIS_HOST', 'redis');\ndefine('WP_REDIS_PORT', 6379); " wp-config.php
 
     echo "Installing WordPress core..."
     wp core install --url="$DOMAIN_NAME" \
@@ -65,7 +65,14 @@ fi
 # Configure php-fpm to listen on port 9000
 sed -i 's@/run/php/php7.4-fpm.sock@9000@' /etc/php/7.4/fpm/pool.d/www.conf
 
-mkdir -p /run/php
 
+echo "Waiting for WordPress installation to complete..."
+until wp core is-installed --allow-root; do
+  sleep 2
+  echo "Still waiting for WordPress..."
+done
+echo "WordPress is installed!"
 echo "Starting php-fpm..."
-php-fpm7.4 -F
+
+mkdir -p /run/php
+exec php-fpm7.4 -F

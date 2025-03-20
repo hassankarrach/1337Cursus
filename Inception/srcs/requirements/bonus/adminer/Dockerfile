@@ -1,34 +1,13 @@
-FROM debian:bullseye
+FROM debian:buster
 
-ARG PHP_VERSION=82
+# Update package lists and install necessary packages in one RUN to reduce layers
+RUN apt update -y && \
+    apt install -y wget php php-mysql && \
+    rm -rf /var/lib/apt/lists/*
 
-RUN apk update && apk upgrade && apk add --no-cache \
-    php${PHP_VERSION} \
-    php${PHP_VERSION}-common \
-    php${PHP_VERSION}-session \
-    php${PHP_VERSION}-iconv \
-    php${PHP_VERSION}-gd \
-    php${PHP_VERSION}-curl \
-    php${PHP_VERSION}-xml \
-    php${PHP_VERSION}-mysqli \
-    php${PHP_VERSION}-imap \
-    php${PHP_VERSION}-cgi \
-    php${PHP_VERSION}-pdo \
-    php${PHP_VERSION}-pdo_mysql \
-    php${PHP_VERSION}-soap \
-    php${PHP_VERSION}-posix \
-    php${PHP_VERSION}-gettext \
-    php${PHP_VERSION}-ldap \
-    php${PHP_VERSION}-ctype \
-    php${PHP_VERSION}-dom \
-    php${PHP_VERSION}-simplexml \
-    wget
-
-WORKDIR /var/www
-
-RUN wget https://github.com/vrana/adminer/releases/download/v4.8.1/adminer-4.8.1.php && \
-    mv adminer-4.8.1.php index.php && chown -R root:root /var/www/
-
-EXPOSE 8080
-
-CMD	[ "php", "-S", "[::]:8080", "-t", "/var/www" ]
+# Copy and set permissions for the script
+COPY ./tools/entrypoint.sh .
+RUN chmod +x /entrypoint.sh
+	
+# Set the entrypoint
+ENTRYPOINT ["/entrypoint.sh"]

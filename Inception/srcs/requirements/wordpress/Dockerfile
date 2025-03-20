@@ -13,4 +13,4 @@ RUN apt-get update && apt-get upgrade -y \
 COPY ./tools/entrypoint.sh .
 RUN chmod +x entrypoint.sh
 
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
