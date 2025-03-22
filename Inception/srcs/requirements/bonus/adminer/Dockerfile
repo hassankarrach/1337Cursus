@@ -8,6 +8,8 @@ RUN apt update -y && \
 # Copy and set permissions for the script
 COPY ./tools/entrypoint.sh .
 RUN chmod +x /entrypoint.sh
+
+EXPOSE 8080
 	
 # Set the entrypoint
 ENTRYPOINT ["/entrypoint.sh"]

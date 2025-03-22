@@ -22,7 +22,7 @@ services:
       context: ./requirements/mariadb
       dockerfile: Dockerfile
     volumes:
-      - wp_database:/var/lib/mysql
+      - db_files:/var/lib/mysql
     networks:
       - Inception.net
     environment:
@@ -126,13 +126,13 @@ networks:
     driver: bridge
 # ===Volumes===
 volumes:
-  wp_database:
-    name : wp_database
+  db_files:
+    name : db_files
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/zero/data/wp_database
+      device: /home/zero/data/db_files
   wp_files:
     name : wp_files
     driver: local
