@@ -30,7 +30,6 @@ services:
       - DB_ROOT_PASS=${DB_ROOT_PASS}
       - DB_USER=${DB_USER}
       - DB_USER_PASS=${DB_USER_PASS}
-      
     restart: always
   wordpress:
     image: wordpress
@@ -108,10 +107,11 @@ services:
       - Inception.net
     restart: always
   cadvisor:
-    container_name: cadvisor
-    build: ./requirements/bonus/cadvisor
     image: cadvisor
-    restart: always
+    container_name: cadvisor
+    build: 
+      context: ./requirements/bonus/cadvisor
+      dockerfile: Dockerfile
     volumes: 
       - /:/rootfs:ro
       - /var/run:/var/run:rw
@@ -119,6 +119,7 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
     networks:
       - Inception.net
+    restart: always
 # ===Networks===
 networks:
   Inception.net:
