@@ -30,7 +30,7 @@ if [ ! -f /var/www/wordpress/wp-config.php ]; then
 
     echo "Installing WordPress core..."
     wp core install --url="$DOMAIN_NAME" \
-                    --title="My Wordpress" \
+                    --title="INCEPTION" \
                     --admin_user="$WP_ADMIN" \
                     --admin_password="$WP_ADMIN_PASS" \
                     --admin_email="admin@inception.net" \
